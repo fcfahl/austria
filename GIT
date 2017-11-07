@@ -23,7 +23,7 @@ do not create readme.md as it will give an error in the first commit
 2b) Set up local repository (firt time)
 cd 03_Scripts
 git init
-git remote add origin https://github.com/fcfahl/test.git
+git remote add origin https://github.com/fcfahl/austria.git
 git add README.md
 git commit -m 'first commit'
 
@@ -45,3 +45,6 @@ git pull
 ## ignore folders
 cd 03_Scripts/.git
 edit .gitignore
+
+
+git push --set-upstream origin master
