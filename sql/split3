@@ -1,0 +1,47 @@
+﻿DROP TABLE IF EXISTS tmp_test;
+CREATE TABLE tmp_test AS
+
+ WITH 
+ 
+        lines as (
+                SELECT ST_GeomFromText('LINESTRING(0 0, 2 2, 10 10, 15 15, 20 20)') as geom
+                ),
+                
+        points as (
+                SELECT ST_GeomFromText('MultiPoint((0 0), (2 2), (10 10), (15 15), (20 20))') as geom
+                ),
+ 
+	numgeoms (pt_count) as (
+		SELECT st_numgeometries(geom) + 1 as pt_count FROM points
+		),
+		
+	knife_points as (
+		SELECT x as segment, 
+		CASE 
+			WHEN x = 0 then 0 
+			WHEN x = (select pt_count from numgeoms) THEN 1 
+			ELSE ST_LineLocatePoint(l.geom, ST_GeometryN(p.geom, x)) 
+			END as line_fraction_end, 
+		
+		CASE 
+			WHEN x = 1 THEN 0 
+			ELSE ST_LineLocatePoint(l.geom, ST_GeometryN(p.geom,x-1)) END as line_fraction_start 
+
+		FROM points p, lines l, 
+		(SELECT generate_series(0, (SELECT pt_count from numgeoms)) as x ) g
+		),
+			
+	segments as (
+		SELECT ST_LineSubstring(geom, line_fraction_start, line_fraction_end) as geom, segment 
+		FROM knife_points, lines 
+		WHERE segment > 0 
+		)
+
+SELECT geom, segment from segments 
+
+WHERE ST_GeometryType(geom) = 'ST_LineString'
+
+;
+
+select ST_astext(geom) from tmp_test
+   

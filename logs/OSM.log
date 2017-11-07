@@ -1,0 +1,7330 @@
+21:15:47 WARNING  
+
+is when this event was logged.
+
+21:15:47 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+21:15:47 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM farm_buildings_location AS a, tmp_building_cluster_poionts AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area;
+    
+
+21:15:47 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM farm_buildings_location AS a, tmp_building_cluster_poionts AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area;
+    
+
+21:15:47 INFO     
+
+DROP TABLE IF EXISTS tmp_buffer;
+
+21:16:48 WARNING  
+
+is when this event was logged.
+
+21:16:48 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+21:16:48 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM farm_buildings_location AS a, tmp_building_cluster_poionts AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area;
+    
+
+21:16:48 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM farm_buildings_location AS a, tmp_building_cluster_poionts AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area;
+    
+
+21:16:48 INFO     
+
+DROP TABLE IF EXISTS tmp_buffer;
+
+21:18:09 WARNING  
+
+is when this event was logged.
+
+21:18:09 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+21:18:24 WARNING  
+
+is when this event was logged.
+
+21:18:24 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+21:18:24 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area;
+    
+
+21:18:24 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area;
+    
+
+21:18:24 INFO     
+
+DROP TABLE IF EXISTS tmp_buffer;
+
+21:19:45 WARNING  
+
+is when this event was logged.
+
+21:19:45 INFO     
+
+DROP TABLE IF EXISTS osm_roads_dissolved;
+CREATE TABLE osm_roads_dissolved AS
+SELECT ST_Union(geom) as geom
+FROM osm_roads;
+
+21:21:38 WARNING  
+
+is when this event was logged.
+
+21:21:38 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+21:21:38 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area;
+    
+
+21:22:55 INFO     
+
+DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+
+21:33:58 WARNING  
+
+is when this event was logged.
+
+21:33:58 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+21:35:02 WARNING  
+
+is when this event was logged.
+
+21:35:02 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+21:35:02 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+21:36:16 INFO     
+
+DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+
+21:36:16 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+21:38:19 WARNING  
+
+is when this event was logged.
+
+21:38:19 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+21:38:19 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+21:39:38 INFO     
+
+DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+
+21:39:38 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+21:41:23 WARNING  
+
+is when this event was logged.
+
+21:41:23 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total_lsu / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.id_building = b.index
+    	LEFT JOIN farm_manure AS c ON a.id_building = c.index
+    	LEFT JOIN farm_methane AS d ON a.id_building = d.index
+    	LEFT JOIN farm_crops AS e ON a.id_building = e.index
+    ;
+    
+
+21:41:23 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total_lsu / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.id_building = b.index
+    	LEFT JOIN farm_manure AS c ON a.id_building = c.index
+    	LEFT JOIN farm_methane AS d ON a.id_building = d.index
+    	LEFT JOIN farm_crops AS e ON a.id_building = e.index
+    ;
+    
+
+21:42:30 WARNING  
+
+is when this event was logged.
+
+21:42:30 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.id_building = b.index
+    	LEFT JOIN farm_manure AS c ON a.id_building = c.index
+    	LEFT JOIN farm_methane AS d ON a.id_building = d.index
+    	LEFT JOIN farm_crops AS e ON a.id_building = e.index
+    ;
+    
+
+21:48:35 WARNING  
+
+is when this event was logged.
+
+21:48:35 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index integer;
+
+21:48:35 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+21:48:35 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+21:49:32 WARNING  
+
+is when this event was logged.
+
+21:49:32 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index integer;
+
+21:49:32 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+21:49:32 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+21:50:34 WARNING  
+
+is when this event was logged.
+
+21:50:34 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index integer;
+
+21:50:34 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS rank1 integer;
+
+21:50:34 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS row1 integer;
+
+21:50:34 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+21:50:34 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+21:53:00 WARNING  
+
+is when this event was logged.
+
+21:53:00 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index VARCHAR;
+
+21:53:00 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS rank1 integer;
+
+21:53:00 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS row1 integer;
+
+21:53:00 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+21:53:00 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+21:54:21 WARNING  
+
+is when this event was logged.
+
+21:54:21 INFO     
+
+ALTER TABLE farm_buildings_location DROP COLUMN IF EXISTS index;
+
+21:54:21 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index VARCHAR;
+
+21:54:21 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS rank1 integer;
+
+21:54:21 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS row1 integer;
+
+21:54:21 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+21:57:12 WARNING  
+
+is when this event was logged.
+
+21:57:12 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index
+    	LEFT JOIN farm_manure AS c ON a.index = c.index
+    	LEFT JOIN farm_methane AS d ON a.index = d.index
+    	LEFT JOIN farm_crops AS e ON a.index = e.index
+    ;
+    
+
+21:57:12 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index
+    	LEFT JOIN farm_manure AS c ON a.index = c.index
+    	LEFT JOIN farm_methane AS d ON a.index = d.index
+    	LEFT JOIN farm_crops AS e ON a.index = e.index
+    ;
+    
+
+21:59:18 WARNING  
+
+is when this event was logged.
+
+21:59:18 INFO     
+
+ALTER TABLE farm_buildings_location DROP COLUMN IF EXISTS index;
+
+21:59:18 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index text;
+
+21:59:18 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS rank1 integer;
+
+21:59:18 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS row1 integer;
+
+21:59:18 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+21:59:18 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index
+    	LEFT JOIN farm_manure AS c ON a.index = c.index
+    	LEFT JOIN farm_methane AS d ON a.index = d.index
+    	LEFT JOIN farm_crops AS e ON a.index = e.index
+    ;
+    
+
+21:59:18 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index
+    	LEFT JOIN farm_manure AS c ON a.index = c.index
+    	LEFT JOIN farm_methane AS d ON a.index = d.index
+    	LEFT JOIN farm_crops AS e ON a.index = e.index
+    ;
+    
+
+21:59:54 WARNING  
+
+is when this event was logged.
+
+21:59:54 INFO     
+
+ALTER TABLE farm_buildings_location DROP COLUMN IF EXISTS index;
+
+21:59:54 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index text;
+
+21:59:54 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS rank1 integer;
+
+21:59:54 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS row1 integer;
+
+21:59:54 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+21:59:54 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON a.index = e.index1
+    ;
+    
+
+22:01:35 WARNING  
+
+is when this event was logged.
+
+22:01:35 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, e.total as total_crop, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+22:02:59 WARNING  
+
+is when this event was logged.
+
+22:02:59 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+22:09:09 WARNING  
+
+is when this event was logged.
+
+22:10:28 WARNING  
+
+is when this event was logged.
+
+22:10:28 INFO     
+
+DROP TABLE IF EXISTS roads_main;
+CREATE TABLE roads_main AS
+SELECT *
+FROM osm_roads
+WHERE value = 'primary' OR value = 'secondary' OR value = 'tertiary';
+
+22:10:28 INFO     
+
+ALTER TABLE roads_main ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+22:10:46 WARNING  
+
+is when this event was logged.
+
+22:10:46 INFO     
+
+DROP TABLE IF EXISTS site_targets;
+CREATE TABLE site_targets AS
+
+        (WITH
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM roads_main),
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 500) AS id_target
+                FROM line),
+            geometries AS (
+                SELECT
+                    id_target,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id_target), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id_target,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+22:10:46 INFO     
+
+ALTER TABLE site_targets DROP COLUMN IF EXISTS id_target;
+
+22:10:46 INFO     
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+22:11:06 WARNING  
+
+is when this event was logged.
+
+22:11:14 WARNING  
+
+is when this event was logged.
+
+22:11:14 INFO     
+
+DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+SELECT a.*
+FROM site_targets a, adm_communes b
+WHERE ST_intersects (a.geom, b.geom);
+
+22:11:14 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+22:11:17 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+22:11:17 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+22:11:34 WARNING  
+
+is when this event was logged.
+
+22:11:40 WARNING  
+
+is when this event was logged.
+
+22:11:40 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS land_code VARCHAR;
+
+22:11:40 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS land_label VARCHAR;
+
+22:11:40 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS land_color VARCHAR;
+
+22:11:40 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS land_rank integer;
+
+22:11:40 INFO     
+
+
+        UPDATE site_clean a
+        SET land_code = b.code_12,
+            land_label = b.label,
+            land_color = b.qgis_color
+        FROM lulc_corine_12_adm b
+        WHERE ST_intersects (a.geom, b.geom);
+    
+
+22:11:48 INFO     
+
+
+        UPDATE site_clean
+        SET land_rank =
+        CASE land_code
+            WHEN '111' THEN 13
+            WHEN '112' THEN 12
+            WHEN '121' THEN 11
+            WHEN '122' THEN 10
+            WHEN '131' THEN 9
+            WHEN '211' THEN 8
+            WHEN '231' THEN 7
+            WHEN '242' THEN 6
+            WHEN '243' THEN 5
+            WHEN '311' THEN 4
+            WHEN '312' THEN 3
+            WHEN '313' THEN 2
+            WHEN '511' THEN 1
+        ELSE 0
+        END;
+
+11:17:59 WARNING  
+
+is when this event was logged.
+
+11:17:59 INFO     
+
+ALTER TABLE lulc_corine_12_adm ADD COLUMN IF NOT EXISTS rank integer;
+
+11:17:59 INFO     
+
+ALTER TABLE lulc_corine_12_adm ADD COLUMN IF NOT EXISTS zone text;
+
+11:21:02 WARNING  
+
+is when this event was logged.
+
+11:21:02 INFO     
+
+
+        UPDATE lulc_corine_12_adm
+        CASE code_12
+            WHEN '111' THEN
+                SET rank = 00 -- Continuous urban fabric
+        ELSE 0
+        END;
+
+11:21:02 ERROR    
+
+
+        UPDATE lulc_corine_12_adm
+        CASE code_12
+            WHEN '111' THEN
+                SET rank = 00 -- Continuous urban fabric
+        ELSE 0
+        END;
+
+11:26:52 WARNING  
+
+is when this event was logged.
+
+11:26:52 INFO     
+
+
+        UPDATE lulc_corine_12_adm
+        SET rank =
+        CASE code_12
+            WHEN '111' THEN 00 -- Continuous urban fabric
+            WHEN '112' THEN 00 -- Discontinuous urban fabric
+            WHEN '121' THEN 99 -- Industrial or commercial units
+            WHEN '122' THEN 99 -- Road and rail networks and associated land
+            WHEN '131' THEN 99 -- Mineral extraction sites
+            WHEN '142' THEN 0 -- Sport and leisure facilities
+            WHEN '211' THEN 99 -- Non irrigated arable land
+            WHEN '231' THEN 99 -- Pasture
+            WHEN '242' THEN 99 -- Complex cultivation patterns
+            WHEN '243' THEN 99 -- Land principally occupied by agriculture with significant areas of natural vegetation
+            WHEN '311' THEN 0 -- Broad leaved forest
+            WHEN '312' THEN 0 -- Coniferous forest
+            WHEN '313' THEN 0 -- Mixed forest
+            WHEN '321' THEN 99 -- Natural grasslands
+            WHEN '322' THEN 0 -- Moors and heathland
+            WHEN '511' THEN 0 -- Water courses
+        ELSE 0
+        END;
+
+11:28:40 WARNING  
+
+is when this event was logged.
+
+11:28:40 INFO     
+
+
+        UPDATE lulc_corine_12_adm
+        SET rank =
+        CASE code_12
+            WHEN '111' THEN 0 -- Continuous urban fabric
+            WHEN '112' THEN 0 -- Discontinuous urban fabric
+            WHEN '121' THEN 5 -- Industrial or commercial units
+            WHEN '122' THEN 5 -- Road and rail networks and associated land
+            WHEN '131' THEN 4 -- Mineral extraction sites
+            WHEN '142' THEN 0 -- Sport and leisure facilities
+            WHEN '211' THEN 3 -- Non irrigated arable land
+            WHEN '231' THEN 3 -- Pasture
+            WHEN '242' THEN 2 -- Complex cultivation patterns
+            WHEN '243' THEN 1 -- Land principally occupied by agriculture with significant areas of natural vegetation
+            WHEN '311' THEN 0 -- Broad leaved forest
+            WHEN '312' THEN 0 -- Coniferous forest
+            WHEN '313' THEN 0 -- Mixed forest
+            WHEN '321' THEN 0 -- Natural grasslands
+            WHEN '322' THEN 0 -- Moors and heathland
+            WHEN '511' THEN 0 -- Water courses
+        ELSE 0
+        END;
+
+11:30:35 WARNING  
+
+is when this event was logged.
+
+11:30:44 WARNING  
+
+is when this event was logged.
+
+11:30:44 INFO     
+
+DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones AS
+SELECT *
+FROM lulc_corine_12_adm
+WHERE 1=2;
+
+11:35:11 WARNING  
+
+is when this event was logged.
+
+11:35:11 INFO     
+
+DROP TABLE IF EXISTS tmp_buffer;
+CREATE TABLE tmp_buffer AS
+SELECT *
+FROM lulc_corine_12_adm
+WHERE code_12 = 111 OR code_12 = 112 OR code_12 = 122 OR code_12 = 131;
+
+11:35:11 ERROR    
+
+DROP TABLE IF EXISTS tmp_buffer;
+CREATE TABLE tmp_buffer AS
+SELECT *
+FROM lulc_corine_12_adm
+WHERE code_12 = 111 OR code_12 = 112 OR code_12 = 122 OR code_12 = 131;
+
+11:37:37 WARNING  
+
+is when this event was logged.
+
+11:37:37 INFO     
+
+ALTER TABLE lulc_corine_12_adm ADD COLUMN IF NOT EXISTS rank integer;
+
+11:37:37 INFO     
+
+ALTER TABLE lulc_corine_12_adm ADD COLUMN IF NOT EXISTS zone text;
+
+11:37:37 INFO     
+
+
+        UPDATE lulc_corine_12_adm
+        SET rank =
+        CASE code_12
+            WHEN '111' THEN -1 -- Continuous urban fabric
+            WHEN '112' THEN -1 -- Discontinuous urban fabric
+            WHEN '121' THEN 5 -- Industrial or commercial units
+            WHEN '122' THEN 5 -- Road and rail networks and associated land
+            WHEN '131' THEN 4 -- Mineral extraction sites
+            WHEN '142' THEN 0 -- Sport and leisure facilities
+            WHEN '211' THEN 3 -- Non irrigated arable land
+            WHEN '231' THEN 3 -- Pasture
+            WHEN '242' THEN 2 -- Complex cultivation patterns
+            WHEN '243' THEN 1 -- Land principally occupied by agriculture with significant areas of natural vegetation
+            WHEN '311' THEN 0 -- Broad leaved forest
+            WHEN '312' THEN 0 -- Coniferous forest
+            WHEN '313' THEN 0 -- Mixed forest
+            WHEN '321' THEN 0 -- Natural grasslands
+            WHEN '322' THEN 0 -- Moors and heathland
+            WHEN '511' THEN 0 -- Water courses
+        ELSE 0
+        END;
+
+15:53:11 WARNING  
+
+is when this event was logged.
+
+15:53:11 INFO     
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_lulc SERIAL PRIMARY KEY;
+
+15:53:55 WARNING  
+
+is when this event was logged.
+
+15:53:55 INFO     
+
+
+        DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones
+        WITH
+           urban AS (
+        	SELECT 0 as rank, ST_SimplifyVW(ST_Union(geom),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112'
+        	),
+           industrial AS (
+        	SELECT 2 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+           forest AS (
+        	SELECT 0 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+        	),
+           agriculture AS (
+        	SELECT 1 as rank, (ST_Dump(ST_Union(ST_SnapToGrid(geom,0.01)))).geom as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+        	),
+           buffer AS (
+        	SELECT 2 as rank, ST_Union(ST_Buffer(geom, 500)) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+            diff AS (
+        	SELECT 1 as rank, ST_Union(c.geom, ST_Difference(a.geom, b.geom)) AS geom
+        	FROM buffer a, urban b, industrial c
+        	),
+            inters AS (
+        	SELECT 1 as rank, ST_Intersection(f.geom, d.geom) AS geom
+        	FROM forest d, diff f,
+        	)
+
+           SELECT a.geom as buffer, b.geom as urban, c.geom as industrial, e.geom as agri,
+           d.geom as forest, f.geom as diff, g.geom as intersection
+           FROM buffer a, urban b, industrial c, forest d, agriculture e, diff f, inters g
+    
+
+15:53:55 ERROR    
+
+
+        DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones
+        WITH
+           urban AS (
+        	SELECT 0 as rank, ST_SimplifyVW(ST_Union(geom),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112'
+        	),
+           industrial AS (
+        	SELECT 2 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+           forest AS (
+        	SELECT 0 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+        	),
+           agriculture AS (
+        	SELECT 1 as rank, (ST_Dump(ST_Union(ST_SnapToGrid(geom,0.01)))).geom as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+        	),
+           buffer AS (
+        	SELECT 2 as rank, ST_Union(ST_Buffer(geom, 500)) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+            diff AS (
+        	SELECT 1 as rank, ST_Union(c.geom, ST_Difference(a.geom, b.geom)) AS geom
+        	FROM buffer a, urban b, industrial c
+        	),
+            inters AS (
+        	SELECT 1 as rank, ST_Intersection(f.geom, d.geom) AS geom
+        	FROM forest d, diff f,
+        	)
+
+           SELECT a.geom as buffer, b.geom as urban, c.geom as industrial, e.geom as agri,
+           d.geom as forest, f.geom as diff, g.geom as intersection
+           FROM buffer a, urban b, industrial c, forest d, agriculture e, diff f, inters g
+    
+
+15:53:55 INFO     
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_lulc SERIAL PRIMARY KEY;
+
+15:53:55 ERROR    
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_lulc SERIAL PRIMARY KEY;
+
+15:55:04 WARNING  
+
+is when this event was logged.
+
+15:55:04 INFO     
+
+
+        DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones AS
+        WITH
+           urban AS (
+        	SELECT 0 as rank, ST_SimplifyVW(ST_Union(geom),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112'
+        	),
+           industrial AS (
+        	SELECT 2 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+           forest AS (
+        	SELECT 0 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+        	),
+           agriculture AS (
+        	SELECT 1 as rank, (ST_Dump(ST_Union(ST_SnapToGrid(geom,0.01)))).geom as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+        	),
+           buffer AS (
+        	SELECT 2 as rank, ST_Union(ST_Buffer(geom, 500)) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+            diff AS (
+        	SELECT 1 as rank, ST_Union(c.geom, ST_Difference(a.geom, b.geom)) AS geom
+        	FROM buffer a, urban b, industrial c
+        	),
+            inters AS (
+        	SELECT 1 as rank, ST_Intersection(f.geom, d.geom) AS geom
+        	FROM forest d, diff f,
+        	)
+
+           SELECT a.geom as buffer, b.geom as urban, c.geom as industrial, e.geom as agri,
+           d.geom as forest, f.geom as diff, g.geom as intersection
+           FROM buffer a, urban b, industrial c, forest d, agriculture e, diff f, inters g
+    
+
+15:55:04 ERROR    
+
+
+        DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones AS
+        WITH
+           urban AS (
+        	SELECT 0 as rank, ST_SimplifyVW(ST_Union(geom),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112'
+        	),
+           industrial AS (
+        	SELECT 2 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+           forest AS (
+        	SELECT 0 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+        	),
+           agriculture AS (
+        	SELECT 1 as rank, (ST_Dump(ST_Union(ST_SnapToGrid(geom,0.01)))).geom as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+        	),
+           buffer AS (
+        	SELECT 2 as rank, ST_Union(ST_Buffer(geom, 500)) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+            diff AS (
+        	SELECT 1 as rank, ST_Union(c.geom, ST_Difference(a.geom, b.geom)) AS geom
+        	FROM buffer a, urban b, industrial c
+        	),
+            inters AS (
+        	SELECT 1 as rank, ST_Intersection(f.geom, d.geom) AS geom
+        	FROM forest d, diff f,
+        	)
+
+           SELECT a.geom as buffer, b.geom as urban, c.geom as industrial, e.geom as agri,
+           d.geom as forest, f.geom as diff, g.geom as intersection
+           FROM buffer a, urban b, industrial c, forest d, agriculture e, diff f, inters g
+    
+
+15:55:04 INFO     
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_lulc SERIAL PRIMARY KEY;
+
+15:55:04 ERROR    
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_lulc SERIAL PRIMARY KEY;
+
+15:55:41 WARNING  
+
+is when this event was logged.
+
+15:55:41 INFO     
+
+
+        DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones AS
+        WITH
+           urban AS (
+        	SELECT 0 as rank, ST_SimplifyVW(ST_Union(geom),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112'
+        	),
+           industrial AS (
+        	SELECT 2 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+           forest AS (
+        	SELECT 0 as rank, ST_Union(geom) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+        	),
+           agriculture AS (
+        	SELECT 1 as rank, (ST_Dump(ST_Union(ST_SnapToGrid(geom,0.01)))).geom as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+        	),
+           buffer AS (
+        	SELECT 2 as rank, ST_Union(ST_Buffer(geom, 500)) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+            diff AS (
+        	SELECT 1 as rank, ST_Union(c.geom, ST_Difference(a.geom, b.geom)) AS geom
+        	FROM buffer a, urban b, industrial c
+        	),
+            inters AS (
+        	SELECT 1 as rank, ST_Intersection(f.geom, d.geom) AS geom
+        	FROM forest d, diff f
+        	)
+
+           SELECT a.geom as buffer, b.geom as urban, c.geom as industrial, e.geom as agri,
+           d.geom as forest, f.geom as diff, g.geom as intersection
+           FROM buffer a, urban b, industrial c, forest d, agriculture e, diff f, inters g
+    
+
+15:55:49 INFO     
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_lulc SERIAL PRIMARY KEY;
+
+16:44:56 WARNING  
+
+is when this event was logged.
+
+16:44:56 INFO     
+
+
+        DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones AS
+        WITH
+           urban AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112'
+        	),
+           industrial AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+           forest AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.0001)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+        	),
+           agriculture AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+        	),
+           buffer AS (
+        	SELECT ST_Union(ST_Buffer(geom, 500)) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+            diff AS (
+        	SELECT ST_SimplifyVW(ST_Difference(ST_Difference(ST_Difference(a.geom, b.geom),c.geom),d.geom),1) AS geom
+        	FROM buffer a, urban b, industrial c, forest d
+        	)
+
+        SELECT 3 as rank, 'industrial zone' as zone, geom FROM industrial
+            UNION ALL
+        SELECT 2 as rank, 'buffer zone' as zone, geom FROM diff
+            UNION ALL
+        SELECT 1 as rank, 'agriculture area' as zone, ST_Difference(a.geom, b.geom) AS geom
+        FROM agriculture a, buffer b
+            UNION ALL
+        SELECT 0 as rank, 'urban area' as zone, geom FROM urban
+            UNION ALL
+        SELECT 0 as rank, 'forest area' as zone, geom FROM forest;
+    
+
+16:44:59 INFO     
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_zones SERIAL PRIMARY KEY;
+
+09:35:40 WARNING  
+
+is when this event was logged.
+
+09:35:40 INFO     
+
+ALTER TABLE lulc_corine_12_adm ADD COLUMN IF NOT EXISTS rank integer;
+
+09:35:40 INFO     
+
+ALTER TABLE lulc_corine_12_adm ADD COLUMN IF NOT EXISTS zone text;
+
+09:35:40 INFO     
+
+
+        UPDATE lulc_corine_12_adm
+        SET rank =
+        CASE code_12
+            WHEN '111' THEN -1 -- Continuous urban fabric
+            WHEN '112' THEN -1 -- Discontinuous urban fabric
+            WHEN '121' THEN 5 -- Industrial or commercial units
+            WHEN '122' THEN 5 -- Road and rail networks and associated land
+            WHEN '131' THEN 4 -- Mineral extraction sites
+            WHEN '142' THEN 0 -- Sport and leisure facilities
+            WHEN '211' THEN 3 -- Non irrigated arable land
+            WHEN '231' THEN 3 -- Pasture
+            WHEN '242' THEN 2 -- Complex cultivation patterns
+            WHEN '243' THEN 1 -- Land principally occupied by agriculture with significant areas of natural vegetation
+            WHEN '311' THEN 0 -- Broad leaved forest
+            WHEN '312' THEN 0 -- Coniferous forest
+            WHEN '313' THEN 0 -- Mixed forest
+            WHEN '321' THEN 0 -- Natural grasslands
+            WHEN '322' THEN 0 -- Moors and heathland
+            WHEN '511' THEN 0 -- Water courses
+        ELSE 0
+        END;
+
+09:36:00 WARNING  
+
+is when this event was logged.
+
+09:36:00 INFO     
+
+
+        DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones AS
+        WITH
+           urban AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112'
+        	),
+           industrial AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+           forest AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.0001)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+        	),
+           agriculture AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+        	),
+           buffer AS (
+        	SELECT ST_Union(ST_Buffer(geom, 500)) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+            diff AS (
+        	SELECT ST_SimplifyVW(ST_Difference(ST_Difference(ST_Difference(a.geom, b.geom),c.geom),d.geom),1) AS geom
+        	FROM buffer a, urban b, industrial c, forest d
+        	)
+
+        SELECT 3 as rank, 'industrial zone' as zone, geom FROM industrial
+            UNION ALL
+        SELECT 2 as rank, 'buffer zone' as zone, geom FROM diff
+            UNION ALL
+        SELECT 1 as rank, 'agriculture area' as zone, ST_Difference(a.geom, b.geom) AS geom
+        FROM agriculture a, buffer b
+            UNION ALL
+        SELECT 0 as rank, 'urban area' as zone, geom FROM urban
+            UNION ALL
+        SELECT 0 as rank, 'forest area' as zone, geom FROM forest;
+    
+
+09:36:06 INFO     
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_zones SERIAL PRIMARY KEY;
+
+09:40:33 WARNING  
+
+is when this event was logged.
+
+09:40:33 INFO     
+
+
+        DROP TABLE IF EXISTS lulc_zones;
+CREATE TABLE lulc_zones AS
+        WITH
+           urban AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112'
+        	),
+           industrial AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+           forest AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.0001)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+        	),
+           agriculture AS (
+        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+        	),
+           buffer AS (
+        	SELECT ST_Union(ST_Buffer(geom, 1000)) as geom
+        	FROM lulc_corine_12_adm
+        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+        	),
+            diff AS (
+        	SELECT ST_SimplifyVW(ST_Difference(ST_Difference(ST_Difference(a.geom, b.geom),c.geom),d.geom),1) AS geom
+        	FROM buffer a, urban b, industrial c, forest d
+        	)
+
+        SELECT 3 as rank, 'industrial zone' as zone, geom FROM industrial
+            UNION ALL
+        SELECT 2 as rank, 'buffer zone' as zone, geom FROM diff
+            UNION ALL
+        SELECT 1 as rank, 'agriculture area' as zone, ST_Difference(a.geom, b.geom) AS geom
+        FROM agriculture a, buffer b
+            UNION ALL
+        SELECT 0 as rank, 'urban area' as zone, geom FROM urban
+            UNION ALL
+        SELECT 0 as rank, 'forest area' as zone, geom FROM forest;
+    
+
+09:40:39 INFO     
+
+ALTER TABLE lulc_zones ADD COLUMN IF NOT EXISTS id_zones SERIAL PRIMARY KEY;
+
+10:17:24 WARNING  
+
+is when this event was logged.
+
+10:17:24 INFO     
+
+DROP TABLE IF EXISTS site_targets;
+CREATE TABLE site_targets AS
+
+        (WITH
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM roads_main),
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 500) AS id_target
+                FROM line),
+            geometries AS (
+                SELECT
+                    id_target,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id_target), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id_target,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+10:17:24 INFO     
+
+ALTER TABLE site_targets DROP COLUMN IF EXISTS id_target;
+
+10:17:24 INFO     
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+10:17:25 INFO     
+
+DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+SELECT a.*
+FROM site_targets a, adm_communes b
+WHERE ST_intersects (a.geom, b.geom);
+
+10:17:57 WARNING  
+
+is when this event was logged.
+
+10:17:57 INFO     
+
+DROP TABLE IF EXISTS site_targets;
+CREATE TABLE site_targets AS
+
+        (WITH
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM roads_main),
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 500) AS id_target
+                FROM line),
+            geometries AS (
+                SELECT
+                    id_target,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id_target), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id_target,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+10:17:58 INFO     
+
+ALTER TABLE site_targets DROP COLUMN IF EXISTS id_target;
+
+10:17:58 INFO     
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+10:17:58 INFO     
+
+DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+SELECT a.*
+FROM site_targets a, adm_communes b
+WHERE ST_intersects (a.geom, b.geom);
+
+10:18:00 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean AS b,
+                (SELECT * FROM lulc_zones WHERE rank = 0) AS c
+            WHERE  a.id_target < b.id_target
+            AND ST_DWithin(a.geom, b.geom, 250
+            AND NOT ST_Contains (a.geom, c.geom)
+        );
+    
+
+10:18:00 ERROR    
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean AS b,
+                (SELECT * FROM lulc_zones WHERE rank = 0) AS c
+            WHERE  a.id_target < b.id_target
+            AND ST_DWithin(a.geom, b.geom, 250
+            AND NOT ST_Contains (a.geom, c.geom)
+        );
+    
+
+10:18:00 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+10:18:00 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+10:40:38 WARNING  
+
+is when this event was logged.
+
+10:40:38 INFO     
+
+DROP TABLE IF EXISTS site_targets;
+CREATE TABLE site_targets AS
+
+        (WITH
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM roads_main),
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 500) AS id_target
+                FROM line),
+            geometries AS (
+                SELECT
+                    id_target,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id_target), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id_target,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+10:40:38 INFO     
+
+ALTER TABLE site_targets DROP COLUMN IF EXISTS id_target;
+
+10:40:38 INFO     
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+10:40:39 INFO     
+
+DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+SELECT a.*
+FROM site_targets a, adm_communes b
+WHERE ST_intersects (a.geom, b.geom);
+
+10:40:41 INFO     
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        with
+        zones AS (
+        SELECT * FROM lulc_zones WHERE rank != 0
+        )
+        select a.*
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+10:41:27 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+10:44:52 WARNING  
+
+is when this event was logged.
+
+10:44:52 INFO     
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        with
+        zones AS (
+        SELECT * FROM lulc_zones WHERE rank != 0
+        )
+        select a.*
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+10:45:38 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+10:45:44 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+10:45:44 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+10:48:45 WARNING  
+
+is when this event was logged.
+
+10:48:45 INFO     
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        WITH zones AS ( SELECT * FROM lulc_zones WHERE rank != 0  )
+        SELECT a.*. b.rank, b.zones
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+10:48:45 ERROR    
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        WITH zones AS ( SELECT * FROM lulc_zones WHERE rank != 0  )
+        SELECT a.*. b.rank, b.zones
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+10:48:45 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+10:48:47 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+10:48:47 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+10:51:01 WARNING  
+
+is when this event was logged.
+
+10:51:01 INFO     
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        WITH zones AS ( SELECT * FROM lulc_zones WHERE rank != 0  )
+        SELECT a.*, b.rank, b.zone
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+10:51:47 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+10:51:52 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+10:51:52 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+10:53:20 WARNING  
+
+is when this event was logged.
+
+10:53:20 INFO     
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        WITH zones AS ( SELECT * FROM lulc_zones WHERE rank != 0 ORDER BY rank DESC )
+        SELECT a.*, b.rank, b.zone
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+10:54:04 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+10:54:09 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+10:54:09 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+11:00:10 WARNING  
+
+is when this event was logged.
+
+11:00:40 WARNING  
+
+is when this event was logged.
+
+11:00:59 WARNING  
+
+is when this event was logged.
+
+11:02:11 WARNING  
+
+is when this event was logged.
+
+11:02:11 INFO     
+
+
+        DROP TABLE IF EXISTS nodes_merged;
+CREATE TABLE nodes_merged AS
+        SELECT * FROM site_clean
+            UNION ALL
+        SELECT * FROM <pyModules.variables.SQL_obj instance at 0x7fd0d1dd3b48>
+    
+
+11:02:11 ERROR    
+
+
+        DROP TABLE IF EXISTS nodes_merged;
+CREATE TABLE nodes_merged AS
+        SELECT * FROM site_clean
+            UNION ALL
+        SELECT * FROM <pyModules.variables.SQL_obj instance at 0x7fd0d1dd3b48>
+    
+
+11:02:11 INFO     
+
+ALTER TABLE nodes_merged ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+11:02:11 ERROR    
+
+ALTER TABLE nodes_merged ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+11:02:48 WARNING  
+
+is when this event was logged.
+
+11:02:48 INFO     
+
+
+        DROP TABLE IF EXISTS nodes_merged;
+CREATE TABLE nodes_merged AS
+        SELECT * FROM site_clean
+            UNION ALL
+        SELECT * FROM <pyModules.variables.SQL_obj instance at 0x7fa8c0c14b48>
+    
+
+11:02:48 ERROR    
+
+
+        DROP TABLE IF EXISTS nodes_merged;
+CREATE TABLE nodes_merged AS
+        SELECT * FROM site_clean
+            UNION ALL
+        SELECT * FROM <pyModules.variables.SQL_obj instance at 0x7fa8c0c14b48>
+    
+
+11:02:48 INFO     
+
+ALTER TABLE nodes_merged ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+11:02:48 ERROR    
+
+ALTER TABLE nodes_merged ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+11:03:01 WARNING  
+
+is when this event was logged.
+
+11:03:01 INFO     
+
+
+        DROP TABLE IF EXISTS nodes_merged;
+CREATE TABLE nodes_merged AS
+        SELECT * FROM site_clean
+            UNION ALL
+        SELECT * FROM farm_buildings_location
+    
+
+11:03:01 ERROR    
+
+
+        DROP TABLE IF EXISTS nodes_merged;
+CREATE TABLE nodes_merged AS
+        SELECT * FROM site_clean
+            UNION ALL
+        SELECT * FROM farm_buildings_location
+    
+
+11:03:01 INFO     
+
+ALTER TABLE nodes_merged ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+11:03:01 ERROR    
+
+ALTER TABLE nodes_merged ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+11:09:00 WARNING  
+
+is when this event was logged.
+
+11:09:00 INFO     
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        WITH zones AS ( SELECT * FROM lulc_zones WHERE rank != 0 ORDER BY rank DESC )
+        SELECT a.*, b.rank, b.zone, 0 as id_mun
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+11:09:47 INFO     
+
+
+        UPDATE site_clean
+        SET id_mun = b.id_mun
+        FROM adm_communes b
+        WHERE ST_intersects (site_clean.geom, b.geom);
+    
+
+11:09:47 ERROR    
+
+
+        UPDATE site_clean
+        SET id_mun = b.id_mun
+        FROM adm_communes b
+        WHERE ST_intersects (site_clean.geom, b.geom);
+    
+
+11:09:47 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+11:09:52 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+11:09:52 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+11:10:20 WARNING  
+
+is when this event was logged.
+
+11:10:20 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+11:10:20 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+11:13:09 WARNING  
+
+is when this event was logged.
+
+11:13:09 INFO     
+
+CREATE INDEX ON farm_manure (total);
+
+11:13:09 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_manure
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:13:10 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:13:10 INFO     
+
+UPDATE rank_farm_manure a SET id_order = nextval('serial');
+
+11:13:10 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_manure
+            )
+
+            UPDATE rank_farm_manure AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:13:10 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+
+11:13:10 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+
+11:13:10 INFO     
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT rank_farm_manure_pkey;
+
+11:13:10 ERROR    
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT rank_farm_manure_pkey;
+
+11:13:10 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:13:10 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:13:10 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:13:10 INFO     
+
+ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+
+11:13:10 INFO     
+
+CREATE INDEX ON farm_crops (total);
+
+11:13:10 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_crops
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:13:10 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:13:10 INFO     
+
+UPDATE rank_farm_crops a SET id_order = nextval('serial');
+
+11:13:10 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_crops
+            )
+
+            UPDATE rank_farm_crops AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:13:10 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+
+11:13:10 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+
+11:13:10 INFO     
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT rank_farm_crops_pkey;
+
+11:13:10 ERROR    
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT rank_farm_crops_pkey;
+
+11:13:10 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:13:10 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:13:10 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:13:10 INFO     
+
+ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+
+11:13:11 INFO     
+
+CREATE INDEX ON farm_lsu (total);
+
+11:13:11 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_lsu
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:13:11 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:13:11 INFO     
+
+UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+
+11:13:11 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_lsu
+            )
+
+            UPDATE rank_farm_lsu AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:13:11 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+
+11:13:11 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+
+11:13:11 INFO     
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT rank_farm_lsu_pkey;
+
+11:13:11 ERROR    
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT rank_farm_lsu_pkey;
+
+11:13:11 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:13:11 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:13:11 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:13:11 INFO     
+
+ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+
+11:13:11 INFO     
+
+CREATE INDEX ON farm_methane (total);
+
+11:13:11 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_methane
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:13:11 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:13:11 INFO     
+
+UPDATE rank_farm_methane a SET id_order = nextval('serial');
+
+11:13:11 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_methane
+            )
+
+            UPDATE rank_farm_methane AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:13:12 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+
+11:13:12 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+
+11:13:12 INFO     
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT rank_farm_methane_pkey;
+
+11:13:12 ERROR    
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT rank_farm_methane_pkey;
+
+11:13:12 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:13:12 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:13:12 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:13:12 INFO     
+
+ALTER TABLE rank_farm_methane RENAME TO farm_methane;
+
+11:13:12 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+11:15:07 WARNING  
+
+is when this event was logged.
+
+11:16:12 WARNING  
+
+is when this event was logged.
+
+11:16:24 INFO     
+
+VACUUM
+
+11:16:26 INFO     
+
+ALTER TABLE farm_manure DROP CONSTRAINT farm_manure_pkey;
+
+11:16:26 ERROR    
+
+ALTER TABLE farm_manure DROP CONSTRAINT farm_manure_pkey;
+
+11:16:26 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:26 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:30 INFO     
+
+VACUUM
+
+11:16:30 INFO     
+
+ALTER TABLE farm_crops DROP CONSTRAINT farm_crops_pkey;
+
+11:16:30 ERROR    
+
+ALTER TABLE farm_crops DROP CONSTRAINT farm_crops_pkey;
+
+11:16:30 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:30 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:40 INFO     
+
+VACUUM
+
+11:16:40 INFO     
+
+ALTER TABLE farm_lsu DROP CONSTRAINT farm_lsu_pkey;
+
+11:16:40 ERROR    
+
+ALTER TABLE farm_lsu DROP CONSTRAINT farm_lsu_pkey;
+
+11:16:40 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:40 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:51 INFO     
+
+VACUUM
+
+11:16:51 INFO     
+
+ALTER TABLE farm_methane DROP CONSTRAINT farm_methane_pkey;
+
+11:16:51 ERROR    
+
+ALTER TABLE farm_methane DROP CONSTRAINT farm_methane_pkey;
+
+11:16:51 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:51 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:51 INFO     
+
+CREATE INDEX ON farm_manure (total);
+
+11:16:51 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_manure
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:16:51 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:16:51 INFO     
+
+UPDATE rank_farm_manure a SET id_order = nextval('serial');
+
+11:16:51 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_manure
+            )
+
+            UPDATE rank_farm_manure AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:16:51 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+
+11:16:51 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+
+11:16:51 INFO     
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT rank_farm_manure_pkey;
+
+11:16:51 ERROR    
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT rank_farm_manure_pkey;
+
+11:16:51 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:51 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:51 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:16:51 INFO     
+
+ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+
+11:16:51 INFO     
+
+CREATE INDEX ON farm_crops (total);
+
+11:16:51 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_crops
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:16:52 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:16:52 INFO     
+
+UPDATE rank_farm_crops a SET id_order = nextval('serial');
+
+11:16:52 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_crops
+            )
+
+            UPDATE rank_farm_crops AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:16:52 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+
+11:16:52 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+
+11:16:52 INFO     
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT rank_farm_crops_pkey;
+
+11:16:52 ERROR    
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT rank_farm_crops_pkey;
+
+11:16:52 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:52 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:52 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:16:52 INFO     
+
+ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+
+11:16:52 INFO     
+
+CREATE INDEX ON farm_lsu (total);
+
+11:16:52 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_lsu
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:16:52 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:16:52 INFO     
+
+UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+
+11:16:52 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_lsu
+            )
+
+            UPDATE rank_farm_lsu AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:16:52 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+
+11:16:52 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+
+11:16:52 INFO     
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT rank_farm_lsu_pkey;
+
+11:16:52 ERROR    
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT rank_farm_lsu_pkey;
+
+11:16:52 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:52 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:52 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:16:52 INFO     
+
+ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+
+11:16:53 INFO     
+
+CREATE INDEX ON farm_methane (total);
+
+11:16:53 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_methane
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:16:53 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:16:53 INFO     
+
+UPDATE rank_farm_methane a SET id_order = nextval('serial');
+
+11:16:53 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_methane
+            )
+
+            UPDATE rank_farm_methane AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:16:53 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+
+11:16:53 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+
+11:16:53 INFO     
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT rank_farm_methane_pkey;
+
+11:16:53 ERROR    
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT rank_farm_methane_pkey;
+
+11:16:53 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:53 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:16:53 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:16:53 INFO     
+
+ALTER TABLE rank_farm_methane RENAME TO farm_methane;
+
+11:16:53 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+11:19:06 WARNING  
+
+is when this event was logged.
+
+11:19:13 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:19:16 INFO     
+
+VACUUM
+
+11:19:16 INFO     
+
+ALTER TABLE farm_manure DROP CONSTRAINT farm_manure_pkey;
+
+11:19:16 ERROR    
+
+ALTER TABLE farm_manure DROP CONSTRAINT farm_manure_pkey;
+
+11:19:16 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:19:16 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:19:18 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:19:20 INFO     
+
+VACUUM
+
+11:19:20 INFO     
+
+ALTER TABLE farm_crops DROP CONSTRAINT farm_crops_pkey;
+
+11:19:20 ERROR    
+
+ALTER TABLE farm_crops DROP CONSTRAINT farm_crops_pkey;
+
+11:19:20 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:19:20 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:19:29 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:19:31 INFO     
+
+VACUUM
+
+11:19:31 INFO     
+
+ALTER TABLE farm_lsu DROP CONSTRAINT farm_lsu_pkey;
+
+11:19:31 ERROR    
+
+ALTER TABLE farm_lsu DROP CONSTRAINT farm_lsu_pkey;
+
+11:19:31 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:19:31 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:19:39 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:19:41 INFO     
+
+VACUUM
+
+11:19:41 INFO     
+
+ALTER TABLE farm_methane DROP CONSTRAINT farm_methane_pkey;
+
+11:19:41 ERROR    
+
+ALTER TABLE farm_methane DROP CONSTRAINT farm_methane_pkey;
+
+11:19:41 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:19:41 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:20:11 WARNING  
+
+is when this event was logged.
+
+11:20:18 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:20:20 INFO     
+
+VACUUM
+
+11:20:36 WARNING  
+
+is when this event was logged.
+
+11:20:44 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:20:46 INFO     
+
+VACUUM
+
+11:20:46 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:20:46 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:20:48 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:20:50 INFO     
+
+VACUUM
+
+11:20:50 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:20:50 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:20:59 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:21:01 INFO     
+
+VACUUM
+
+11:21:01 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:21:01 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:21:10 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:21:12 INFO     
+
+VACUUM
+
+11:21:12 INFO     
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:21:12 ERROR    
+
+ALTER TABLE %s ADD PRIMARY KEY (%s);
+
+11:21:24 WARNING  
+
+is when this event was logged.
+
+11:21:32 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:21:34 INFO     
+
+VACUUM
+
+11:21:34 INFO     
+
+ALTER TABLE farm_manure ADD PRIMARY KEY farm_manure;
+
+11:21:34 ERROR    
+
+ALTER TABLE farm_manure ADD PRIMARY KEY farm_manure;
+
+11:21:36 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:21:38 INFO     
+
+VACUUM
+
+11:21:38 INFO     
+
+ALTER TABLE farm_crops ADD PRIMARY KEY farm_crops;
+
+11:21:38 ERROR    
+
+ALTER TABLE farm_crops ADD PRIMARY KEY farm_crops;
+
+11:21:46 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:21:49 INFO     
+
+VACUUM
+
+11:21:49 INFO     
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY farm_lsu;
+
+11:21:49 ERROR    
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY farm_lsu;
+
+11:21:57 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:22:00 INFO     
+
+VACUUM
+
+11:22:00 INFO     
+
+ALTER TABLE farm_methane ADD PRIMARY KEY farm_methane;
+
+11:22:00 ERROR    
+
+ALTER TABLE farm_methane ADD PRIMARY KEY farm_methane;
+
+11:22:03 WARNING  
+
+is when this event was logged.
+
+11:22:11 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:22:13 INFO     
+
+VACUUM
+
+11:22:13 INFO     
+
+ALTER TABLE farm_manure DROP CONSTRAINT farm_manure_pkey;
+
+11:22:13 ERROR    
+
+ALTER TABLE farm_manure DROP CONSTRAINT farm_manure_pkey;
+
+11:22:13 INFO     
+
+ALTER TABLE farm_manure ADD PRIMARY KEY farm_id;
+
+11:22:13 ERROR    
+
+ALTER TABLE farm_manure ADD PRIMARY KEY farm_id;
+
+11:22:15 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:22:17 INFO     
+
+VACUUM
+
+11:22:17 INFO     
+
+ALTER TABLE farm_crops DROP CONSTRAINT farm_crops_pkey;
+
+11:22:17 ERROR    
+
+ALTER TABLE farm_crops DROP CONSTRAINT farm_crops_pkey;
+
+11:22:17 INFO     
+
+ALTER TABLE farm_crops ADD PRIMARY KEY farm_id;
+
+11:22:17 ERROR    
+
+ALTER TABLE farm_crops ADD PRIMARY KEY farm_id;
+
+11:22:25 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:22:27 INFO     
+
+VACUUM
+
+11:22:27 INFO     
+
+ALTER TABLE farm_lsu DROP CONSTRAINT farm_lsu_pkey;
+
+11:22:27 ERROR    
+
+ALTER TABLE farm_lsu DROP CONSTRAINT farm_lsu_pkey;
+
+11:22:27 INFO     
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY farm_id;
+
+11:22:27 ERROR    
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY farm_id;
+
+11:22:35 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:22:38 INFO     
+
+VACUUM
+
+11:22:38 INFO     
+
+ALTER TABLE farm_methane DROP CONSTRAINT farm_methane_pkey;
+
+11:22:38 ERROR    
+
+ALTER TABLE farm_methane DROP CONSTRAINT farm_methane_pkey;
+
+11:22:38 INFO     
+
+ALTER TABLE farm_methane ADD PRIMARY KEY farm_id;
+
+11:22:38 ERROR    
+
+ALTER TABLE farm_methane ADD PRIMARY KEY farm_id;
+
+11:22:56 WARNING  
+
+is when this event was logged.
+
+11:23:03 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:23:05 INFO     
+
+VACUUM
+
+11:23:05 INFO     
+
+ALTER TABLE farm_manure ADD PRIMARY KEY farm_id;
+
+11:23:05 ERROR    
+
+ALTER TABLE farm_manure ADD PRIMARY KEY farm_id;
+
+11:23:08 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:23:10 INFO     
+
+VACUUM
+
+11:23:10 INFO     
+
+ALTER TABLE farm_crops ADD PRIMARY KEY farm_id;
+
+11:23:10 ERROR    
+
+ALTER TABLE farm_crops ADD PRIMARY KEY farm_id;
+
+11:23:18 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:23:20 INFO     
+
+VACUUM
+
+11:23:20 INFO     
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY farm_id;
+
+11:23:20 ERROR    
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY farm_id;
+
+11:23:28 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:23:30 INFO     
+
+VACUUM
+
+11:23:30 INFO     
+
+ALTER TABLE farm_methane ADD PRIMARY KEY farm_id;
+
+11:23:30 ERROR    
+
+ALTER TABLE farm_methane ADD PRIMARY KEY farm_id;
+
+11:25:31 WARNING  
+
+is when this event was logged.
+
+11:25:39 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:25:41 INFO     
+
+VACUUM
+
+11:25:41 INFO     
+
+ALTER TABLE farm_manure ADD PRIMARY KEY (farm_id);
+
+11:25:43 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:25:46 INFO     
+
+VACUUM
+
+11:25:46 INFO     
+
+ALTER TABLE farm_crops ADD PRIMARY KEY (farm_id);
+
+11:25:54 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:25:57 INFO     
+
+VACUUM
+
+11:25:57 INFO     
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY (farm_id);
+
+11:26:05 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:26:07 INFO     
+
+VACUUM
+
+11:26:07 INFO     
+
+ALTER TABLE farm_methane ADD PRIMARY KEY (farm_id);
+
+11:26:17 WARNING  
+
+is when this event was logged.
+
+11:26:17 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+11:26:17 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+11:27:11 WARNING  
+
+is when this event was logged.
+
+11:27:11 INFO     
+
+CREATE INDEX ON farm_manure (total);
+
+11:27:11 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_manure
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:27:11 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:27:11 INFO     
+
+UPDATE rank_farm_manure a SET id_order = nextval('serial');
+
+11:27:11 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_manure
+            )
+
+            UPDATE rank_farm_manure AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT rank_farm_manure_pkey;
+
+11:27:12 ERROR    
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT rank_farm_manure_pkey;
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_manure ADD PRIMARY KEY (farm_id);
+
+11:27:12 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+
+11:27:12 INFO     
+
+CREATE INDEX ON farm_crops (total);
+
+11:27:12 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_crops
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:27:12 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:27:12 INFO     
+
+UPDATE rank_farm_crops a SET id_order = nextval('serial');
+
+11:27:12 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_crops
+            )
+
+            UPDATE rank_farm_crops AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT rank_farm_crops_pkey;
+
+11:27:12 ERROR    
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT rank_farm_crops_pkey;
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_crops ADD PRIMARY KEY (farm_id);
+
+11:27:12 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:27:12 INFO     
+
+ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+
+11:27:12 INFO     
+
+CREATE INDEX ON farm_lsu (total);
+
+11:27:12 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_lsu
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:27:12 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:27:12 INFO     
+
+UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+
+11:27:13 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_lsu
+            )
+
+            UPDATE rank_farm_lsu AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT rank_farm_lsu_pkey;
+
+11:27:13 ERROR    
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT rank_farm_lsu_pkey;
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_lsu ADD PRIMARY KEY (farm_id);
+
+11:27:13 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+
+11:27:13 INFO     
+
+CREATE INDEX ON farm_methane (total);
+
+11:27:13 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_methane
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:27:13 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:27:13 INFO     
+
+UPDATE rank_farm_methane a SET id_order = nextval('serial');
+
+11:27:13 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_methane
+            )
+
+            UPDATE rank_farm_methane AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT rank_farm_methane_pkey;
+
+11:27:13 ERROR    
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT rank_farm_methane_pkey;
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_methane ADD PRIMARY KEY (farm_id);
+
+11:27:13 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:27:13 INFO     
+
+ALTER TABLE rank_farm_methane RENAME TO farm_methane;
+
+11:28:18 WARNING  
+
+is when this event was logged.
+
+11:28:18 INFO     
+
+CREATE INDEX ON farm_manure (total);
+
+11:28:18 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_manure
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:28:18 ERROR    
+
+
+            DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_manure
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:28:18 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:28:18 INFO     
+
+UPDATE rank_farm_manure a SET id_order = nextval('serial');
+
+11:28:18 ERROR    
+
+UPDATE rank_farm_manure a SET id_order = nextval('serial');
+
+11:28:18 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_manure
+            )
+
+            UPDATE rank_farm_manure AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:28:18 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_manure
+            )
+
+            UPDATE rank_farm_manure AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT (rank_farm_manure_pkey);
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT (rank_farm_manure_pkey);
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_manure ADD PRIMARY KEY (farm_id);
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_manure ADD PRIMARY KEY (farm_id);
+
+11:28:18 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+
+11:28:18 INFO     
+
+CREATE INDEX ON farm_crops (total);
+
+11:28:18 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_crops
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:28:18 ERROR    
+
+
+            DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_crops
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:28:18 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:28:18 INFO     
+
+UPDATE rank_farm_crops a SET id_order = nextval('serial');
+
+11:28:18 ERROR    
+
+UPDATE rank_farm_crops a SET id_order = nextval('serial');
+
+11:28:18 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_crops
+            )
+
+            UPDATE rank_farm_crops AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:28:18 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_crops
+            )
+
+            UPDATE rank_farm_crops AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT (rank_farm_crops_pkey);
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT (rank_farm_crops_pkey);
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_crops ADD PRIMARY KEY (farm_id);
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_crops ADD PRIMARY KEY (farm_id);
+
+11:28:18 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+
+11:28:18 INFO     
+
+CREATE INDEX ON farm_lsu (total);
+
+11:28:18 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_lsu
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:28:18 ERROR    
+
+
+            DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_lsu
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:28:18 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:28:18 INFO     
+
+UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+
+11:28:18 ERROR    
+
+UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+
+11:28:18 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_lsu
+            )
+
+            UPDATE rank_farm_lsu AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:28:18 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_lsu
+            )
+
+            UPDATE rank_farm_lsu AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT (rank_farm_lsu_pkey);
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT (rank_farm_lsu_pkey);
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_lsu ADD PRIMARY KEY (farm_id);
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_lsu ADD PRIMARY KEY (farm_id);
+
+11:28:18 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+
+11:28:18 INFO     
+
+CREATE INDEX ON farm_methane (total);
+
+11:28:18 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_methane
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:28:18 ERROR    
+
+
+            DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_methane
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:28:18 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:28:18 INFO     
+
+UPDATE rank_farm_methane a SET id_order = nextval('serial');
+
+11:28:18 ERROR    
+
+UPDATE rank_farm_methane a SET id_order = nextval('serial');
+
+11:28:18 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_methane
+            )
+
+            UPDATE rank_farm_methane AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:28:18 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_methane
+            )
+
+            UPDATE rank_farm_methane AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT (rank_farm_methane_pkey);
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT (rank_farm_methane_pkey);
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_methane ADD PRIMARY KEY (farm_id);
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_methane ADD PRIMARY KEY (farm_id);
+
+11:28:18 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:28:18 INFO     
+
+ALTER TABLE rank_farm_methane RENAME TO farm_methane;
+
+11:28:18 ERROR    
+
+ALTER TABLE rank_farm_methane RENAME TO farm_methane;
+
+11:28:46 WARNING  
+
+is when this event was logged.
+
+11:28:53 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:28:55 INFO     
+
+VACUUM
+
+11:28:55 INFO     
+
+ALTER TABLE farm_manure ADD PRIMARY KEY (farm_id);
+
+11:28:58 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:29:00 INFO     
+
+VACUUM
+
+11:29:00 INFO     
+
+ALTER TABLE farm_crops ADD PRIMARY KEY (farm_id);
+
+11:29:07 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:29:09 INFO     
+
+VACUUM
+
+11:29:09 INFO     
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY (farm_id);
+
+11:29:17 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:29:19 INFO     
+
+VACUUM
+
+11:29:19 INFO     
+
+ALTER TABLE farm_methane ADD PRIMARY KEY (farm_id);
+
+11:29:19 INFO     
+
+CREATE INDEX ON farm_manure (total);
+
+11:29:19 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_manure
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:29:19 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:29:19 INFO     
+
+UPDATE rank_farm_manure a SET id_order = nextval('serial');
+
+11:29:19 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_manure
+            )
+
+            UPDATE rank_farm_manure AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:29:19 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+
+11:29:19 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+
+11:29:19 INFO     
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT (rank_farm_manure_pkey);
+
+11:29:19 ERROR    
+
+ALTER TABLE rank_farm_manure DROP CONSTRAINT (rank_farm_manure_pkey);
+
+11:29:19 INFO     
+
+ALTER TABLE rank_farm_manure ADD PRIMARY KEY (farm_id);
+
+11:29:19 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:29:19 INFO     
+
+ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+
+11:29:19 INFO     
+
+CREATE INDEX ON farm_crops (total);
+
+11:29:19 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_crops
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:29:20 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:29:20 INFO     
+
+UPDATE rank_farm_crops a SET id_order = nextval('serial');
+
+11:29:20 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_crops
+            )
+
+            UPDATE rank_farm_crops AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT (rank_farm_crops_pkey);
+
+11:29:20 ERROR    
+
+ALTER TABLE rank_farm_crops DROP CONSTRAINT (rank_farm_crops_pkey);
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_crops ADD PRIMARY KEY (farm_id);
+
+11:29:20 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+
+11:29:20 INFO     
+
+CREATE INDEX ON farm_lsu (total);
+
+11:29:20 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_lsu
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:29:20 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:29:20 INFO     
+
+UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+
+11:29:20 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_lsu
+            )
+
+            UPDATE rank_farm_lsu AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT (rank_farm_lsu_pkey);
+
+11:29:20 ERROR    
+
+ALTER TABLE rank_farm_lsu DROP CONSTRAINT (rank_farm_lsu_pkey);
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_lsu ADD PRIMARY KEY (farm_id);
+
+11:29:20 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:29:20 INFO     
+
+ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+
+11:29:20 INFO     
+
+CREATE INDEX ON farm_methane (total);
+
+11:29:21 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_methane
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:29:21 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:29:21 INFO     
+
+UPDATE rank_farm_methane a SET id_order = nextval('serial');
+
+11:29:21 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_methane
+            )
+
+            UPDATE rank_farm_methane AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:29:21 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+
+11:29:21 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+
+11:29:21 INFO     
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT (rank_farm_methane_pkey);
+
+11:29:21 ERROR    
+
+ALTER TABLE rank_farm_methane DROP CONSTRAINT (rank_farm_methane_pkey);
+
+11:29:21 INFO     
+
+ALTER TABLE rank_farm_methane ADD PRIMARY KEY (farm_id);
+
+11:29:21 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:29:21 INFO     
+
+ALTER TABLE rank_farm_methane RENAME TO farm_methane;
+
+11:30:41 WARNING  
+
+is when this event was logged.
+
+11:30:48 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:30:51 INFO     
+
+VACUUM
+
+11:30:51 INFO     
+
+ALTER TABLE farm_manure ADD PRIMARY KEY (farm_id);
+
+11:30:54 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:30:56 INFO     
+
+VACUUM
+
+11:30:56 INFO     
+
+ALTER TABLE farm_crops ADD PRIMARY KEY (farm_id);
+
+11:31:04 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:31:06 INFO     
+
+VACUUM
+
+11:31:06 INFO     
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY (farm_id);
+
+11:31:14 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:31:16 INFO     
+
+VACUUM
+
+11:31:16 INFO     
+
+ALTER TABLE farm_methane ADD PRIMARY KEY (farm_id);
+
+11:31:16 INFO     
+
+CREATE INDEX ON farm_manure (total);
+
+11:31:17 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_manure
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:31:17 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:31:17 INFO     
+
+UPDATE rank_farm_manure a SET id_order = nextval('serial');
+
+11:31:17 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_manure
+            )
+
+            UPDATE rank_farm_manure AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:31:17 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+
+11:31:17 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+
+11:31:17 INFO     
+
+ALTER TABLE rank_farm_manure ADD PRIMARY KEY (farm_id);
+
+11:31:17 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+11:31:17 INFO     
+
+ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+
+11:31:17 INFO     
+
+CREATE INDEX ON farm_crops (total);
+
+11:31:17 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_crops
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:31:17 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:31:17 INFO     
+
+UPDATE rank_farm_crops a SET id_order = nextval('serial');
+
+11:31:17 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_crops
+            )
+
+            UPDATE rank_farm_crops AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:31:18 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+
+11:31:18 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+
+11:31:18 INFO     
+
+ALTER TABLE rank_farm_crops ADD PRIMARY KEY (farm_id);
+
+11:31:18 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+11:31:18 INFO     
+
+ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+
+11:31:18 INFO     
+
+CREATE INDEX ON farm_lsu (total);
+
+11:31:18 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_lsu
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:31:18 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:31:18 INFO     
+
+UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+
+11:31:18 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_lsu
+            )
+
+            UPDATE rank_farm_lsu AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:31:18 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+
+11:31:18 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+
+11:31:18 INFO     
+
+ALTER TABLE rank_farm_lsu ADD PRIMARY KEY (farm_id);
+
+11:31:18 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+11:31:18 INFO     
+
+ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+
+11:31:18 INFO     
+
+CREATE INDEX ON farm_methane (total);
+
+11:31:18 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_methane
+            ORDER BY mun_id ASC, total DESC;
+        
+
+11:31:18 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+11:31:18 INFO     
+
+UPDATE rank_farm_methane a SET id_order = nextval('serial');
+
+11:31:19 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_methane
+            )
+
+            UPDATE rank_farm_methane AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+11:31:19 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+
+11:31:19 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+
+11:31:19 INFO     
+
+ALTER TABLE rank_farm_methane ADD PRIMARY KEY (farm_id);
+
+11:31:19 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+11:31:19 INFO     
+
+ALTER TABLE rank_farm_methane RENAME TO farm_methane;
+
+11:31:28 WARNING  
+
+is when this event was logged.
+
+11:31:28 INFO     
+
+ALTER TABLE farm_buildings_location DROP COLUMN IF EXISTS index;
+
+11:31:28 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index text;
+
+11:31:29 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS rank1 integer;
+
+11:31:29 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS row1 integer;
+
+11:31:29 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+11:31:29 ERROR    
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+11:33:48 WARNING  
+
+is when this event was logged.
+
+11:33:48 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+11:33:48 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:33:48 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:33:48 INFO     
+
+DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+
+11:33:48 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:33:48 INFO     
+
+ALTER TABLE farm_buildings_location DROP COLUMN IF EXISTS index;
+
+11:33:48 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index text;
+
+11:33:48 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS rank1 integer;
+
+11:33:48 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS row1 integer;
+
+11:33:48 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+11:34:01 WARNING  
+
+is when this event was logged.
+
+11:34:01 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+11:36:44 WARNING  
+
+is when this event was logged.
+
+11:36:44 INFO     
+
+ALTER TABLE farm_buildings_location DROP COLUMN IF EXISTS index;
+
+11:36:44 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index text;
+
+11:36:44 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS rank1 integer;
+
+11:36:44 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS row1 integer;
+
+11:36:44 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+11:38:01 WARNING  
+
+is when this event was logged.
+
+11:38:01 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+11:38:01 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:38:01 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:38:01 INFO     
+
+DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+
+11:38:01 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:38:01 ERROR    
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:38:17 WARNING  
+
+is when this event was logged.
+
+11:38:17 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+11:38:17 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:38:17 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:38:17 INFO     
+
+DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+
+11:38:17 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:38:17 ERROR    
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:39:12 WARNING  
+
+is when this event was logged.
+
+11:39:12 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+11:39:12 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:39:12 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:39:12 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:39:12 ERROR    
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:39:13 INFO     
+
+DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+
+11:39:35 WARNING  
+
+is when this event was logged.
+
+11:39:35 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+11:39:35 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:39:35 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:39:35 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:39:35 ERROR    
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+11:39:55 WARNING  
+
+is when this event was logged.
+
+11:39:55 INFO     
+
+DROP TABLE IF EXISTS osm_roads_dissolved;
+CREATE TABLE osm_roads_dissolved AS
+SELECT ST_Union(geom) as geom
+FROM osm_roads;
+
+11:45:28 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+11:45:28 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+11:50:28 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+12:31:48 WARNING  
+
+is when this event was logged.
+
+12:31:56 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+12:31:58 INFO     
+
+VACUUM
+
+12:31:59 INFO     
+
+ALTER TABLE farm_manure ADD PRIMARY KEY (farm_id);
+
+12:32:01 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+12:32:03 INFO     
+
+VACUUM
+
+12:32:03 INFO     
+
+ALTER TABLE farm_crops ADD PRIMARY KEY (farm_id);
+
+12:32:11 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+12:32:13 INFO     
+
+VACUUM
+
+12:32:13 INFO     
+
+ALTER TABLE farm_lsu ADD PRIMARY KEY (farm_id);
+
+12:32:20 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+12:32:22 INFO     
+
+VACUUM
+
+12:32:22 INFO     
+
+ALTER TABLE farm_methane ADD PRIMARY KEY (farm_id);
+
+12:32:22 INFO     
+
+CREATE INDEX ON farm_manure (total);
+
+12:32:22 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_manure
+            ORDER BY mun_id ASC, total DESC;
+        
+
+12:32:22 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+12:32:22 INFO     
+
+UPDATE rank_farm_manure a SET id_order = nextval('serial');
+
+12:32:23 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_manure
+            )
+
+            UPDATE rank_farm_manure AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+12:32:23 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+
+12:32:23 INFO     
+
+ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+
+12:32:23 INFO     
+
+ALTER TABLE rank_farm_manure ADD PRIMARY KEY (farm_id);
+
+12:32:23 INFO     
+
+DROP TABLE IF EXISTS farm_manure;
+
+12:32:23 INFO     
+
+ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+
+12:32:23 INFO     
+
+CREATE INDEX ON farm_crops (total);
+
+12:32:23 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_crops
+            ORDER BY mun_id ASC, total DESC;
+        
+
+12:32:23 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+12:32:23 INFO     
+
+UPDATE rank_farm_crops a SET id_order = nextval('serial');
+
+12:32:23 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_crops
+            )
+
+            UPDATE rank_farm_crops AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+12:32:23 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+
+12:32:23 INFO     
+
+ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+
+12:32:23 INFO     
+
+ALTER TABLE rank_farm_crops ADD PRIMARY KEY (farm_id);
+
+12:32:23 INFO     
+
+DROP TABLE IF EXISTS farm_crops;
+
+12:32:23 INFO     
+
+ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+
+12:32:23 INFO     
+
+CREATE INDEX ON farm_lsu (total);
+
+12:32:23 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_lsu
+            ORDER BY mun_id ASC, total DESC;
+        
+
+12:32:24 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+12:32:24 INFO     
+
+UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+
+12:32:24 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_lsu
+            )
+
+            UPDATE rank_farm_lsu AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+12:32:24 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+
+12:32:24 INFO     
+
+ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+
+12:32:24 INFO     
+
+ALTER TABLE rank_farm_lsu ADD PRIMARY KEY (farm_id);
+
+12:32:24 INFO     
+
+DROP TABLE IF EXISTS farm_lsu;
+
+12:32:24 INFO     
+
+ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+
+12:32:24 INFO     
+
+CREATE INDEX ON farm_methane (total);
+
+12:32:24 INFO     
+
+
+            DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+            SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+            FROM farm_methane
+            ORDER BY mun_id ASC, total DESC;
+        
+
+12:32:24 INFO     
+
+ALTER SEQUENCE serial RESTART WITH 1;
+
+12:32:24 INFO     
+
+UPDATE rank_farm_methane a SET id_order = nextval('serial');
+
+12:32:24 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_order, mun_id,
+                    row_number() OVER (ORDER BY mun_id) AS row1,
+                    rank() OVER (ORDER BY mun_id) AS rank1
+                FROM rank_farm_methane
+            )
+
+            UPDATE rank_farm_methane AS b
+               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_order = b.id_order;
+        
+
+12:32:24 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+
+12:32:24 INFO     
+
+ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+
+12:32:24 INFO     
+
+ALTER TABLE rank_farm_methane ADD PRIMARY KEY (farm_id);
+
+12:32:24 INFO     
+
+DROP TABLE IF EXISTS farm_methane;
+
+12:32:24 INFO     
+
+ALTER TABLE rank_farm_methane RENAME TO farm_methane;
+
+12:32:25 INFO     
+
+DROP TABLE IF EXISTS roads_main;
+CREATE TABLE roads_main AS
+SELECT *
+FROM osm_roads
+WHERE value = 'primary' OR value = 'secondary' OR value = 'tertiary';
+
+12:32:25 INFO     
+
+ALTER TABLE roads_main ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+12:32:25 INFO     
+
+DROP TABLE IF EXISTS site_targets;
+CREATE TABLE site_targets AS
+
+        (WITH
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM roads_main),
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 500) AS id_target
+                FROM line),
+            geometries AS (
+                SELECT
+                    id_target,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id_target), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id_target,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+12:32:26 INFO     
+
+ALTER TABLE site_targets DROP COLUMN IF EXISTS id_target;
+
+12:32:26 INFO     
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+12:32:26 INFO     
+
+DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+SELECT a.*
+FROM site_targets a, adm_communes b
+WHERE ST_intersects (a.geom, b.geom);
+
+12:32:28 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+12:32:36 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+12:32:36 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+12:32:36 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS land_code VARCHAR;
+
+12:32:36 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS land_label VARCHAR;
+
+12:32:36 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS land_color VARCHAR;
+
+12:32:36 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS land_rank integer;
+
+12:32:36 INFO     
+
+
+        UPDATE site_clean a
+        SET land_code = b.code_12,
+            land_label = b.label,
+            land_color = b.qgis_color
+        FROM lulc_corine_12_adm b
+        WHERE ST_intersects (a.geom, b.geom);
+    
+
+12:33:06 INFO     
+
+
+        UPDATE site_clean
+        SET land_rank =
+        CASE land_code
+            WHEN '111' THEN 13
+            WHEN '112' THEN 12
+            WHEN '121' THEN 11
+            WHEN '122' THEN 10
+            WHEN '131' THEN 9
+            WHEN '211' THEN 8
+            WHEN '231' THEN 7
+            WHEN '242' THEN 6
+            WHEN '243' THEN 5
+            WHEN '311' THEN 4
+            WHEN '312' THEN 3
+            WHEN '313' THEN 2
+            WHEN '511' THEN 1
+        ELSE 0
+        END;
+
+12:33:06 INFO     
+
+DROP TABLE IF EXISTS farm_buildings;
+CREATE TABLE farm_buildings AS
+SELECT DISTINCT a.value as value, a.geom
+FROM osm_buildings a, lulc_corine_crop b 
+WHERE 
+        ST_intersects (a.geom, b.geom) AND (
+            a.value = 'farm' OR (
+                
+        (
+        a.value <> 'commercial'
+        AND a.value <> 'apartments'
+        AND a.value <> 'manufacture'
+        AND a.value <> 'supermarket'
+        AND a.value <> 'train_station'
+        AND a.value <> 'house'
+        AND a.value <> 'school'
+        AND a.value <> 'residential'
+        AND a.value <> 'greenhouse'
+        )
+     AND (
+                    ST_NRings (a.geom) > 1 OR
+                    (ST_Area(a.geom) > 700 AND ST_Area(a.geom) < 5000)
+        )))
+    ;
+
+12:33:08 INFO     
+
+ALTER TABLE farm_buildings ADD COLUMN IF NOT EXISTS bld_area double precision;
+
+12:33:08 INFO     
+
+UPDATE farm_buildings a SET bld_area = ST_Area(geom);
+
+12:33:08 INFO     
+
+ALTER TABLE farm_buildings ADD COLUMN IF NOT EXISTS id_mun integer;
+
+12:33:08 INFO     
+
+UPDATE farm_buildings a 
+SET id_mun = b.mun_id 
+FROM adm_communes b  
+WHERE ST_Within(ST_Centroid(a.geom), b.geom);
+
+12:33:12 INFO     
+
+DROP TABLE IF EXISTS farm_buildings_centroids;
+CREATE TABLE farm_buildings_centroids AS
+SELECT value, id_mun, bld_area, ST_Centroid(geom) as geom
+FROM farm_buildings;
+
+12:33:12 INFO     
+
+ALTER TABLE farm_buildings_centroids ADD COLUMN IF NOT EXISTS id_centroid SERIAL PRIMARY KEY;
+
+12:33:12 INFO     
+
+DROP TABLE IF EXISTS farm_buildings_centroids_cluster;
+CREATE TABLE farm_buildings_centroids_cluster AS
+SELECT 
+        row_number() over () AS id_centroid,
+        ST_NumGeometries(gc),
+        gc AS geom_collection,
+        ST_Centroid(gc) AS centroid,
+        ST_MinimumBoundingCircle(gc) AS circle,
+        sqrt(ST_Area(ST_MinimumBoundingCircle(gc)) / pi()) AS radius
+    
+FROM (
+        SELECT unnest(ST_ClusterWithin(geom, 100)) gc
+        FROM farm_buildings_centroids) f
+    ;
+
+12:33:12 INFO     
+
+ALTER TABLE farm_buildings_centroids_cluster ADD COLUMN IF NOT EXISTS id_cluster SERIAL PRIMARY KEY;
+
+12:33:13 INFO     
+
+DROP TABLE IF EXISTS tmp_buffer;
+CREATE TABLE tmp_buffer AS
+SELECT 
+		CASE WHEN radius = 0
+		THEN ST_Buffer(centroid,50)
+		ELSE circle
+		END
+        AS geom
+    
+FROM farm_buildings_centroids_cluster;
+
+12:33:13 INFO     
+
+ALTER TABLE tmp_buffer ADD COLUMN IF NOT EXISTS id_buffer SERIAL PRIMARY KEY;
+
+12:33:13 INFO     
+
+ALTER TABLE farm_buildings ADD COLUMN IF NOT EXISTS id_buffer integer;
+
+12:33:13 INFO     
+
+
+        UPDATE farm_buildings a
+        SET id_buffer = b.id_buffer
+        FROM tmp_buffer b
+        WHERE ST_intersects (a.geom, b.geom);
+    
+
+12:33:27 INFO     
+
+DROP TABLE IF EXISTS tmp_buffer;
+
+12:33:27 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_cluster;
+CREATE TABLE farm_buildings_cluster AS
+        SELECT id_buffer, id_mun, ST_Multi(ST_Union(geom)) as geom, sum(ST_Area(geom)) AS total_area
+        FROM farm_buildings
+        GROUP BY id_buffer, id_mun
+        ORDER BY total_area;
+    
+
+12:33:27 INFO     
+
+CREATE INDEX ON farm_buildings_cluster (total_area);
+
+12:33:27 INFO     
+
+
+        DROP TABLE IF EXISTS tmp_building_cluster_poionts;
+CREATE TABLE tmp_building_cluster_poionts AS
+        SELECT id_mun, total_area, 0 AS rank, 0 AS row, '0'::text AS index, ST_Centroid(ST_Envelope(geom)) as geom
+        FROM farm_buildings_cluster
+        ORDER BY id_mun ASC, total_area DESC;
+    
+
+12:33:27 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_location;
+CREATE TABLE farm_buildings_location AS
+        SELECT a.id_mun, a.total_area, ST_Closestpoint(ST_Collect(b.geom), a.geom) AS geom
+        FROM tmp_building_cluster_poionts AS a, osm_roads_dissolved AS b
+        GROUP BY a.total_area, a.id_mun, a.geom, b.geom
+        ORDER BY a.total_area DESC;
+    
+
+12:38:02 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+12:38:03 INFO     
+
+ALTER TABLE farm_buildings_location DROP COLUMN IF EXISTS index;
+
+12:38:03 INFO     
+
+ALTER TABLE farm_buildings_location ADD COLUMN IF NOT EXISTS index text;
+
+12:38:03 INFO     
+
+
+            WITH a AS
+            (
+                SELECT
+                    id_building, id_mun,
+                    row_number() OVER (ORDER BY id_mun) AS row1,
+                    rank() OVER (ORDER BY id_mun) AS rank1
+                FROM farm_buildings_location
+            )
+
+            UPDATE farm_buildings_location AS b
+               SET index = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+               FROM  a
+               WHERE  a.id_building = b.id_building;
+        
+
+12:38:03 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a., b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+12:38:03 ERROR    
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a., b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+12:39:05 WARNING  
+
+is when this event was logged.
+
+12:39:05 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+12:40:04 WARNING  
+
+is when this event was logged.
+
+12:40:04 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+12:40:04 INFO     
+
+ALTER TABLE farm_buildings_biomass ADD COLUMN IF NOT EXISTS id_building SERIAL PRIMARY KEY;
+
+12:41:51 WARNING  
+
+is when this event was logged.
+
+12:41:51 INFO     
+
+
+        DROP TABLE IF EXISTS farm_buildings_biomass;
+CREATE TABLE farm_buildings_biomass AS
+        SELECT a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane,             e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density
+        FROM farm_buildings_location AS a 
+        
+    	LEFT JOIN farm_lsu AS b ON a.index = b.index1
+    	LEFT JOIN farm_manure AS c ON a.index = c.index1
+    	LEFT JOIN farm_methane AS d ON a.index = d.index1
+    	LEFT JOIN farm_crops AS e ON b.farm_id = e.farm_id
+    ;
+    
+
+12:41:52 INFO     
+
+ALTER TABLE farm_buildings_biomass ADD PRIMARY KEY (id_building);
+
+12:42:45 WARNING  
+
+is when this event was logged.
+
+12:42:45 INFO     
+
+
+        DROP TABLE IF EXISTS nodes_merged;
+CREATE TABLE nodes_merged AS
+        SELECT * FROM site_clean
+            UNION ALL
+        SELECT * FROM farm_buildings_location
+    
+
+12:42:45 ERROR    
+
+
+        DROP TABLE IF EXISTS nodes_merged;
+CREATE TABLE nodes_merged AS
+        SELECT * FROM site_clean
+            UNION ALL
+        SELECT * FROM farm_buildings_location
+    
+
+12:42:45 INFO     
+
+ALTER TABLE nodes_merged ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+12:42:45 ERROR    
+
+ALTER TABLE nodes_merged ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+12:50:05 WARNING  
+
+is when this event was logged.
+
+12:50:05 INFO     
+
+
+        DROP TABLE IF EXISTS topo_nodes;
+CREATE TABLE topo_nodes AS
+        SELECT "target" AS node, id_building, id_mun, geom FROM site_clean
+            UNION ALL
+        SELECT "farm" AS node, Null as id_building, Null as id_mun, geom FROM farm_buildings_location
+    
+
+12:50:05 ERROR    
+
+
+        DROP TABLE IF EXISTS topo_nodes;
+CREATE TABLE topo_nodes AS
+        SELECT "target" AS node, id_building, id_mun, geom FROM site_clean
+            UNION ALL
+        SELECT "farm" AS node, Null as id_building, Null as id_mun, geom FROM farm_buildings_location
+    
+
+12:50:05 INFO     
+
+ALTER TABLE topo_nodes ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+12:50:05 ERROR    
+
+ALTER TABLE topo_nodes ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+12:56:01 WARNING  
+
+is when this event was logged.
+
+12:56:01 INFO     
+
+
+        DROP TABLE IF EXISTS topo_nodes;
+CREATE TABLE topo_nodes AS
+        SELECT 'target' AS node, Null as id_building, Null as id_mun, geom FROM site_clean
+            UNION ALL
+        SELECT 'farm' AS node, id_building, id_mun, geom FROM farm_buildings_location
+    
+
+12:56:02 INFO     
+
+ALTER TABLE topo_nodes ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+12:57:11 WARNING  
+
+is when this event was logged.
+
+12:57:11 INFO     
+
+
+        DROP TABLE IF EXISTS topo_nodes;
+CREATE TABLE topo_nodes AS
+        SELECT 'target' AS node, Null AS id_building, id_target, Null AS id_mun, geom FROM site_clean
+            UNION ALL
+        SELECT 'farm' AS node, id_building, Null AS id_target, id_mun, geom FROM farm_buildings_location
+    
+
+12:57:11 INFO     
+
+ALTER TABLE topo_nodes ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+13:05:10 WARNING  
+
+is when this event was logged.
+
+13:05:10 INFO     
+
+DROP TABLE IF EXISTS site_targets;
+CREATE TABLE site_targets AS
+
+        (WITH
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM roads_main),
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 500) AS id_target
+                FROM line),
+            geometries AS (
+                SELECT
+                    id_target,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id_target), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id_target,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+13:05:10 INFO     
+
+ALTER TABLE site_targets DROP COLUMN IF EXISTS id_target;
+
+13:05:10 INFO     
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+13:05:10 INFO     
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        WITH zones AS ( SELECT * FROM lulc_zones WHERE rank != 0 ORDER BY rank DESC )
+        SELECT a.*, b.rank, b.zone, 0 as id_mun
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+13:05:54 INFO     
+
+
+        UPDATE site_clean
+        SET id_mun = b.id_mun
+        FROM adm_communes b
+        WHERE ST_intersects (site_clean.geom, b.geom);
+    
+
+13:05:54 ERROR    
+
+
+        UPDATE site_clean
+        SET id_mun = b.id_mun
+        FROM adm_communes b
+        WHERE ST_intersects (site_clean.geom, b.geom);
+    
+
+13:05:54 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+13:05:59 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+13:05:59 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+13:07:18 WARNING  
+
+is when this event was logged.
+
+13:07:18 INFO     
+
+DROP TABLE IF EXISTS site_targets;
+CREATE TABLE site_targets AS
+
+        (WITH
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM roads_main),
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 500) AS id_target
+                FROM line),
+            geometries AS (
+                SELECT
+                    id_target,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id_target), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id_target,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+13:07:18 INFO     
+
+ALTER TABLE site_targets DROP COLUMN IF EXISTS id_target;
+
+13:07:18 INFO     
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+13:07:18 INFO     
+
+
+        DROP TABLE IF EXISTS site_clean;
+CREATE TABLE site_clean AS
+        WITH zones AS ( SELECT * FROM lulc_zones WHERE rank != 0 ORDER BY rank DESC )
+        SELECT a.*, b.rank, b.zone, 0 as id_mun
+        FROM site_targets a, zones b
+        WHERE ST_Within (a.geom, b.geom)
+    
+
+13:08:04 INFO     
+
+
+        UPDATE site_clean
+        SET id_mun = b.mun_id
+        FROM adm_communes b
+        WHERE ST_intersects (site_clean.geom, b.geom);
+    
+
+13:08:06 INFO     
+
+
+        DELETE FROM site_clean a
+        WHERE EXISTS (
+            SELECT 1
+            FROM site_clean b
+            WHERE  a.id_target < b.id_target
+            AND st_dwithin(a.geom, b.geom, 250)
+        );
+    
+
+13:08:11 INFO     
+
+ALTER TABLE site_clean DROP COLUMN IF EXISTS id_target;
+
+13:08:11 INFO     
+
+ALTER TABLE site_clean ADD COLUMN IF NOT EXISTS id_target SERIAL PRIMARY KEY;
+
+13:08:33 WARNING  
+
+is when this event was logged.
+
+13:08:33 INFO     
+
+
+        DROP TABLE IF EXISTS topo_nodes;
+CREATE TABLE topo_nodes AS
+        SELECT id_mun, 'target' AS node, Null AS id_building, id_target,  geom FROM site_clean
+            UNION ALL
+        SELECT id_mun, 'farm' AS node, id_building, Null AS id_target,  geom FROM farm_buildings_location
+    
+
+13:08:33 INFO     
+
+ALTER TABLE topo_nodes ADD COLUMN IF NOT EXISTS id_nodes SERIAL PRIMARY KEY;
+
+13:17:45 WARNING  
+
+is when this event was logged.
+
+13:17:45 INFO     
+
+
+        DROP TABLE IF EXISTS topo_targets;
+CREATE TABLE topo_targets AS
+        SELECT id_mun, 'target' AS node, Null AS id_building, id_target,  geom FROM site_clean
+            UNION ALL
+        SELECT id_mun, 'farm' AS node, id_building, Null AS id_target,  geom FROM farm_buildings_location
+    
+
+13:17:45 INFO     
+
+ALTER TABLE topo_targets ADD COLUMN IF NOT EXISTS id_type SERIAL PRIMARY KEY;
+
+13:33:50 WARNING  
+
+is when this event was logged.
+
+13:33:50 INFO     
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+SELECT *;
+
+13:33:50 ERROR    
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+SELECT *;
+
+13:34:28 WARNING  
+
+is when this event was logged.
+
+13:34:28 INFO     
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+SELECT *
+FROM osm_roads;
+
+13:37:57 WARNING  
+
+is when this event was logged.
+
+13:37:57 INFO     
+
+
+        UPDATE topo_roads
+        SET geom = ST_AddPoint(geom,ST_StartPoint(geom))
+        FROM topo_targets
+        WHERE ST_IsClosed(geom) = false;
+
+    
+
+13:37:57 ERROR    
+
+
+        UPDATE topo_roads
+        SET geom = ST_AddPoint(geom,ST_StartPoint(geom))
+        FROM topo_targets
+        WHERE ST_IsClosed(geom) = false;
+
+    
+
+13:40:24 WARNING  
+
+is when this event was logged.
+
+13:40:24 INFO     
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+SELECT *
+FROM osm_roads;
+
+09:34:37 WARNING  
+
+is when this event was logged.
+
+09:34:37 INFO     
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+
+        (WITH
+            selection AS
+                (Select * from osm_roads where id > 30000) -- to be deleted
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM selection ), -- osm_roads
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 250) AS id
+                FROM line),
+            geometries AS (
+                SELECT
+                    id,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+09:34:37 ERROR    
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+
+        (WITH
+            selection AS
+                (Select * from osm_roads where id > 30000) -- to be deleted
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM selection ), -- osm_roads
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 250) AS id
+                FROM line),
+            geometries AS (
+                SELECT
+                    id,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+09:35:26 WARNING  
+
+is when this event was logged.
+
+09:35:26 INFO     
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+
+        (WITH
+            selection AS
+                (Select * from osm_roads where id > 30000), -- to be deleted
+            line AS
+                (SELECT (ST_Dump(geom)).geom AS geom FROM selection ), -- osm_roads
+            linemeasure AS
+                (SELECT
+                    ST_AddMeasure(line.geom, 0, ST_Length(line.geom)) AS linem,
+                    generate_series(0, ST_Length(line.geom)::int, 250) AS id
+                FROM line),
+            geometries AS (
+                SELECT
+                    id,
+                    (ST_Dump(ST_GeometryN(ST_LocateAlong(linem, id), 1))).geom AS geom
+                FROM linemeasure)
+        SELECT
+            id,
+            ST_SetSRID(ST_MakePoint(ST_X(geom), ST_Y(geom)), 3035) AS geom
+        FROM geometries)
+    ;
+
+09:50:56 WARNING  
+
+is when this event was logged.
+
+09:50:56 INFO     
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+SELECT *
+FROM osm_roads
+WHERE id > 30000;
+
+09:51:24 WARNING  
+
+is when this event was logged.
+
+09:51:24 INFO     
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+SELECT *
+FROM osm_roads
+WHERE id > 35000;
+
+09:56:27 WARNING  
+
+is when this event was logged.
+
+09:56:27 INFO     
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+SELECT SELECT id_road AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+FROM 
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id_road
+            FROM (
+                SELECT id_road, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    ;
+
+09:56:27 ERROR    
+
+DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+SELECT SELECT id_road AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+FROM 
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id_road
+            FROM (
+                SELECT id_road, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    ;
+
+09:58:19 WARNING  
+
+is when this event was logged.
+
+09:58:19 INFO     
+
+
+        SELECT id_road AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id_road
+            FROM (
+                SELECT id_road, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    
+
+09:58:19 ERROR    
+
+
+        SELECT id_road AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id_road
+            FROM (
+                SELECT id_road, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    
+
+09:58:55 WARNING  
+
+is when this event was logged.
+
+09:58:55 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id_road AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id_road
+            FROM (
+                SELECT id_road, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    
+
+09:58:55 ERROR    
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id_road AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id_road
+            FROM (
+                SELECT id_road, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    
+
+09:59:53 WARNING  
+
+is when this event was logged.
+
+09:59:53 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id_road AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id_road
+            FROM (
+                SELECT id_road, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    
+
+09:59:53 ERROR    
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id_road AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id_road
+            FROM (
+                SELECT id_road, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    
+
+10:01:12 WARNING  
+
+is when this event was logged.
+
+10:01:12 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id
+            FROM (
+                SELECT id, ST_Segmentize(geom,250) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    
+
+10:02:45 WARNING  
+
+is when this event was logged.
+
+10:02:45 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id
+            FROM (
+                SELECT id, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+            WHERE id > 35000
+                ) as line
+        ) as a
+    
+
+10:04:19 WARNING  
+
+is when this event was logged.
+
+10:04:19 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id
+            FROM (
+                SELECT id, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                ) as line
+        ) as a
+    
+
+10:06:48 WARNING  
+
+is when this event was logged.
+
+10:06:48 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id
+            FROM (
+                SELECT id, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                ) as line
+        ) as a
+    
+
+10:06:48 ERROR    
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id
+            FROM (
+                SELECT id, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                ) as line
+        ) as a
+    
+
+10:08:12 WARNING  
+
+is when this event was logged.
+
+10:08:12 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                ) as line
+        ) as a
+    
+
+10:09:01 WARNING  
+
+is when this event was logged.
+
+10:09:01 INFO     
+
+ALTER TABLE site_targets DROP COLUMN IF EXISTS id_road;
+
+10:09:01 INFO     
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:09:01 ERROR    
+
+ALTER TABLE site_targets ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:09:52 WARNING  
+
+is when this event was logged.
+
+10:09:52 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:09:52 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:12:13 WARNING  
+
+is when this event was logged.
+
+10:12:13 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+10:16:49 WARNING  
+
+is when this event was logged.
+
+10:16:49 INFO     
+
+
+        DELETE FROM topo_roads a
+        WHERE EXISTS (
+            SELECT 1
+            FROM topo_roads b
+            WHERE  lenght = 0
+            )
+        );
+    
+
+10:16:49 ERROR    
+
+
+        DELETE FROM topo_roads a
+        WHERE EXISTS (
+            SELECT 1
+            FROM topo_roads b
+            WHERE  lenght = 0
+            )
+        );
+    
+
+10:16:50 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:16:50 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:17:13 WARNING  
+
+is when this event was logged.
+
+10:17:13 INFO     
+
+
+        DELETE FROM topo_roads a
+        WHERE EXISTS (
+            SELECT 1
+            FROM topo_roads b
+            WHERE  lenght = 0
+        );
+    
+
+10:17:13 ERROR    
+
+
+        DELETE FROM topo_roads a
+        WHERE EXISTS (
+            SELECT 1
+            FROM topo_roads b
+            WHERE  lenght = 0
+        );
+    
+
+10:17:13 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:17:13 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:17:40 WARNING  
+
+is when this event was logged.
+
+10:17:40 INFO     
+
+
+        DELETE FROM topo_roads a
+        WHERE EXISTS (
+            SELECT 1
+            FROM topo_roads b
+            WHERE  length = 0
+        );
+    
+
+10:17:44 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:17:44 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:18:22 WARNING  
+
+is when this event was logged.
+
+10:18:22 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                ) as line
+        ) as a
+    
+
+10:18:29 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+10:18:37 INFO     
+
+
+        DELETE FROM topo_roads a
+        WHERE EXISTS (
+            SELECT 1
+            FROM topo_roads b
+            WHERE  length = 0
+        );
+    
+
+10:18:38 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:18:38 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:20:02 WARNING  
+
+is when this event was logged.
+
+10:20:02 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                ) as line
+        ) as a
+    
+
+10:20:09 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+10:20:18 INFO     
+
+
+        DELETE FROM topo_roads
+        WHERE EXISTS (
+            SELECT 1
+            FROM topo_roads
+            WHERE length = 0
+        );
+    
+
+10:20:21 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:20:21 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:20:38 WARNING  
+
+is when this event was logged.
+
+10:20:38 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                ) as line
+        ) as a
+    
+
+10:20:46 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+10:20:54 INFO     
+
+
+        DELETE FROM topo_roads
+        WHERE EXISTS (
+            SELECT *
+            FROM topo_roads
+            WHERE length = 0
+        );
+    
+
+10:20:55 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:20:55 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:27:38 WARNING  
+
+is when this event was logged.
+
+10:27:38 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                ) as line
+        ) as a;
+    
+
+10:27:46 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+10:27:52 INFO     
+
+DELETE FROM topo_roads WHERE length = 0;
+
+10:27:52 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:27:52 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:52:28 WARNING  
+
+is when this event was logged.
+
+10:52:28 INFO     
+
+DROP TABLE IF EXISTS topo_roads_vertices_pgr;
+
+10:52:28 INFO     
+
+DROP TABLE IF EXISTS topo_roads_noded;
+
+10:52:28 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+10:52:28 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+10:52:32 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS source INT4;
+
+10:52:32 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS target INT4;
+
+10:52:33 INFO     
+
+SELECT pgr_createTopology('topo_roads', 0.001, 'geom', 'id_road');
+
+11:18:52 INFO     
+
+SELECT pgr_nodeNetwork('topo_roads', 0.001, 'id_road', 'geom');
+
+11:20:50 INFO     
+
+SELECT pgr_createTopology('topo_roads', 0.001, 'geom', 'id');
+
+11:20:51 INFO     
+
+SELECT pgr_analyzeGraph('topo_roads', 0.001, 'geom', 'id_road');
+
+11:27:27 INFO     
+
+SELECT pgr_analyzeGraph('topo_roads_noded', 0.001, 'geom', 'id');
+
+11:32:15 WARNING  
+
+is when this event was logged.
+
+11:32:16 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS type VARCHAR;
+
+11:32:20 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS oneway VARCHAR;
+
+11:32:20 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS surface VARCHAR;
+
+11:32:20 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS distance FLOAT8;
+
+11:32:21 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS time FLOAT8;
+
+11:32:21 INFO     
+
+
+        UPDATE topo_roads_noded a
+        SET type = b.value,
+            oneway = b.oneway,
+            surface = b.surface
+        FROM topo_roads b
+        WHERE a.id = b.id_road;
+    
+
+11:33:02 INFO     
+
+
+        UPDATE topo_roads_noded
+        SET distance = ST_Length(geom) / 1000;
+    
+
+11:33:38 INFO     
+
+
+        UPDATE topo_roads_noded
+        SET time =
+        CASE type
+            WHEN 'steps' THEN -1
+            WHEN 'path' THEN -1
+            WHEN 'footway' THEN -1
+            WHEN 'cycleway' THEN -1
+            WHEN 'proposed' THEN -1
+            WHEN 'construction' THEN -1
+            WHEN 'raceway' THEN distance / 100
+            WHEN 'motorway' THEN distance / 70
+            WHEN 'motorway_link' THEN distance / 70
+            WHEN 'trunk' THEN distance / 60
+            WHEN 'trunk_link' THEN distance / 60
+            WHEN 'primary' THEN distance / 55
+            WHEN 'primary_link' THEN distance / 55
+            WHEN 'secondary' THEN distance / 45
+            WHEN 'secondary_link' THEN distance / 45
+            WHEN 'tertiary' THEN distance / 45
+            WHEN 'tertiary_link' THEN distance / 40
+            WHEN 'unclassified' THEN distance / 35
+            WHEN 'residential' THEN distance / 30
+            WHEN 'living_street' THEN distance / 30
+            WHEN 'service' THEN distance / 30
+            WHEN 'track' THEN distance / 20
+            ELSE distance / 20
+        END;
+
+12:34:26 WARNING  
+
+is when this event was logged.
+
+12:34:26 INFO     
+
+
+        DROP TABLE IF EXISTS topo_route;
+CREATE TABLE topo_route AS
+        SELECT
+            e.old_id,
+            e.name,
+            e.type,
+            e.oneway,
+            e.time AS time,
+            e.distance AS distance,
+            e.the_geom AS geom
+        FROM
+             pgr_dijkstra('SELECT id, source::integer, target::integer, time::double precision AS cost FROM topo_roads_noded', 1, 10,false) AS r,
+             topo_roads_noded AS e
+    
+
+12:34:27 ERROR    
+
+
+        DROP TABLE IF EXISTS topo_route;
+CREATE TABLE topo_route AS
+        SELECT
+            e.old_id,
+            e.name,
+            e.type,
+            e.oneway,
+            e.time AS time,
+            e.distance AS distance,
+            e.the_geom AS geom
+        FROM
+             pgr_dijkstra('SELECT id, source::integer, target::integer, time::double precision AS cost FROM topo_roads_noded', 1, 10,false) AS r,
+             topo_roads_noded AS e
+    
+
+12:39:05 WARNING  
+
+is when this event was logged.
+
+12:39:05 INFO     
+
+SELECT pgr_analyzeGraph('topo_roads', 0.001, 'geom', 'id_road');
+
+12:43:27 ERROR    
+
+SELECT pgr_analyzeGraph('topo_roads', 0.001, 'geom', 'id_road');
+
+12:43:27 INFO     
+
+SELECT pgr_analyzeGraph('topo_roads_noded', 0.001, 'geom', 'id');
+
+12:44:06 WARNING  
+
+is when this event was logged.
+
+12:44:07 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                WHERE id > 35000 -- to be deleted
+                ) as line
+        ) as a;
+    
+
+12:44:15 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+12:44:17 INFO     
+
+DELETE FROM topo_roads WHERE length = 0;
+
+12:46:20 WARNING  
+
+is when this event was logged.
+
+12:46:20 INFO     
+
+DROP TABLE IF EXISTS topo_roads_vertices_pgr;
+
+12:46:23 INFO     
+
+DROP TABLE IF EXISTS topo_roads_noded;
+
+12:46:23 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+12:46:23 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+12:46:26 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS source INT4;
+
+12:46:26 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS target INT4;
+
+12:46:26 INFO     
+
+SELECT pgr_createTopology('topo_roads', 0.01, 'geom', 'id_road');
+
+12:48:59 INFO     
+
+SELECT pgr_nodeNetwork('topo_roads', 0.01, 'id_road', 'geom');
+
+12:49:09 INFO     
+
+SELECT pgr_createTopology('topo_roads', 0.01, 'geom', 'id');
+
+12:49:10 INFO     
+
+SELECT pgr_analyzeGraph('topo_roads', 0.01, 'geom', 'id_road');
+
+12:49:18 INFO     
+
+SELECT pgr_analyzeGraph('topo_roads_noded', 0.01, 'geom', 'id');
+
+12:52:30 WARNING  
+
+is when this event was logged.
+
+12:52:31 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                WHERE id > 35000 -- to be deleted
+                ) as line
+        ) as a;
+    
+
+12:52:34 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+12:52:35 INFO     
+
+DROP TABLE IF EXISTS topo_roads_vertices_pgr;
+
+12:52:35 INFO     
+
+DROP TABLE IF EXISTS topo_roads_noded;
+
+12:52:35 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+12:52:36 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+12:52:36 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS source INT4;
+
+12:52:37 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS target INT4;
+
+12:52:37 INFO     
+
+SELECT pgr_createTopology('topo_roads', 0.01, 'geom', 'id_road');
+
+12:55:30 INFO     
+
+SELECT pgr_nodeNetwork('topo_roads', 0.01, 'id_road', 'geom');
+
+12:55:47 INFO     
+
+SELECT pgr_createTopology('topo_roads', 0.01, 'geom', 'id');
+
+13:09:59 WARNING  
+
+is when this event was logged.
+
+13:09:59 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                WHERE id > 35000 -- to be deleted
+                ) as line
+        ) as a;
+    
+
+13:10:00 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+13:10:00 INFO     
+
+DROP TABLE IF EXISTS topo_roads_vertices_pgr;
+
+13:10:00 INFO     
+
+DROP TABLE IF EXISTS topo_roads_noded;
+
+13:10:00 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+13:10:00 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+13:10:01 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS source INT4;
+
+13:10:01 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS target INT4;
+
+13:10:01 INFO     
+
+SELECT pgr_createTopology('topo_roads', 0.01, 'geom', 'id_road');
+
+13:12:20 INFO     
+
+SELECT pgr_nodeNetwork('topo_roads', 0.01, 'id_road', 'geom');
+
+13:12:27 INFO     
+
+SELECT pgr_createTopology('topo_roads_noded', 0.01, 'geom', 'id');
+
+13:18:54 WARNING  
+
+is when this event was logged.
+
+13:18:54 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS type VARCHAR;
+
+13:18:54 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS oneway VARCHAR;
+
+13:18:54 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS surface VARCHAR;
+
+13:18:54 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS distance FLOAT8;
+
+13:18:55 INFO     
+
+ALTER TABLE topo_roads_noded ADD COLUMN IF NOT EXISTS time FLOAT8;
+
+13:18:55 INFO     
+
+
+        UPDATE topo_roads_noded a
+        SET type = b.value,
+            oneway = b.oneway,
+            surface = b.surface
+        FROM topo_roads b
+        WHERE a.id = b.id_road;
+    
+
+13:18:57 INFO     
+
+
+        UPDATE topo_roads_noded
+        SET distance = ST_Length(geom) / 1000;
+    
+
+13:18:59 INFO     
+
+
+        UPDATE topo_roads_noded
+        SET time =
+        CASE type
+            WHEN 'steps' THEN -1
+            WHEN 'path' THEN -1
+            WHEN 'footway' THEN -1
+            WHEN 'cycleway' THEN -1
+            WHEN 'proposed' THEN -1
+            WHEN 'construction' THEN -1
+            WHEN 'raceway' THEN distance / 100
+            WHEN 'motorway' THEN distance / 70
+            WHEN 'motorway_link' THEN distance / 70
+            WHEN 'trunk' THEN distance / 60
+            WHEN 'trunk_link' THEN distance / 60
+            WHEN 'primary' THEN distance / 55
+            WHEN 'primary_link' THEN distance / 55
+            WHEN 'secondary' THEN distance / 45
+            WHEN 'secondary_link' THEN distance / 45
+            WHEN 'tertiary' THEN distance / 45
+            WHEN 'tertiary_link' THEN distance / 40
+            WHEN 'unclassified' THEN distance / 35
+            WHEN 'residential' THEN distance / 30
+            WHEN 'living_street' THEN distance / 30
+            WHEN 'service' THEN distance / 30
+            WHEN 'track' THEN distance / 20
+            ELSE distance / 20
+        END;
+
+13:19:54 WARNING  
+
+is when this event was logged.
+
+13:19:54 INFO     
+
+
+        DROP TABLE IF EXISTS topo_roads;
+CREATE TABLE topo_roads AS
+        SELECT id AS id_road, 0 as length, value, oneway, junction, surface, maxspeed, ST_MakeLine(start_point,end_point) AS geom
+        FROM
+        (
+            SELECT
+                ST_Pointn(geom, generate_series(1, ST_NumPoints(geom)-1)) as start_point,
+                ST_Pointn(geom, generate_series(2, ST_NumPoints(geom))) as end_point,
+                id,
+                value, oneway, junction, surface, maxspeed
+            FROM (
+                SELECT id, value, oneway, junction, surface, maxspeed, ST_Segmentize(geom,100) AS geom
+                FROM osm_roads
+                -- WHERE id > 35000 -- to be deleted
+                ) as line
+        ) as a;
+    
+
+13:20:01 INFO     
+
+UPDATE topo_roads a SET length = ST_Length(geom);
+
+13:20:07 INFO     
+
+DELETE FROM topo_roads WHERE length = 0;
+
+13:20:07 INFO     
+
+DROP TABLE IF EXISTS topo_roads_noded;
+
+13:20:07 INFO     
+
+DROP TABLE IF EXISTS topo_roads_vertices_pgr;
+
+13:20:07 INFO     
+
+DROP TABLE IF EXISTS topo_roads_vertices_pgr;
+
+13:20:07 INFO     
+
+ALTER TABLE topo_roads DROP COLUMN IF EXISTS id_road;
+
+13:20:07 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS id_road SERIAL PRIMARY KEY;
+
+13:20:11 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS source INT4;
+
+13:20:11 INFO     
+
+ALTER TABLE topo_roads ADD COLUMN IF NOT EXISTS target INT4;
+
+13:20:11 INFO     
+
+SELECT pgr_createTopology('topo_roads', 0.01, 'geom', 'id_road');
+
+13:50:02 INFO     
+
+SELECT pgr_nodeNetwork('topo_roads', 0.01, 'id_road', 'geom');
+
+13:52:14 INFO     
+
+SELECT pgr_createTopology('topo_roads_noded', 0.01, 'geom', 'id');
+
