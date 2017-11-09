@@ -1,9 +1,4 @@
-17:02:13 WARNING  is when this event was logged.
-17:02:13 INFO     DROP TABLE IF EXISTS topo_route_50km;
-CREATE TABLE topo_route_50km (id_building int, id_target int, cost double precision, distance double precision, length double precision)
-17:02:19 INFO     SELECT AddGeometryColumn ('public', 'topo_route_50km','geom', 3035, 'multilinestring', 2);
-17:02:19 INFO     
-    DO
+﻿   DO
     $$
     DECLARE
     	loop_targets record;
@@ -27,15 +22,13 @@ CREATE TABLE topo_route_50km (id_building int, id_target int, cost double precis
     		) as a
     
             LOOP
-                WITH
-                    
+                WITH                  
 
     		nodes as (select * from jrc_get_ids_from_nodes (
                 -- get target id (from loop 1)
     			(SELECT id_target FROM topo_targets WHERE id_target =  loop_targets.id_target),
                 -- get farm id (from loop 2)
-    			(SELECT id_building FROM topo_targets WHERE id_building =  loop_farms.id_building)))
-    ,
+    			(SELECT id_building FROM topo_targets WHERE id_building =  loop_farms.id_building)))   ,
                     
     		dijkstra AS (
                 -- extract path with smallest distance between farm and target
@@ -76,6 +69,3 @@ CREATE TABLE topo_route_50km (id_building int, id_target int, cost double precis
         END LOOP;
     END
     $$;
-
-    
-17:55:21 DEBUG    Total time = 53.14

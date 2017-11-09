@@ -146,6 +146,7 @@ db_PostGIS = {
     "port"  :   '5432',
     'proj'  :   '3035',
     'cursor'  :  '',
+    'log_sql'  :  'PG_queries.sql',
 }
 
 OSM_tables = {
@@ -178,6 +179,7 @@ SQL_distances = {
     'lulc_zones': 1000,
     'osm': 100,
     'tolerance': 0.01,
+    'max_travel': 50000,
 }
 
 SQL_target = {

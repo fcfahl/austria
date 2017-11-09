@@ -1,4 +1,4 @@
-import os, colorlog, logging
+import os, colorlog, logging, time
 
 #def remove_LOG_File(filename):
 #
@@ -8,6 +8,12 @@ import os, colorlog, logging
 #        print 'error deleting log file'
 #        pass
 
+
+def get_time ():
+    return time.time()
+
+def get_total_time (start, end):
+    return round((end - start) / 60, 2)
 
 def initialize_Log(fileName, mode):
 
@@ -34,7 +40,7 @@ def initialize_Log(fileName, mode):
     '%(log_color)s%(levelname)s:%(name)s:%(message)s'))
 
     logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(levelname)-8s \n\n%(message)s\n',
+                    format='%(asctime)s %(levelname)-8s %(message)s',
                     datefmt='%H:%M:%S',
                     filename=file,
                     filemode=mode)

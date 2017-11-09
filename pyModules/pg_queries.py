@@ -68,6 +68,10 @@ def add_column (table, column):
     sql = "ALTER TABLE {0} ADD COLUMN IF NOT EXISTS {1};".format (table, column)
     execute_Query (sql, table)
 
+def add_geometry (scheme, table, column, srid, type_, dimension):
+    sql = "SELECT AddGeometryColumn ('{0}', '{1}','{2}', {3}, '{4}', {5});".format (scheme, table, column, srid, type_, dimension)
+    execute_Query (sql, table)
+
 def drop_column (table, column):
     sql = "ALTER TABLE {0} DROP COLUMN IF EXISTS {1};".format (table, column)
     execute_Query (sql, "")
@@ -151,3 +155,21 @@ def sql_create_table_with (table, with_, where):
         )
 
     execute_Query (sql, table)
+
+def sql_create_SQL_function (name, columns, return_, sql):
+
+    sql = """
+        DROP FUNCTION IF EXISTS {name} ({columns});
+        CREATE OR REPLACE FUNCTION {name} ({columns})
+        RETURNS {return_} AS
+        $$
+            {sql}
+        $$ LANGUAGE SQL;
+    """.format (
+        name = name,
+        columns = columns,
+        return_ = return_,
+        sql = sql
+    )
+
+    execute_Query (sql, "")

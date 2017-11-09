@@ -14,11 +14,12 @@ import pyModules.targets as TRG
 import pyModules.topology as TOPO
 
 
+
 if __name__ == "__main__":
 
     print ""
 
-    initialize_Log(fileName='OSM', mode='a') # w for overwrite log
+    initialize_Log(fileName='OSM', mode='w') # w for overwrite log, a for append
 
     #==============================================================================
     #           PostGIS Database
@@ -83,12 +84,19 @@ if __name__ == "__main__":
     #==============================================================================
 
     # TOPO.Step_01_create_Topo_Nodes()
-    TOPO.Step_02_segmentize_OSM_Roads()
-    TOPO.Step_03_create_Road_Topology()
-    TOPO.Step_04_update_Topology()
-    # TOPO.Step_05_do_Dijkstra()
+    # TOPO.Step_02_segmentize_OSM_Roads()
+    # TOPO.Step_03_create_Road_Topology()
+    # TOPO.Step_04_update_Topology()
+    # TOPO.Step_05_create_PG_Functions()
+    TOPO.Step_06_extract_Routes()
 
 
 
+    #==============================================================================
+    #           FINAL DATABASE
+    #==============================================================================
+
+    # outFile = folder['OSM'].outDir + OSM_raw['austria'].outFile
+    # export_PostGIS(db_PostGIS['dbname'], outFile)
 
     log_close()

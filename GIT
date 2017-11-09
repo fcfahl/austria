@@ -28,6 +28,7 @@ git add README.md
 git commit -m 'first commit'
 
 git push origin master
+git push --set-upstream origin master
 
 3)Clone repo
 git clone https://github.com/fcfahl/WebGIS_LULC.git /home/fcfahl/GIS/07_WebGIS/LULC
@@ -47,4 +48,4 @@ cd 03_Scripts/.git
 edit .gitignore
 
 
-git push --set-upstream origin master
+
