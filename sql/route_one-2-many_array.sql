@@ -25,11 +25,13 @@ With
 	),
 	farm as
 	(
-	    	SELECT DISTINCT array_agg(a.id_building) as id_node
-			FROM (Select * from topo_targets where id_building > 0) as a
-			JOIN (Select * from topo_targets where id_target = 1) as b
-			ON ST_DWithin (a.geom, b.geom, 50000)
-    		
+
+		SELECT array_agg(a.id_building) as id_node FROM jrc_get_farm_ids (
+			(SELECT id_target FROM topo_targets WHERE id_target = 1),
+			 -- max travel distance
+			5000) as a	
+	
+   		
 	),
 	dijkstra as (
 		SELECT
@@ -45,9 +47,7 @@ With
 			seq
 	)
 SELECT *
-FROM dijkstra
-	
-;
+FROM dijkstra;
 
 select * from tmp_topo_route_array;
 
@@ -66,7 +66,3 @@ select end_vid, ST_Length (geom) as length, geom from lines
 select * from tmp_topo_route_array_union;
 
 
-	SELECT DISTINCT array_agg(a.id_building)
-	FROM (Select * from topo_targets where id_building > 0) as a
-	JOIN (Select * from topo_targets where id_target = 1) as b
-	ON ST_DWithin (a.geom, b.geom, 50000)

@@ -173,3 +173,28 @@ def sql_create_SQL_function (name, columns, return_, sql):
     )
 
     execute_Query (sql, "")
+
+
+
+def sql_create_PLPGSQL_function (name, columns, return_, declare, sql):
+
+    sql = """
+        DROP FUNCTION IF EXISTS {name} ({columns});
+        CREATE OR REPLACE FUNCTION {name} ({columns})
+        RETURNS {return_} AS
+        $$
+    	DECLARE
+    		{declare}
+    	BEGIN
+            {sql}
+    	END;
+        $$ LANGUAGE PLPGSQL;
+    """.format (
+        name = name,
+        columns = columns,
+        return_ = return_,
+        declare = declare,
+        sql = sql
+    )
+
+    execute_Query (sql, "")

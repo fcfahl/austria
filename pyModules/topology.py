@@ -146,10 +146,12 @@ def Step_04_update_Topology ():
 
 def Step_05_create_PG_Functions ():
 
-    # ________________________ Function 1
 
     points_table = SQL_topology['targets'].name
     nodes_table = SQL_topology['noded_ver'].name
+
+
+    # ________________________ Function 1
 
     columns_base = "a.id as id_node, b.{0}, ST_Distance(a.the_geom, b.geom) as dist"
     columns_farm = columns_base.format('id_building')
@@ -186,33 +188,133 @@ def Step_05_create_PG_Functions ():
     )
 
     # ________________________ Function 2
-
-    points_table = SQL_topology['targets'].name
-
-    columns_farm = 'id_building'
-    columns_target = 'id_target'
-
     function_ids = "jrc_get_farm_ids"
     columns_ids  = "id_target_ int, distance int"
     return_ids  = "table (id_building int)"
     sql_ids = """
     	SELECT DISTINCT a.id_building
-    	FROM (Select * from {table_1} where {columns_1} > 0) as a
-    	JOIN (Select * from {table_1} where {columns_2} = $1) as b
+    	FROM (Select * from {table_1} where id_building > 0) as a
+    	JOIN (Select * from {table_1} where id_target = $1) as b
     	ON ST_DWithin (a.geom, b.geom, $2)
 
     """.format(
         table_1 = points_table,
-        table_2 = nodes_table,
-        columns_1 = columns_farm,
-        columns_2 = columns_target
+        table_2 = nodes_table
     )
+
+    # ________________________ Function 3
+    function_array= "jrc_get_ids_arrays"
+    columns_array  = "id_target_ int, distance int"
+    return_array  = "table (id_target2 int, id_building2 int, node_building2 int)"
+
+    sql_declare = "n_buildings int[]; i integer;"
+
+    sql_array = """
+    	n_buildings := ((SELECT array_agg(id_building) FROM jrc_get_farm_ids (
+    		(SELECT id_target FROM {table_1} WHERE id_target = $1), $2))::int[]);
+
+    	FOR i IN 1 .. array_upper(n_buildings, 1)
+    	LOOP
+    		id_building2 := n_buildings[i];
+    		id_target2 := $1;
+
+    		node_building2 := (select node_farm from jrc_get_ids_from_nodes (
+    	  			(SELECT id_target FROM {table_1} WHERE id_target =  $1),
+    				(SELECT id_building FROM {table_1} WHERE id_building =  n_buildings[i]))) ;
+
+    	  		RAISE NOTICE 'The id is : % and the node is : % s', n_buildings[i] , node_building2;
+
+    		RETURN NEXT;
+    	END LOOP;
+    """.format(table_1 = points_table)
 
     # ________________________ EXECUTE QUERIES
     sql_create_SQL_function(name=function_nodes, columns=columns_nodes, return_=return_nodes, sql=sql_nodes)
     sql_create_SQL_function(name=function_ids, columns=columns_ids, return_=return_ids, sql=sql_ids)
+    sql_create_PLPGSQL_function(name=function_array, columns=columns_array, return_=return_array, declare=sql_declare, sql=sql_array)
+
 
 def Step_06_extract_Routes ():
+
+    print ""
+
+    start = get_time()
+
+    # ________________________ Table
+    points_table = SQL_topology['targets'].name
+    noded_table = SQL_topology['noded'].name
+    vertice_table = SQL_topology['noded_ver'].name
+
+    # ________________________ Create output table
+    route_table = ("{0}_{1}m".format(SQL_topology['route'].name, SQL_distances['max_travel'] )).replace('000m', 'km')
+    columns = "id_building int, id_target int, cost double precision, distance double precision, length double precision"
+
+    sql_route = """
+        {create} AS
+        WITH
+            target AS
+            (
+                SELECT 	a.id AS id_node, b.id_target, ST_Distance(a.the_geom, b.geom) AS dist
+                FROM 	{table_3} AS a,
+                    (SELECT id_target, geom FROM {table_1} where id_target <= 2) AS b
+                WHERE 	ST_DWithin (a.the_geom, b.geom, 500)
+                ORDER BY dist ASC
+                LIMIT 1
+            ),
+            farm AS
+            (
+                SELECT array_agg(node_building2) AS id_node FROM jrc_get_ids_arrays (1, {distance})
+            ),
+            dijkstra as (
+                SELECT
+                    dijkstra.*, topo_roads_noded.geom
+                FROM	pgr_dijkstra(
+                        'SELECT id, source::integer, target::integer, distance::double precision AS cost FROM topo_roads_noded',
+                        (SELECT id_node FROM target), (SELECT id_node FROM farm),false) AS dijkstra
+                LEFT JOIN
+                    {table_2}
+                ON
+                    (edge = id)
+                ORDER BY
+                    seq
+            ),
+            join_ids AS (
+                SELECT b.id_building2 AS id_building, b.id_target2 AS id_target, a.*
+                FROM dijkstra a
+                LEFT JOIN (SELECT * FROM jrc_get_ids_arrays (1, {distance})) b
+                ON (a.end_vid = b.node_building2)
+            ),
+        	routes AS (
+        		SELECT id_building, ST_Multi(ST_LineMerge(ST_Collect(geom))) AS geom
+                FROM join_ids
+        		GROUP BY id_building
+        	),
+        	final AS (
+        		SELECT a.id_building, a.geom, b.id_mun
+                FROM routes a
+                LEFT JOIN {table_1} b
+                ON (a.id_building = b.id_building)
+                ORDER BY a.id_building
+        	)
+            SELECT *
+            FROM final   ;
+    """.format(
+        create = create_table(route_table),
+        table_1 = points_table,
+        table_2 = noded_table,
+        table_3 = vertice_table,
+        distance = SQL_distances['max_travel']
+    )
+
+    end = get_time()
+    debug ("Total time = {0}".format(get_total_time(start,end)))
+
+    print sql_route
+    sql_custom (table = route_table,  sql=sql_route)
+
+def Step_06_extract_Routes_DEPRECATED ():
+
+    ####### TO SLOW
 
     start = get_time()
 

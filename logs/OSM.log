@@ -1,81 +1,53 @@
-17:02:13 WARNING  is when this event was logged.
-17:02:13 INFO     DROP TABLE IF EXISTS topo_route_50km;
-CREATE TABLE topo_route_50km (id_building int, id_target int, cost double precision, distance double precision, length double precision)
-17:02:19 INFO     SELECT AddGeometryColumn ('public', 'topo_route_50km','geom', 3035, 'multilinestring', 2);
-17:02:19 INFO     
-    DO
-    $$
-    DECLARE
-    	loop_targets record;
-    	loop_farms record;
-    BEGIN
-        
-        -- selet target nodes
-        CREATE TEMPORARY TABLE IF NOT EXISTS targets AS (SELECT id_target FROM topo_targets WHERE id_target <= 1);
+15:03:05 WARNING  is when this event was logged.
+15:03:05 DEBUG    Total time = 0.0
+15:03:05 INFO     
+        DROP TABLE IF EXISTS topo_route_10km;
+CREATE TABLE topo_route_10km AS
+        WITH
+            target AS
+            (
+                SELECT 	a.id AS id_node, b.id_target, ST_Distance(a.the_geom, b.geom) AS dist
+                FROM 	topo_roads_noded_vertices_pgr AS a,
+                    (SELECT id_target, geom FROM topo_targets where id_target <= 2) AS b
+                WHERE 	ST_DWithin (a.the_geom, b.geom, 500)
+                ORDER BY dist ASC
+                LIMIT 1
+            ),
+            farm AS
+            (
+                SELECT array_agg(node_building2) AS id_node FROM jrc_get_ids_arrays (1, 10000)
+            ),
+            dijkstra as (
+                SELECT
+                    dijkstra.*, topo_roads_noded.geom
+                FROM	pgr_dijkstra(
+                        'SELECT id, source::integer, target::integer, distance::double precision AS cost FROM topo_roads_noded',
+                        (SELECT id_node FROM target), (SELECT id_node FROM farm),false) AS dijkstra
+                LEFT JOIN
+                    topo_roads_noded
+                ON
+                    (edge = id)
+                ORDER BY
+                    seq
+            ),
+            join_ids AS (
+                SELECT b.id_building2 AS id_building, b.id_target2 AS id_target, a.*
+                FROM dijkstra a
+                LEFT JOIN (SELECT * FROM jrc_get_ids_arrays (1, 10000)) b
+                ON (a.end_vid = b.node_building2)
+            ),
+        	routes AS (
+        		SELECT id_building, ST_Multi(ST_LineMerge(ST_Collect(geom))) AS geom
+                FROM join_ids
+        		GROUP BY id_building
+        	),
+        	final AS (
+        		SELECT a.id_building, a.geom, b.id_mun
+                FROM routes a
+                LEFT JOIN topo_targets b
+                ON (a.id_building = b.id_building)
+                ORDER BY a.id_building
+        	)
+            SELECT *
+            FROM final   ;
     
-        -- LOOP 1 (TARGET)
-            FOR loop_targets IN SELECT id_target FROM targets
-        LOOP
-            -- LOOP 2 (FARM)
-                
-        FOR loop_farms IN
-	    SELECT a.id_building FROM (
-    		SELECT * FROM jrc_get_farm_ids (
-                (SELECT id_target FROM topo_targets WHERE id_target = loop_targets.id_target),
-                 -- max travel distance
-                50000)
-    		) as a
-    
-            LOOP
-                WITH
-                    
-
-    		nodes as (select * from jrc_get_ids_from_nodes (
-                -- get target id (from loop 1)
-    			(SELECT id_target FROM topo_targets WHERE id_target =  loop_targets.id_target),
-                -- get farm id (from loop 2)
-    			(SELECT id_building FROM topo_targets WHERE id_building =  loop_farms.id_building)))
-    ,
-                    
-    		dijkstra AS (
-                -- extract path with smallest distance between farm and target
-                SELECT  b.*, topo_roads_noded.geom
-                FROM pgr_dijkstra (
-                    -- dijkstra results
-                    'SELECT id, source::integer, target::integer, distance::double precision AS cost FROM topo_roads_noded',
-                    -- target id
-                     (SELECT node_target FROM nodes),
-                     -- farm id
-                     (SELECT node_farm FROM nodes), false
-                     ) AS b
-    			LEFT JOIN
-    				topo_roads_noded
-    			ON
-    				(edge = id)
-    			ORDER BY
-    				seq
-            )
-    ,
-                    
-        -- get the linestring from dijkstra
-        line as (SELECT ST_Multi(ST_Collect(geom)) as geom FROM dijkstra)
-    
-                    
-            -- insert results into table for each pair of farm and target IDs
-    		INSERT INTO topo_route_50km (id_building, id_target, cost, distance, length, geom)
-    		VALUES (
-    			(SELECT id_building FROM nodes),
-    			(SELECT id_target FROM nodes),
-    			(SELECT sum(dist) FROM nodes),
-    			(SELECT dist FROM nodes),
-    			(SELECT ST_Length (geom) FROM line),
-    			(SELECT geom FROM line)
-            );
-    
-            END LOOP;
-        END LOOP;
-    END
-    $$;
-
-    
-17:55:21 DEBUG    Total time = 53.14
