@@ -1,0 +1,32 @@
+# Tiff files
+*.tiff
+*.tif
+*.tfw
+
+# Shape files
+*.shp
+*.dbf
+*.qpj
+*.shx
+*.prj
+
+# Zip files
+*.zip
+
+# folders
+/01_Input/*
+02_Output/**
+**/01_Input/**
+**/02_Output/**
+**/03_Scripts/cache/**
+**/TMP
+
+# python files
+*.pyc
+
+
+*.svgz
+*.odg
+*.png
+
+
