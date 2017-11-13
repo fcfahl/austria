@@ -1,0 +1,29 @@
+
+___________________GIT
+http://rogerdudler.github.io/git-guide/
+
+1) Set up git
+git config --global user.name "fcfahl"
+git config --global user.email "fcfahl@gmx.com"
+
+git config --global core.editor "atom --wait"
+
+2) Set up local repository
+cd ... [project]
+git init 
+git remote add origin [repository url]
+
+e.g 
+git remote add origin https://github.com/fcfahl/austria.git
+
+
+3) Pull repository if it already exists
+git pull origin master
+
+4) Push repo case it is a new project
+git add -A
+git commit -m 'Jade'
+git push origin master
+
+5) Update local repo
+

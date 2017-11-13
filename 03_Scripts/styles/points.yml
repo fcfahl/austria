@@ -1,0 +1,13 @@
+  points:
+    type: point
+    mapping:
+      landuse: [__any__]
+      place: [__any__]
+    fields:
+    - {name: osm_id, type: id}
+    - {name: geom, type: geometry}
+    - {name: tags, type: hstore_tags}
+    - {name: value, type: mapping_value}
+    - {name: key, type: mapping_key}
+    - {key: name, name: name, type: string}
+    - {key: landuse, name: landuse, type: string}

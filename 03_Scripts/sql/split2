@@ -1,0 +1,48 @@
+﻿
+
+
+DROP TABLE IF EXISTS topo_roads2;
+CREATE TABLE topo_roads2 AS
+select 
+
+(st_dump(st_split(line.geom, ST_Snap(point.geom,line.geom, 1)))).geom as geom
+
+FROM 
+
+(select * from osm_roads where id = 18383) as line,
+(select * from topo_targets where id_target = 1) as point
+;
+
+select * from topo_roads2;
+
+
+
+DROP TABLE IF EXISTS topo_roads2;
+CREATE TABLE topo_roads2 AS
+select 
+line.id,
+(st_dump(st_split(line.geom, point.geom))).geom as geom
+
+FROM 
+
+(select * from osm_roads where id = 17434) as line,
+(select ST_Collect(geom) as geom from topo_targets where id_target = 572  group by geom) as point
+;
+
+select * from topo_roads2;
+
+
+DROP TABLE IF EXISTS topo_roads2;
+CREATE TABLE topo_roads2 AS
+SELECT ST_Multi(St_Union(a.geom)) as geom, a.id_target
+FROM (select * from topo_targets where id_target = 572 or id_target = 573) as a
+INNER JOIN (
+	SELECT c.id_target
+	FROM (select * from topo_targets where id_target = 572 or id_target = 573) as c
+	GROUP BY c.id_target
+	HAVING COUNT(*)>1
+) b ON a.id_target = b.id_target
+
+
+GROUP BY a.id_target
+

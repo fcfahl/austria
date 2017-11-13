@@ -1,0 +1,53 @@
+15:03:05 WARNING  is when this event was logged.
+15:03:05 DEBUG    Total time = 0.0
+15:03:05 INFO     
+        DROP TABLE IF EXISTS topo_route_10km;
+CREATE TABLE topo_route_10km AS
+        WITH
+            target AS
+            (
+                SELECT 	a.id AS id_node, b.id_target, ST_Distance(a.the_geom, b.geom) AS dist
+                FROM 	topo_roads_noded_vertices_pgr AS a,
+                    (SELECT id_target, geom FROM topo_targets where id_target <= 2) AS b
+                WHERE 	ST_DWithin (a.the_geom, b.geom, 500)
+                ORDER BY dist ASC
+                LIMIT 1
+            ),
+            farm AS
+            (
+                SELECT array_agg(node_building2) AS id_node FROM jrc_get_ids_arrays (1, 10000)
+            ),
+            dijkstra as (
+                SELECT
+                    dijkstra.*, topo_roads_noded.geom
+                FROM	pgr_dijkstra(
+                        'SELECT id, source::integer, target::integer, distance::double precision AS cost FROM topo_roads_noded',
+                        (SELECT id_node FROM target), (SELECT id_node FROM farm),false) AS dijkstra
+                LEFT JOIN
+                    topo_roads_noded
+                ON
+                    (edge = id)
+                ORDER BY
+                    seq
+            ),
+            join_ids AS (
+                SELECT b.id_building2 AS id_building, b.id_target2 AS id_target, a.*
+                FROM dijkstra a
+                LEFT JOIN (SELECT * FROM jrc_get_ids_arrays (1, 10000)) b
+                ON (a.end_vid = b.node_building2)
+            ),
+        	routes AS (
+        		SELECT id_building, ST_Multi(ST_LineMerge(ST_Collect(geom))) AS geom
+                FROM join_ids
+        		GROUP BY id_building
+        	),
+        	final AS (
+        		SELECT a.id_building, a.geom, b.id_mun
+                FROM routes a
+                LEFT JOIN topo_targets b
+                ON (a.id_building = b.id_building)
+                ORDER BY a.id_building
+        	)
+            SELECT *
+            FROM final   ;
+    
