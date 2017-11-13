@@ -179,7 +179,7 @@ SQL_distances = {
     'lulc_zones': 1000,
     'osm': 100,
     'tolerance': 0.01,
-    'max_travel': 10000,
+    'max_travel': 4000,
 }
 
 SQL_target = {
@@ -206,10 +206,13 @@ SQL_topology= {
 	'noded' : SQL_obj ('topo_roads_noded', '', 'topology of main roads'),
 	'roads_ver' : SQL_obj ('topo_roads_vertices_pgr', '', 'output of pgr_createTopology'),
 	'noded_ver' : SQL_obj ('topo_roads_noded_vertices_pgr', '', 'output of pgr_createTopology'),
-	'route' : SQL_obj ('topo_route', '', 'shortest distance'),
 }
 
-
+SQL_route= {
+	'route' : SQL_obj ('route_distance', '', 'shortest distance'),
+	'targets' : SQL_obj ('route_targets', '', 'targets to be used on routing'),
+	'nodes' : SQL_obj ('route_node_ids', '', 'node ids'),
+}
 
 prefix = 'osm'
 Files.class_counter = -99
