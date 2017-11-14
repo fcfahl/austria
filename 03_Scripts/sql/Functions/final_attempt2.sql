@@ -10,7 +10,7 @@ SELECT AddGeometryColumn ('public', 'topo_route_tmp','geom', 3035, 'multilinestr
 -- Step 1: Selet target points
 
 DROP TABLE IF EXISTS tmp_1_targets;
-CREATE TABLE tmp_1_targets AS (SELECT id_target, geom FROM site_clean WHERE id_target <= 250);
+CREATE TABLE tmp_1_targets AS (SELECT id_target, geom FROM site_clean WHERE id_target <= 2);
 
 -- Step 2: Create node table
 
@@ -24,7 +24,7 @@ DO
 $$
 DECLARE
 	i integer; 
-	distance int := 50000; 
+	distance int := 3000; 
 	n_targets int[];
 	id_target_ int;
 	node_target_ int;
