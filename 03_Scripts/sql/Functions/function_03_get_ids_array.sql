@@ -25,7 +25,10 @@ $$
 					(SELECT id_target FROM topo_targets WHERE id_target =  $1),
 					(SELECT id_building FROM topo_targets WHERE id_building =  n_buildings[i]))) ;
 
--- 			RAISE NOTICE 'The farm id is : % and the node is : % s', n_buildings[i] , node_building2;
+	-- 		RAISE NOTICE 'target id / node  = % | % ', id_target3, node_target3;
+-- 			RAISE NOTICE 'number of farms = % ', n_buildings;
+-- 			RAISE NOTICE 'farm id / node = % | % ', id_building3, node_building3;
+-- 			RAISE NOTICE '';
 
 			RETURN NEXT;
 		END LOOP;
@@ -33,4 +36,4 @@ $$
 	END;
 $$ LANGUAGE PLPGSQL;
 
-select * from jrc_03_get_node_arrays (1, 5000)
+select * from jrc_03_get_node_arrays (2, 5000) order by id_building3;

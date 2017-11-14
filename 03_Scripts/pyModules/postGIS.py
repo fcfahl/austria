@@ -34,18 +34,18 @@ def connect_PostGIS (db=db_PostGIS['dbname']):
 
     global connect
 
-    try:
-        connect = psycopg2.connect(
-            dbname=db,
-            user=db_PostGIS['user'],
-            host=db_PostGIS['host'],
-            password=db_PostGIS['pwd'],
-            sslmode='disable')
-        print "connected to the database \t->\t {db}".format(db=db)
+    # try:
+    connect = psycopg2.connect(
+        dbname=db,
+        user=db_PostGIS['user'],
+        host=db_PostGIS['host'],
+        password=db_PostGIS['pwd'],
+        sslmode='disable')
+    print "connected to the database \t->\t {db}".format(db=db)
 
-    except psycopg2.OperationlError as e:
-        print "unable to connect to the database {db} due to \n{error}".format(db=db, error=e)
-        sys.exit(1)
+    # except psycopg2.OperationlError as e:
+    #     print "unable to connect to the database {db} due to \n{error}".format(db=db, error=e)
+    #     sys.exit(1)
 
     connect.autocommit = True
     return connect.cursor()

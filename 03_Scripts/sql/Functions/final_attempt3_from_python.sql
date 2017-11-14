@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS route_targets;
 CREATE TABLE route_targets AS
 SELECT id_target, geom
 FROM topo_targets
-WHERE id_target >0  AND id_target < = 2 ;
+WHERE id_target > 0  AND id_target <= 2 ;
 
 DROP TABLE IF EXISTS route_node_ids;
 CREATE TABLE route_node_ids (target_ int, farm_ int, node_target_ int, node_farm_ int );
@@ -46,9 +46,9 @@ LOOP
 	-- Assign the ids to variables
 	node_target_ := (SELECT a.node_target_ FROM route_node_ids AS a WHERE target_ = id_target_ LIMIT 1);
 	id_building_ := (SELECT array_agg(farm_) FROM route_node_ids WHERE target_ = id_target_);
-	node_building_ := (SELECT array_agg(node_farm_) FROM route_node_ids);
+	node_building_ := (SELECT array_agg(node_farm_) FROM route_node_ids WHERE target_ = id_target_);
 
-	n_farms := (SELECT COUNT (*) FROM route_node_ids);
+	n_farms := (SELECT COUNT (*) FROM route_node_ids WHERE target_ = id_target_);
 
 	RAISE NOTICE 'target id / node  = % | % ', id_target_, node_target_;
 	RAISE NOTICE 'number of farms = % ', n_farms;

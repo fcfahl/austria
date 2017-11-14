@@ -142,7 +142,8 @@ db_PostGIS = {
     "dbname" :  'amstetten_biogas',
     "host"  :   'localhost',
     "user"  :   'postgres',
-    "pwd"   :   'postgres',
+    "pwd"   :   'rosana',
+    # "pwd"   :   'postgres',
     "port"  :   '5432',
     'proj'  :   '3035',
     'cursor'  :  '',
@@ -179,7 +180,9 @@ SQL_distances = {
     'lulc_zones': 1000,
     'osm': 100,
     'tolerance': 0.01,
-    'max_travel': 5000,
+    'max_travel': 50000,
+    'features': '500',
+    'criteria': 'id_target > 250 and id_target <= 500',
 }
 
 SQL_target = {

@@ -145,12 +145,14 @@ def Step_04_update_Topology ():
 
 def Step_05_create_PG_Functions ():
 
+    number_features = SQL_distances['features'] # just to test the results: use > 0 to get all the results
+
     points_table = SQL_topology['targets'].name
     nodes_table = SQL_topology['noded'].name
     nodes_vertices = SQL_topology['noded_ver'].name
     route_table = SQL_route['route'].name
     route_targets = SQL_route['targets'].name
-    route_ids = SQL_route['nodes'].name
+    route_nodes = "{0}_{1}__".format(SQL_route['nodes'].name, number_features)
 
     # ________________________ Function 1
     function_ids = "jrc_01_get_farm_ids"
@@ -206,11 +208,11 @@ def Step_05_create_PG_Functions ():
     columns_array  = "id_target_ int, distance int"
     return_array  = "table (id_target3 int, id_building3 int, node_target3 int, node_building3 int)"
 
-    declare_array = "n_buildings int[]; i integer;"
+    declare_array = "n_buildings int[]; i integer; distance_fix int := distance * 0.8; -- distance correction factor"
 
     sql_array = """
     	n_buildings := ((SELECT array_agg(id_building1) FROM jrc_01_get_farm_ids (
-    		(SELECT id_target FROM {table_1} WHERE id_target = $1), $2))::int[]);
+    		(SELECT id_target FROM {table_1} WHERE id_target = $1), distance_fix))::int[]);
 
     	FOR i IN 1 .. array_upper(n_buildings, 1)
     	LOOP
@@ -235,9 +237,9 @@ def Step_05_create_PG_Functions ():
     # ________________________ Function 4
     function_route= "jrc_04_routes"
     columns_route  = "id_target_ int, id_building_ int[], node_target_ int,  node_farm_ int[]"
-    return_route  = "table (id_target4 int, id_building4 int, length double precision, geom geometry)"
+    return_route  = "table (id_target4 int, id_building4 int, length4 double precision, geom geometry)"
 
-    declare_route = "n_buildings int[]; i integer;"
+    declare_route = "n_buildings int[]; i integer;distance int := {0};".format(SQL_distances['max_travel'])
 
     sql_route = """
         RETURN QUERY
@@ -249,7 +251,7 @@ def Step_05_create_PG_Functions ():
 
             dijkstra as (
             	SELECT
-            	    dijkstra.*, {nodes}.geom
+            	    $1 as dij_target, dijkstra.*, {nodes}.geom
             	FROM	pgr_dijkstra(
             		'SELECT id, source::integer, target::integer, distance::double precision AS cost FROM {nodes}',
             		$3, $4,false) AS dijkstra
@@ -264,7 +266,7 @@ def Step_05_create_PG_Functions ():
             	SELECT b.farm_, a.*
             	FROM dijkstra a
             	LEFT JOIN (SELECT * FROM {ids}) AS b
-            	ON (a.end_vid = b.node_farm_)
+            	ON (a.end_vid = b.node_farm_ AND a.dij_target = b.target_)
             ),
             routes AS (
             	SELECT c.farm_, ST_Multi(ST_LineMerge(ST_Collect(c.geom))) AS geom
@@ -272,13 +274,13 @@ def Step_05_create_PG_Functions ():
             	GROUP BY c.farm_
             ),
             merge_results AS (
-            	SELECT d.farm_, d.geom
+            	SELECT d.farm_, d.geom, ST_Length(d.geom) as length
             	FROM routes AS d
             	LEFT JOIN {targets} AS e
             	ON (d.farm_ = e.id_building)
             	ORDER BY d.farm_
             )
-            SELECT id_target_ AS  id_target4, f.farm_, ST_Length(f.geom), f.geom FROM merge_results AS f  ;
+            SELECT id_target_ AS  id_target4, f.farm_, f.length, f.geom FROM merge_results AS f  WHERE  f.length <= distance ;
 
             --RAISE NOTICE 'target id / node  = % | % ', id_target_, node_target_;
             --RAISE NOTICE 'farm id / node = % | % ', id_building_, node_farm_;
@@ -286,7 +288,7 @@ def Step_05_create_PG_Functions ():
 
     """.format(
         nodes = nodes_table,
-        ids = route_ids,
+        ids = route_nodes,
         targets = points_table
         )
 
@@ -297,10 +299,12 @@ def Step_05_create_PG_Functions ():
     sql_create_PLPGSQL_function(name=function_array, columns=columns_array, return_=return_array, declare=declare_array, sql=sql_array)
     sql_create_PLPGSQL_function(name=function_route, columns=columns_route, return_=return_route, declare=declare_route, sql=sql_route)
 
-
 def Step_06_extract_Routes ():
 
     start = get_time()
+
+    number_features = SQL_distances['features'] # just to test the results: use > 0 to get all the results
+
 
     # ________________________ Tables
     points_table = SQL_topology['targets'].name
@@ -308,13 +312,12 @@ def Step_06_extract_Routes ():
     nodes_vertices = SQL_topology['noded_ver'].name
     route_table = SQL_route['route'].name
     route_targets = SQL_route['targets'].name
-    route_nodes = SQL_route['nodes'].name
+    route_nodes = "{0}_{1}__".format(SQL_route['nodes'].name, number_features)
 
-    number_features = '2' # just to test the results: use > 0 to get all the results
+    route_table_name = "{0}_{1}m_{2}__".format(route_table, SQL_distances['max_travel'], number_features).replace('000m', 'km')
+    route_target_name = "route_targets_{0}__".format(number_features)
 
 
-    # ________________________ Create output table
-    route_table_name = "{0}_{1}_{2}m".format(route_table, number_features, SQL_distances['max_travel']).replace('000m', 'km')
 
     # ________________________ Step 01 Create route table (structure only)
     sql_step1= "{create} (id_target int, id_building int, length double precision );".format (
@@ -325,10 +328,10 @@ def Step_06_extract_Routes ():
 
     # ________________________ Step 02 Create target points
     sql_create_table (
-        table = route_targets,
+        table = route_target_name,
         select = 'id_target, geom',
         from_ = points_table,
-        where = 'id_target <= ' + number_features
+        where =  SQL_distances['criteria']
     )
 
     # ________________________ Step 03 Create node points
@@ -375,19 +378,24 @@ def Step_06_extract_Routes ():
     		-- Assign the ids to variables
     	 	node_target_ := (SELECT a.node_target_ FROM {nodes} AS a WHERE target_ = id_target_ LIMIT 1);
     		id_building_ := (SELECT array_agg(farm_) FROM {nodes} WHERE target_ = id_target_);
-    		node_building_ := (SELECT array_agg(node_farm_) FROM {nodes});
+    		node_building_ := (SELECT array_agg(node_farm_) FROM {nodes} WHERE target_ = id_target_);
 
-    		n_farms := (SELECT COUNT (*) FROM {nodes});
+    		n_farms := (SELECT COUNT (*) FROM {nodes}  WHERE target_ = id_target_);
 
-    		RAISE NOTICE 'target id / node  = % | % ', id_target_, node_target_;
+    		RAISE NOTICE 'target id  = % ', id_target_;
+    		RAISE NOTICE 'target node  = % ', node_target_;
     		RAISE NOTICE 'number of farms = % ', n_farms;
-    		RAISE NOTICE 'farm id / node = % | % ', id_building_, node_building_;
+    		RAISE NOTICE '____________________________';
+    		RAISE NOTICE 'farm id  % ', id_building_;
+    		RAISE NOTICE '____________________________';
+    		RAISE NOTICE 'farm node = % ', node_building_;
+    		RAISE NOTICE '____________________________';
     		RAISE NOTICE '';
 
     		-- Do the routing between the target (point) and the farms (array)
 
     		INSERT INTO "{route}" (id_target, id_building, length, geom)
-    		SELECT id_target4, id_building4, length, geom FROM jrc_04_routes (id_target_, id_building_, node_target_, node_building_);
+    		SELECT id_target4, id_building4, length4, geom FROM jrc_04_routes (id_target_, id_building_, node_target_, node_building_);
 
     	END LOOP;
     END
@@ -396,12 +404,15 @@ def Step_06_extract_Routes ():
 
     """.format(
         declarations=declarations,
-        targets=route_targets,
+        targets=route_target_name,
         nodes=route_nodes,
         route=route_table_name
     )
 
     sql_custom (table = route_table_name,  sql=sql_route)
+
+    end = get_time()
+    debug ("Total time step 6 = {0}".format(get_total_time(start,end)))
 
 def Step_06_extract_Routes_DEPRECATED ():
 

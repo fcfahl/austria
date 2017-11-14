@@ -4,7 +4,7 @@ from variables import *
 
 def execute_Query (query, table):
 
-    print "\n______________________________\n\n{0}\n______________________________\n".format(query)
+    print "\n____________________________________________________________\n"
 
     cursor = db_PostGIS['cursor']
 
@@ -65,7 +65,8 @@ def add_Pkey (table, pkey):
     execute_Query (sql, "")
 
 def add_column (table, column):
-    sql = "ALTER TABLE {0} ADD COLUMN IF NOT EXISTS {1};".format (table, column)
+    # sql = "ALTER TABLE {0} ADD COLUMN IF NOT EXISTS {1};".format (table, column)
+    sql = "ALTER TABLE {0} ADD COLUMN  {1};".format (table, column)
     execute_Query (sql, table)
 
 def add_geometry (scheme, table, column, srid, type_, dimension):

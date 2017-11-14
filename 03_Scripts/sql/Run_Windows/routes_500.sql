@@ -1,15 +1,17 @@
-15:13:34 WARNING  is when this event was logged.
-15:13:34 INFO     DROP TABLE IF EXISTS route_distance_50km_500__;
+﻿DROP TABLE IF EXISTS route_distance_50km_500__;
 CREATE TABLE route_distance_50km_500__ (id_target int, id_building int, length double precision );
-15:13:34 INFO     SELECT AddGeometryColumn ('public', 'route_distance_50km_500__','geom', 3035, 'multilinestring', 2);
-15:13:34 INFO     DROP TABLE IF EXISTS route_targets_500__;
+SELECT AddGeometryColumn ('public', 'route_distance_50km_500__','geom', 3035, 'multilinestring', 2);
+
+DROP TABLE IF EXISTS route_targets_500__;
 CREATE TABLE route_targets_500__ AS
 SELECT id_target, geom
 FROM topo_targets
 WHERE id_target > 250 and id_target <= 500;
-15:13:34 INFO     DROP TABLE IF EXISTS route_node_ids_500__;
+
+DROP TABLE IF EXISTS route_node_ids_500__;
 CREATE TABLE route_node_ids_500__ (target_ int, farm_ int, node_target_ int, node_farm_ int );
-15:13:34 INFO     
+    
+	
     DO
     $$
     DECLARE
@@ -66,6 +68,3 @@ CREATE TABLE route_node_ids_500__ (target_ int, farm_ int, node_target_ int, nod
     	END LOOP;
     END
     $$;
-
-
-    
