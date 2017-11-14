@@ -87,7 +87,7 @@ if __name__ == "__main__":
     # TOPO.Step_02_segmentize_OSM_Roads()
     # TOPO.Step_03_create_Road_Topology()
     # TOPO.Step_04_update_Topology()
-    # TOPO.Step_05_create_PG_Functions()
+    TOPO.Step_05_create_PG_Functions()
     TOPO.Step_06_extract_Routes()
 
 
