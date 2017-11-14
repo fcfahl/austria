@@ -181,8 +181,8 @@ SQL_distances = {
     'osm': 100,
     'tolerance': 0.01,
     'max_travel': 50000,
-    'features': '500',
-    'criteria': 'id_target > 250 and id_target <= 500',
+    'features': '750',
+    'criteria': 'id_target > 500 and id_target <= 750',
 }
 
 SQL_target = {

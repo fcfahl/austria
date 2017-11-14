@@ -40,7 +40,7 @@ git commit -m 'first'
 git push origin master
 
 5) Update local repo
-git pull
+git pull origin master
 
 
 ## ignore folders
