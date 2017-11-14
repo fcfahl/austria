@@ -1,5 +1,5 @@
-16:09:05 WARNING  is when this event was logged.
-16:09:05 INFO     
+18:55:24 WARNING  is when this event was logged.
+18:55:24 INFO     
         DROP FUNCTION IF EXISTS jrc_01_get_farm_ids (id_target_ int, distance int);
         CREATE OR REPLACE FUNCTION jrc_01_get_farm_ids (id_target_ int, distance int)
         RETURNS table (id_building1 int) AS
@@ -13,7 +13,7 @@
     
         $$ LANGUAGE SQL;
     
-16:09:05 INFO     
+18:55:24 INFO     
         DROP FUNCTION IF EXISTS jrc_02_get_road_node (id_target_ int, id_farm_ int);
         CREATE OR REPLACE FUNCTION jrc_02_get_road_node (id_target_ int, id_farm_ int)
         RETURNS table (id_target2 int, id_building2 int, node_target2 bigint, node_farm2 bigint, dist2 double precision) AS
@@ -40,7 +40,7 @@
     
         $$ LANGUAGE SQL;
     
-16:09:05 INFO     
+18:55:24 INFO     
         DROP FUNCTION IF EXISTS jrc_03_get_node_arrays (id_target_ int, distance int);
         CREATE OR REPLACE FUNCTION jrc_03_get_node_arrays (id_target_ int, distance int)
         RETURNS table (id_target3 int, id_building3 int, node_target3 int, node_building3 int) AS
@@ -74,7 +74,7 @@
     	END;
         $$ LANGUAGE PLPGSQL;
     
-16:09:05 INFO     
+18:55:24 INFO     
         DROP FUNCTION IF EXISTS jrc_04_routes (id_target_ int, id_building_ int[], node_target_ int,  node_farm_ int[]);
         CREATE OR REPLACE FUNCTION jrc_04_routes (id_target_ int, id_building_ int[], node_target_ int,  node_farm_ int[])
         RETURNS table (id_target4 int, id_building4 int, length4 double precision, geom geometry) AS
@@ -106,7 +106,7 @@
             join_ids AS (
             	SELECT b.farm_, a.*
             	FROM dijkstra a
-            	LEFT JOIN (SELECT * FROM route_node_ids_750__) AS b
+            	LEFT JOIN (SELECT * FROM route_node_ids_1500__) AS b
             	ON (a.end_vid = b.node_farm_ AND a.dij_target = b.target_)
             ),
             routes AS (
@@ -131,17 +131,17 @@
     	END;
         $$ LANGUAGE PLPGSQL;
     
-16:09:05 INFO     DROP TABLE IF EXISTS route_distance_50km_750__;
-CREATE TABLE route_distance_50km_750__ (id_target int, id_building int, length double precision );
-16:09:05 INFO     SELECT AddGeometryColumn ('public', 'route_distance_50km_750__','geom', 3035, 'multilinestring', 2);
-16:09:05 INFO     DROP TABLE IF EXISTS route_targets_750__;
-CREATE TABLE route_targets_750__ AS
+18:55:24 INFO     DROP TABLE IF EXISTS route_distance_50km_1500__;
+CREATE TABLE route_distance_50km_1500__ (id_target int, id_building int, length double precision );
+18:55:24 INFO     SELECT AddGeometryColumn ('public', 'route_distance_50km_1500__','geom', 3035, 'multilinestring', 2);
+18:55:24 INFO     DROP TABLE IF EXISTS route_targets_1500__;
+CREATE TABLE route_targets_1500__ AS
 SELECT id_target, geom
 FROM topo_targets
-WHERE id_target > 500 and id_target <= 750;
-16:09:05 INFO     DROP TABLE IF EXISTS route_node_ids_750__;
-CREATE TABLE route_node_ids_750__ (target_ int, farm_ int, node_target_ int, node_farm_ int );
-16:09:05 INFO     
+WHERE id_target > 1000 and id_target <= 1500;
+18:55:24 INFO     DROP TABLE IF EXISTS route_node_ids_1500__;
+CREATE TABLE route_node_ids_1500__ (target_ int, farm_ int, node_target_ int, node_farm_ int );
+18:55:24 INFO     
     DO
     $$
     DECLARE
@@ -159,7 +159,7 @@ CREATE TABLE route_node_ids_750__ (target_ int, farm_ int, node_target_ int, nod
     
     BEGIN
     	-- Get number of target points
-    	n_targets := (SELECT array_agg(id_target) FROM route_targets_750__);
+    	n_targets := (SELECT array_agg(id_target) FROM route_targets_1500__);
 
     	-- Perform the Loop
     	FOR i IN 1 .. array_upper(n_targets, 1)
@@ -168,17 +168,17 @@ CREATE TABLE route_node_ids_750__ (target_ int, farm_ int, node_target_ int, nod
     		id_target_ := n_targets[i];
 
     		-- Get the id nodes (from roads) of the target and farm locations within a given distance
-    		INSERT INTO "route_node_ids_750__" (target_, farm_, node_target_, node_farm_)
+    		INSERT INTO "route_node_ids_1500__" (target_, farm_, node_target_, node_farm_)
     			SELECT id_target3 AS target_, id_building3 AS farm_,
     				node_target3 AS node_target_, node_building3 AS node_farm_
     			FROM jrc_03_get_node_arrays (id_target_, distance);
 
     		-- Assign the ids to variables
-    	 	node_target_ := (SELECT a.node_target_ FROM route_node_ids_750__ AS a WHERE target_ = id_target_ LIMIT 1);
-    		id_building_ := (SELECT array_agg(farm_) FROM route_node_ids_750__ WHERE target_ = id_target_);
-    		node_building_ := (SELECT array_agg(node_farm_) FROM route_node_ids_750__ WHERE target_ = id_target_);
+    	 	node_target_ := (SELECT a.node_target_ FROM route_node_ids_1500__ AS a WHERE target_ = id_target_ LIMIT 1);
+    		id_building_ := (SELECT array_agg(farm_) FROM route_node_ids_1500__ WHERE target_ = id_target_);
+    		node_building_ := (SELECT array_agg(node_farm_) FROM route_node_ids_1500__ WHERE target_ = id_target_);
 
-    		n_farms := (SELECT COUNT (*) FROM route_node_ids_750__  WHERE target_ = id_target_);
+    		n_farms := (SELECT COUNT (*) FROM route_node_ids_1500__  WHERE target_ = id_target_);
 
     		RAISE NOTICE 'target id  = % ', id_target_;
     		RAISE NOTICE 'target node  = % ', node_target_;
@@ -192,7 +192,7 @@ CREATE TABLE route_node_ids_750__ (target_ int, farm_ int, node_target_ int, nod
 
     		-- Do the routing between the target (point) and the farms (array)
 
-    		INSERT INTO "route_distance_50km_750__" (id_target, id_building, length, geom)
+    		INSERT INTO "route_distance_50km_1500__" (id_target, id_building, length, geom)
     		SELECT id_target4, id_building4, length4, geom FROM jrc_04_routes (id_target_, id_building_, node_target_, node_building_);
 
     	END LOOP;
