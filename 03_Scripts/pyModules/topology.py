@@ -310,9 +310,11 @@ def Step_06_extract_Routes ():
     route_targets = SQL_route['targets'].name
     route_nodes = SQL_route['nodes'].name
 
+    number_features = '2' # just to test the results: use > 0 to get all the results
+
 
     # ________________________ Create output table
-    route_table_name = "{0}_{1}m".format(route_table, SQL_distances['max_travel']).replace('000m', 'km')
+    route_table_name = "{0}_{1}_{2}m".format(route_table, number_features, SQL_distances['max_travel']).replace('000m', 'km')
 
     # ________________________ Step 01 Create route table (structure only)
     sql_step1= "{create} (id_target int, id_building int, length double precision );".format (
@@ -326,7 +328,7 @@ def Step_06_extract_Routes ():
         table = route_targets,
         select = 'id_target, geom',
         from_ = points_table,
-        where = "id_target <= 2"
+        where = 'id_target <= ' + number_features
     )
 
     # ________________________ Step 03 Create node points

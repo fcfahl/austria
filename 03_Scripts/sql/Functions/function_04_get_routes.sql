@@ -58,9 +58,9 @@ WITH
 --     
     SELECT id_target_ AS  id_target4, f.farm_, ST_Length(f.geom), f.geom FROM merge_results AS f  ;
     
-    RAISE NOTICE 'target id / node  = % | % ', id_target_, node_target_;
-    RAISE NOTICE 'farm id / node = % | % ', id_building_, node_farm_;
-    RAISE NOTICE ''; 
+--     RAISE NOTICE 'target id / node  = % | % ', id_target_, node_target_;
+--     RAISE NOTICE 'farm id / node = % | % ', id_building_, node_farm_;
+--     RAISE NOTICE ''; 
 
 
 END;

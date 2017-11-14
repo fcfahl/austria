@@ -179,7 +179,7 @@ SQL_distances = {
     'lulc_zones': 1000,
     'osm': 100,
     'tolerance': 0.01,
-    'max_travel': 4000,
+    'max_travel': 5000,
 }
 
 SQL_target = {
