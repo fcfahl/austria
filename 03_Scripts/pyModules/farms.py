@@ -25,7 +25,7 @@ def Step_00_dissolve_Roads ():
         where = ""
     )
 
-def Step_01_import_Farm_Tables (table):
+def Step_01_import_Farm_Tables ():
 
     for key in FARM:
 
@@ -36,68 +36,71 @@ def Step_01_import_Farm_Tables (table):
 
         import_CSV_PostGIS (table=FARM[key].name, csv=csv_file, sep=',')
 
-        add_Pkey (table=FARM[key].name, pkey='farm_id')
+        add_Pkey (table=FARM[key].name, pkey='id_farm')
 
         os.remove (csv_file)
 
-def Step_02_rank_Farm_Tables (table):
+
+def Step_02_rank_Farm_Tables ():
 
     for key in FARM:
 
-        table =  "rank_" + FARM[key].name
-        sequence = 'serial'
+        if key != 'parameter':
 
-        create_index (table=FARM[key].name, column='total')
+            table =  "rank_" + FARM[key].name
+            sequence = 'serial'
 
-        # ______________ order farms by total column
-        sql_rank = """
-            {create_table} AS
-            SELECT {select}
-            FROM {from_}
-            ORDER BY {order};
-        """.format (
-                create_table = create_table(table),
-                select = "*, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order",
-                from_ = FARM[key].name,
-                sequence = sequence,
-                order = 'mun_id ASC, total DESC'
+            create_index (table=FARM[key].name, column='total')
+
+            # ______________ order farms by total column
+            sql_rank = """
+                {create_table} AS
+                SELECT {select}
+                FROM {from_}
+                ORDER BY {order};
+            """.format (
+                    create_table = create_table(table),
+                    select = "*, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order",
+                    from_ = FARM[key].name,
+                    sequence = sequence,
+                    order = 'mun_id ASC, total DESC'
+                    )
+
+            sql_custom (table=table, sql=sql_rank)
+
+            # ______________ add IDS for each farm
+            restart_sequence (sequence)
+            update_column (table="rank_" + FARM[key].name, column="id_order", value="nextval('serial')")
+
+            # ______________ rank the farms according to municipal ID
+            sql_rank2 = """
+                WITH a AS
+                (
+                    SELECT
+                        id_order, mun_id,
+                        row_number() OVER (ORDER BY mun_id) AS row1,
+                        rank() OVER (ORDER BY mun_id) AS rank1
+                    FROM {table}
                 )
 
-        sql_custom (table=table, sql=sql_rank)
+                UPDATE {table} AS b
+                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+                   FROM  a
+                   WHERE  a.id_order = b.id_order;
+            """.format (
+                    table = table
+                    )
 
-        # ______________ add IDS for each farm
-        restart_sequence (sequence)
-        update_column (table="rank_" + FARM[key].name, column="id_order", value="nextval('serial')")
+            sql_custom (table=table, sql=sql_rank2)
 
-        # ______________ rank the farms according to municipal ID
-        sql_rank2 = """
-            WITH a AS
-            (
-                SELECT
-                    id_order, mun_id,
-                    row_number() OVER (ORDER BY mun_id) AS row1,
-                    rank() OVER (ORDER BY mun_id) AS rank1
-                FROM {table}
-            )
+            drop_column (table = table, column = 'rank1')
+            drop_column (table = table, column = 'row1')
 
-            UPDATE {table} AS b
-               SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
-               FROM  a
-               WHERE  a.id_order = b.id_order;
-        """.format (
-                table = table
-                )
+            add_Pkey (table=table, pkey='farm_id')
 
-        sql_custom (table=table, sql=sql_rank2)
-
-        drop_column (table = table, column = 'rank1')
-        drop_column (table = table, column = 'row1')
-
-        add_Pkey (table=table, pkey='farm_id')
-
-        # ______________ replace tables
-        drop_table (FARM[key].name)
-        rename_table (old_table=table, new_table=FARM[key].name)
+            # ______________ replace tables
+            drop_table (FARM[key].name)
+            rename_table (old_table=table, new_table=FARM[key].name)
 
 def Step_03_create_Farm_Roads ():
 

@@ -1,36 +1,151 @@
-15:42:24 WARNING  is when this event was logged.
-15:42:24 INFO     DROP TABLE IF EXISTS plants_resources_grouped;
-CREATE TABLE plants_resources_grouped AS
+19:08:23 WARNING  is when this event was logged.
+19:08:23 INFO     CREATE INDEX ON farm_heads (total);
+19:08:23 INFO     
+                DROP TABLE IF EXISTS rank_farm_heads;
+CREATE TABLE rank_farm_heads AS
+                SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+                FROM farm_heads
+                ORDER BY mun_id ASC, total DESC;
+            
+19:08:23 INFO     ALTER SEQUENCE serial RESTART WITH 1;
+19:08:23 INFO     UPDATE rank_farm_heads a SET id_order = nextval('serial');
+19:08:23 INFO     
+                WITH a AS
+                (
+                    SELECT
+                        id_order, mun_id,
+                        row_number() OVER (ORDER BY mun_id) AS row1,
+                        rank() OVER (ORDER BY mun_id) AS rank1
+                    FROM rank_farm_heads
+                )
 
-        WITH
-            selection AS (
-                SELECT a.id_target, a.length, a.lsu, a.manure, a.methane, a.crop, a.total_area, a.geom
-                     FROM plants_resources AS a
-                     LEFT JOIN topo_targets AS b
-                     ON a.id_target = b.id_target
-                     ORDER BY a.id_target, a.length
-                ),
-            manure AS (
-                SELECT b.id_target, sum(b.lsu) AS lsu, sum(b.manure) AS manure, sum(b.methane) AS methane, sum(b.length) AS manure_distance
-                FROM (SELECT * FROM  selection WHERE length < 10000) AS b
-                GROUP BY b.id_target
-               ),
-            crop AS (
-                SELECT b.id_target, sum(b.crop) AS crop, sum(b.total_area) as total_area, sum(b.length) AS crop_distance
-                FROM selection AS b
-                GROUP BY b.id_target
-               ),
-            join_tables AS (
-                SELECT m.id_target, m.lsu, m.manure, m.methane, c.crop, c.total_area, m.manure_distance, c.crop_distance
-                FROM manure AS m
-                LEFT JOIN crop AS c
-                ON m.id_target = c.id_target
-               )
-        SELECT
-            a.*, s.geom
-        FROM
-            join_tables AS a
-        LEFT JOIN (SELECT DISTINCT ON (id_target) * FROM selection) AS s
-        ON a.id_target = s.id_target
-    ;
-15:42:26 INFO     ALTER TABLE plants_resources_grouped ADD COLUMN  id_plants SERIAL PRIMARY KEY;
+                UPDATE rank_farm_heads AS b
+                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+                   FROM  a
+                   WHERE  a.id_order = b.id_order;
+            
+19:08:23 INFO     ALTER TABLE rank_farm_heads DROP COLUMN IF EXISTS rank1;
+19:08:23 INFO     ALTER TABLE rank_farm_heads DROP COLUMN IF EXISTS row1;
+19:08:23 INFO     ALTER TABLE rank_farm_heads ADD PRIMARY KEY (farm_id);
+19:08:23 INFO     DROP TABLE IF EXISTS farm_heads;
+19:08:23 INFO     ALTER TABLE rank_farm_heads RENAME TO farm_heads;
+19:08:23 INFO     CREATE INDEX ON farm_crops (total);
+19:08:23 INFO     
+                DROP TABLE IF EXISTS rank_farm_crops;
+CREATE TABLE rank_farm_crops AS
+                SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+                FROM farm_crops
+                ORDER BY mun_id ASC, total DESC;
+            
+19:08:23 INFO     ALTER SEQUENCE serial RESTART WITH 1;
+19:08:23 INFO     UPDATE rank_farm_crops a SET id_order = nextval('serial');
+19:08:23 INFO     
+                WITH a AS
+                (
+                    SELECT
+                        id_order, mun_id,
+                        row_number() OVER (ORDER BY mun_id) AS row1,
+                        rank() OVER (ORDER BY mun_id) AS rank1
+                    FROM rank_farm_crops
+                )
+
+                UPDATE rank_farm_crops AS b
+                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+                   FROM  a
+                   WHERE  a.id_order = b.id_order;
+            
+19:08:23 INFO     ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS rank1;
+19:08:23 INFO     ALTER TABLE rank_farm_crops DROP COLUMN IF EXISTS row1;
+19:08:23 INFO     ALTER TABLE rank_farm_crops ADD PRIMARY KEY (farm_id);
+19:08:23 INFO     DROP TABLE IF EXISTS farm_crops;
+19:08:23 INFO     ALTER TABLE rank_farm_crops RENAME TO farm_crops;
+19:08:23 INFO     CREATE INDEX ON farm_manure (total);
+19:08:23 INFO     
+                DROP TABLE IF EXISTS rank_farm_manure;
+CREATE TABLE rank_farm_manure AS
+                SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+                FROM farm_manure
+                ORDER BY mun_id ASC, total DESC;
+            
+19:08:23 INFO     ALTER SEQUENCE serial RESTART WITH 1;
+19:08:23 INFO     UPDATE rank_farm_manure a SET id_order = nextval('serial');
+19:08:23 INFO     
+                WITH a AS
+                (
+                    SELECT
+                        id_order, mun_id,
+                        row_number() OVER (ORDER BY mun_id) AS row1,
+                        rank() OVER (ORDER BY mun_id) AS rank1
+                    FROM rank_farm_manure
+                )
+
+                UPDATE rank_farm_manure AS b
+                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+                   FROM  a
+                   WHERE  a.id_order = b.id_order;
+            
+19:08:23 INFO     ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS rank1;
+19:08:23 INFO     ALTER TABLE rank_farm_manure DROP COLUMN IF EXISTS row1;
+19:08:23 INFO     ALTER TABLE rank_farm_manure ADD PRIMARY KEY (farm_id);
+19:08:23 INFO     DROP TABLE IF EXISTS farm_manure;
+19:08:23 INFO     ALTER TABLE rank_farm_manure RENAME TO farm_manure;
+19:08:23 INFO     CREATE INDEX ON farm_lsu (total);
+19:08:23 INFO     
+                DROP TABLE IF EXISTS rank_farm_lsu;
+CREATE TABLE rank_farm_lsu AS
+                SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+                FROM farm_lsu
+                ORDER BY mun_id ASC, total DESC;
+            
+19:08:23 INFO     ALTER SEQUENCE serial RESTART WITH 1;
+19:08:23 INFO     UPDATE rank_farm_lsu a SET id_order = nextval('serial');
+19:08:23 INFO     
+                WITH a AS
+                (
+                    SELECT
+                        id_order, mun_id,
+                        row_number() OVER (ORDER BY mun_id) AS row1,
+                        rank() OVER (ORDER BY mun_id) AS rank1
+                    FROM rank_farm_lsu
+                )
+
+                UPDATE rank_farm_lsu AS b
+                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+                   FROM  a
+                   WHERE  a.id_order = b.id_order;
+            
+19:08:23 INFO     ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS rank1;
+19:08:23 INFO     ALTER TABLE rank_farm_lsu DROP COLUMN IF EXISTS row1;
+19:08:23 INFO     ALTER TABLE rank_farm_lsu ADD PRIMARY KEY (farm_id);
+19:08:23 INFO     DROP TABLE IF EXISTS farm_lsu;
+19:08:23 INFO     ALTER TABLE rank_farm_lsu RENAME TO farm_lsu;
+19:08:23 INFO     CREATE INDEX ON farm_methane (total);
+19:08:23 INFO     
+                DROP TABLE IF EXISTS rank_farm_methane;
+CREATE TABLE rank_farm_methane AS
+                SELECT *, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order
+                FROM farm_methane
+                ORDER BY mun_id ASC, total DESC;
+            
+19:08:23 INFO     ALTER SEQUENCE serial RESTART WITH 1;
+19:08:23 INFO     UPDATE rank_farm_methane a SET id_order = nextval('serial');
+19:08:23 INFO     
+                WITH a AS
+                (
+                    SELECT
+                        id_order, mun_id,
+                        row_number() OVER (ORDER BY mun_id) AS row1,
+                        rank() OVER (ORDER BY mun_id) AS rank1
+                    FROM rank_farm_methane
+                )
+
+                UPDATE rank_farm_methane AS b
+                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+                   FROM  a
+                   WHERE  a.id_order = b.id_order;
+            
+19:08:23 INFO     ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS rank1;
+19:08:23 INFO     ALTER TABLE rank_farm_methane DROP COLUMN IF EXISTS row1;
+19:08:23 INFO     ALTER TABLE rank_farm_methane ADD PRIMARY KEY (farm_id);
+19:08:23 INFO     DROP TABLE IF EXISTS farm_methane;
+19:08:23 INFO     ALTER TABLE rank_farm_methane RENAME TO farm_methane;

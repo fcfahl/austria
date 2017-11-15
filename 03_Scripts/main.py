@@ -55,8 +55,8 @@ if __name__ == "__main__":
     #           FARMS
     #==============================================================================
     # FARM.Step_00_dissolve_Roads ()
-    # FARM.Step_01_import_Farm_Tables (table=FARM)
-    # FARM.Step_02_rank_Farm_Tables (table=FARM)
+    # FARM.Step_01_import_Farm_Tables ()
+    FARM.Step_02_rank_Farm_Tables ()
     # FARM.Step_03_create_Farm_Roads ()
     # FARM.Step_04_create_Target_Points ()
     # FARM.Step_05_clean_Target_Points ()
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     # PLT.Step_01_merge_Routes()
     # PLT.Step_02_join_Farm_Resources()
-    PLT.Step_03_calculate_Target_Resources()
+    # PLT.Step_03_calculate_Target_Resources()
 
     #==============================================================================
     #           FINAL DATABASE

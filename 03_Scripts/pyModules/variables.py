@@ -192,8 +192,8 @@ SQL_distances = {
     'tolerance': 0.01,
     'max_travel': 50000,
     'manure': 10000,
-    'features': '250',
-    'criteria': 'id_target <= 250',
+    'features': '1500',
+    'criteria': 'id_target > 750 AND id_target <= 1500',
 }
 
 SQL_target = {
@@ -235,6 +235,7 @@ SQL_plants= {
 
 }
 
+
 prefix = 'osm'
 Files.class_counter = -99
 OSM_Files = OrderedDict({
@@ -265,8 +266,13 @@ LULC = OrderedDict({
 prefix = 'farm'
 Files.class_counter = -99
 FARM = OrderedDict({
-    'lsu':Files(prefix, 'Livestock_Manure_LSU.xlsx', 'lsu', 'lsu', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
-    'manure':Files(prefix, 'Livestock_Manure_LSU.xlsx', 'manure', 'manure', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
-    'methane':Files(prefix, 'Livestock_Manure_LSU.xlsx', 'methane', 'methane', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
-    'crops':Files(prefix, 'Amstetten_Farms.xlsx', 'crops', 'crops', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'parameter':Files(prefix, 'biogas_potential.xlsx', 'parameters', 'liv_parameters', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'heads':Files(prefix, 'biogas_potential.xlsx', 'heads', 'heads', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+
+    'lsu':Files(prefix, 'biogas_potential.xlsx', 'lsu', 'lsu', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'manure':Files(prefix, 'biogas_potential.xlsx', 'manure', 'manure', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'methane':Files(prefix, 'biogas_potential.xlsx', 'methane', 'methane', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+
+    'crops':Files(prefix, 'biogas_potential.xlsx', 'crops', 'crop', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+
 })

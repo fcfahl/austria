@@ -16,7 +16,7 @@ def Step_01_merge_Routes ():
 
 
     # routes = ['route_distance_50km_250_', 'route_distance_50km_500__', 'route_distance_50km_750__']
-    routes = ['500', '750']
+    routes = ['250', '500', '750']
 
     for key in routes:
 

@@ -6,12 +6,11 @@ DROP TABLE IF EXISTS route_targets_1500__;
 CREATE TABLE route_targets_1500__ AS
 SELECT id_target, geom
 FROM topo_targets
-WHERE id_target > 1000 and id_target <= 1500;
+WHERE id_target > 750 AND id_target <= 1500;
 
 DROP TABLE IF EXISTS route_node_ids_1500__;
 CREATE TABLE route_node_ids_1500__ (target_ int, farm_ int, node_target_ int, node_farm_ int );
 
-    
     DO
     $$
     DECLARE
