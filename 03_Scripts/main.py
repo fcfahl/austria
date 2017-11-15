@@ -12,6 +12,7 @@ import pyModules.adm_lulc as ADM_LULC
 import pyModules.farms as FARM
 import pyModules.targets as TRG
 import pyModules.topology as TOPO
+import pyModules.plants as PLT
 
 
 
@@ -87,10 +88,16 @@ if __name__ == "__main__":
     # TOPO.Step_02_segmentize_OSM_Roads()
     # TOPO.Step_03_create_Road_Topology()
     # TOPO.Step_04_update_Topology()
-    TOPO.Step_05_create_PG_Functions()
-    TOPO.Step_06_extract_Routes()
+    # TOPO.Step_05_create_PG_Functions()
+    # TOPO.Step_06_extract_Routes()
 
+    #==============================================================================
+    #           PLANTS
+    #==============================================================================
 
+    # PLT.Step_01_merge_Routes()
+    # PLT.Step_02_join_Farm_Resources()
+    PLT.Step_03_calculate_Target_Resources()
 
     #==============================================================================
     #           FINAL DATABASE
@@ -98,5 +105,7 @@ if __name__ == "__main__":
 
     # outFile = folder['OSM'].outDir + OSM_raw['austria'].outFile
     # export_PostGIS(db_PostGIS['dbname'], outFile)
+
+    # size_DB()
 
     log_close()

@@ -158,7 +158,7 @@ def test_DB (table):
         query = "SELECT value FROM {table} limit 10".format(table=table)
 
         # execute our Query
-        cursor.execute(query)
+        cursor.execute_Query(query)
 
         # retrieve the records from the database
         records = cursor.fetchall()
@@ -170,6 +170,16 @@ def test_DB (table):
         print "\n#######################################################"
         print "\t\tunable to query the table"
         print "#######################################################\n"
+
+def size_DB ():
+
+    connect_PostGIS (db='postgres')
+
+    cursor.execute("VACUUM FULL ;")
+
+    query = "SELECT pg_size_pretty(pg_database_size('{0}'))".format(db_PostGIS['dbname'])
+
+    execute_Query (query, "")
 
 def export_SHP (osm,  proj, tables):
 
@@ -278,18 +288,38 @@ def export_PostGIS (db, outFile):
     print "\n__________________ Dumping DB ______________________\n"
 
     # try:
+    os.chdir(folder['OSM'].outDir)
 
-    command = "pg_dump -F t --no-password --host={host} --port={port} --dbname={db} --username={user} --file={outFile}.tar.gz".format(
-        host=db_PostGIS['host'],
-        port=db_PostGIS['port'],
-        db=db,
-        user=db_PostGIS['user'],
-        outFile=outFile)
+    if platform == 'linux':
+        command = "pg_dump -F t --no-password --host={host} --port={port} --dbname={db} --username={user} --file={outFile}.tar.gz".format(
+            host=db_PostGIS['host'],
+            port=db_PostGIS['port'],
+            db=db,
+            user=db_PostGIS['user'],
+            outFile=outFile)
+    else:
+
+        command = r"C:/Program Files/PostgreSQL/9.5/bin/pg_dump.exe -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --file={outFile}.backup".format(
+            host=db_PostGIS['host'],
+            port=db_PostGIS['port'],
+            db=db,
+            user=db_PostGIS['user'],
+            pwd=db_PostGIS['pwd'],
+            outFile=outFile)
+
+
+    print command
 
     subprocess.call(command, shell=True)
 
+        # command = r"C:\Program Files\PostgreSQL\9.5\bin\pg_dump.exe -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --file={outFile}.backup"
 
     # except:
     #     print "\n#######################################################"
     #     print "\t\tunable to export the database"
     #     print "#######################################################\n"
+
+
+# C:\Program Files\PostgreSQL\9.5\bin
+#
+# pg_dump.exe

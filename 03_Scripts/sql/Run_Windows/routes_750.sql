@@ -10,7 +10,6 @@ WHERE id_target > 500 and id_target <= 750;
 
 DROP TABLE IF EXISTS route_node_ids_750__;
 CREATE TABLE route_node_ids_750__ (target_ int, farm_ int, node_target_ int, node_farm_ int );
-
     
     DO
     $$

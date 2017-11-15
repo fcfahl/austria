@@ -48,4 +48,8 @@ cd 03_Scripts/.git
 edit .gitignore
 
 
+force “git pull” to overwrite local files?
+
+git fetch --all
+git reset --hard origin/master
 

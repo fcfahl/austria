@@ -12,6 +12,16 @@ imposm3_cache = script_Folder + 'cache'
 yml_folder = script_Folder + 'styles'
 log_folder = script_Folder + 'log'
 
+#_________Check OS
+if sys.platform.startswith('linux'):
+    platform = 'linux'
+elif sys.platform.startswith('win'):
+    platform = 'windows'
+else:
+    raise OSError('Platform not configured.')
+
+print "platform = {0}".format(platform)
+
 def get_DB (continent, country, region):
 
     prefix = 'http://download.geofabrik.de'
@@ -181,8 +191,9 @@ SQL_distances = {
     'osm': 100,
     'tolerance': 0.01,
     'max_travel': 50000,
-    'features': '1500',
-    'criteria': 'id_target > 1000 and id_target <= 1500',
+    'manure': 10000,
+    'features': '250',
+    'criteria': 'id_target <= 250',
 }
 
 SQL_target = {
@@ -215,6 +226,13 @@ SQL_route= {
 	'route' : SQL_obj ('route_distance', '', 'shortest distance'),
 	'targets' : SQL_obj ('route_targets', '', 'targets to be used on routing'),
 	'nodes' : SQL_obj ('route_node_ids', '', 'node ids'),
+}
+
+SQL_plants= {
+	'initial' : SQL_obj ('plants_initial', '', 'merge of route tables '),
+	'resources' : SQL_obj ('plants_resources', '', 'join of resoureces '),
+	'grouped' : SQL_obj ('plants_resources_grouped', '', 'join of resoureces '),
+
 }
 
 prefix = 'osm'
