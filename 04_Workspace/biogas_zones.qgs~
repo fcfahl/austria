@@ -3,9 +3,9 @@
   <title></title>
   <autotransaction active="0"/>
   <evaluateDefaultValues active="0"/>
-  <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
+  <layer-tree-group expanded="1" checked="Qt::Checked" name="">
     <customproperties/>
-    <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="plants_costs_total20171116165445348" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;plants_costs_total&quot; (geom) sql=" name="plants_costs_total">
+    <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="plants_costs_total20171116165445348" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;plants_costs_total&quot; (geom) sql=" name="plants_costs_total">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="roads_main20171116165415827" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_road' srid=3035 type=LineString table=&quot;public&quot;.&quot;roads_main&quot; (geom) sql=" name="roads_main">
@@ -19,10 +19,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>4650795.23011290840804577</xmin>
-      <ymin>2745058.07768953405320644</ymin>
-      <xmax>4696457.33753383159637451</xmax>
-      <ymax>2805150.84652911592274904</ymax>
+      <xmin>4650805.33313389681279659</xmin>
+      <ymin>2748998.25587504683062434</ymin>
+      <xmax>4696467.44055481813848019</xmax>
+      <ymax>2809091.02471462963148952</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>0</projections>
@@ -49,9 +49,9 @@
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="plants_costs_total" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="plants_costs_total" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="plants_costs_total20171116165445348" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="plants_costs_total20171116165445348" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="roads_main" showFeatureCount="0">
@@ -312,8 +312,8 @@
         <categories>
           <category render="true" symbol="0" value="0" label="0"/>
           <category render="true" symbol="1" value="1" label="1"/>
-          <category render="true" symbol="2" value="2" label="2"/>
-          <category render="true" symbol="3" value="3" label="3"/>
+          <category render="false" symbol="2" value="2" label="2"/>
+          <category render="false" symbol="3" value="3" label="3"/>
           <category render="false" symbol="4" value="" label=""/>
         </categories>
         <symbols>
@@ -397,7 +397,7 @@
           <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="109,218,135,255"/>
+              <prop k="color" v="251,228,228,255"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -714,8 +714,14 @@
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
-        <columns/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;cost_total&quot;" sortOrder="0">
+        <columns>
+          <column width="-1" hidden="0" type="field" name="id_target"/>
+          <column width="168" hidden="0" type="field" name="cost_harvest"/>
+          <column width="213" hidden="0" type="field" name="cost_ensiling"/>
+          <column width="-1" hidden="0" type="field" name="cost_total"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
       </attributetableconfig>
       <editform></editform>
       <editforminit/>
@@ -735,7 +741,7 @@
         <default field="cost_ensiling" expression=""/>
         <default field="cost_total" expression=""/>
       </defaults>
-      <previewExpression></previewExpression>
+      <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>roads_main20171116165415827</id>

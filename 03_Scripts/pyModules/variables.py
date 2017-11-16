@@ -238,14 +238,11 @@ SQL_plants= {
 	'methane' : SQL_obj ('plants_methane_available', '', 'methane available on each farm '),
 	'capacity' : SQL_obj ('plants_capacity', '', 'capacity calculation '),
 	'cost' : SQL_obj ('plants_costs', '', 'cost calculation '),
+	'manure' : SQL_obj ('plants_manure_demand', '', 'manure for feeding the plants '),
+	'crop' : SQL_obj ('plants_crop_demand', '', 'crop for feeding the plants '),
 	'cost_total' : SQL_obj ('plants_costs_total', '', 'total cost '),
 	# 'grouped' : SQL_obj ('plants_resources_grouped', '', 'join of resoureces '),
 
-}
-
-SQL_methane_ratio = {
-    'manure': 0.3,
-    'crop': 0.7,
 }
 
 SQL_plant_capacity = {
@@ -254,9 +251,15 @@ SQL_plant_capacity = {
     '750': 1560000,
 }
 
+SQL_methane_ratio = {
+    'manure': 0.3,
+    'crop': 0.7,
+}
+
 SQL_costs = {
     'harvest': 5,
     'ensiling': 6,
+    'manure': 0.2,
 }
 
 prefix = 'osm'

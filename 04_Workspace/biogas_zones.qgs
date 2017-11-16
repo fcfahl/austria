@@ -714,8 +714,14 @@
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
-        <columns/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;cost_total&quot;" sortOrder="0">
+        <columns>
+          <column width="-1" hidden="0" type="field" name="id_target"/>
+          <column width="168" hidden="0" type="field" name="cost_harvest"/>
+          <column width="213" hidden="0" type="field" name="cost_ensiling"/>
+          <column width="-1" hidden="0" type="field" name="cost_total"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
       </attributetableconfig>
       <editform></editform>
       <editforminit/>
@@ -735,7 +741,7 @@
         <default field="cost_ensiling" expression=""/>
         <default field="cost_total" expression=""/>
       </defaults>
-      <previewExpression></previewExpression>
+      <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>roads_main20171116165415827</id>

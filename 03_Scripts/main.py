@@ -100,6 +100,7 @@ if __name__ == "__main__":
     # PLT.Step_03_calculate_Methane()
     # PLT.Step_04_sum_Resources()
     # PLT.Step_05_calculate_Costs()
+    # PLT.Step_06_aggregate_Demands()
     PLT.Step_06_aggregate_Costs()
 
     #==============================================================================

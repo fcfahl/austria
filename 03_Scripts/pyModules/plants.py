@@ -102,21 +102,28 @@ def Step_04_sum_Resources ():
 def Step_05_calculate_Costs ():
 
     cost_harvest = "(crop_production * {0})".format(SQL_costs['harvest'])
-    cost_ensiling = "((length / 1000) * manure * {0})".format(SQL_costs['ensiling'])
+    cost_ensiling = "((length / 1000) * crop_production * {0})".format(SQL_costs['ensiling'])
+    cost_manure = "((length / 1000) * crop_production * {0})".format(SQL_costs['manure'])
 
     sql_cost = """
         {create_table} AS
-        SELECT *, {harvest} AS cost_harvest, {ensiling} AS cost_ensiling, {harvest} + {ensiling} as cost_total
+        SELECT *, {manure} AS cost_manure, {harvest} AS cost_harvest, {ensiling} AS cost_ensiling,  {harvest} + {ensiling} + {manure} as cost_total
         FROM {capacity}
             ;
     """.format (
         create_table = create_table(SQL_plants['cost'].name),
         capacity = SQL_plants['capacity'].name,
         harvest = cost_harvest,
-        ensiling = cost_ensiling
+        ensiling = cost_ensiling,
+        manure = cost_manure
         )
 
     sql_custom (table=SQL_plants['cost'].name, sql=sql_cost)
+
+def Step_06_aggregate_Demands ():
+
+    manure_demand = SQL_plant_capacity['250'] * SQL_methane_ratio['manure']
+    crop_demand = SQL_plant_capacity['250'] * SQL_methane_ratio['crop']
 
 
 def Step_06_aggregate_Costs ():
@@ -126,7 +133,7 @@ def Step_06_aggregate_Costs ():
         WITH
             total AS (
                 SELECT a.id_target,
-                SUM (a.cost_harvest) AS cost_harvest, SUM (a.cost_ensiling) AS cost_ensiling, SUM (a.cost_total) AS cost_total
+                SUM (a.cost_manure) AS cost_manure, SUM (a.cost_harvest) AS cost_harvest, SUM (a.cost_ensiling) AS cost_ensiling, SUM (a.cost_total) AS cost_total
                 FROM {cost} a
                 GROUP BY a.id_target
                 ORDER BY a.id_target
