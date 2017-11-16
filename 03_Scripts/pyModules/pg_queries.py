@@ -8,21 +8,21 @@ def execute_Query (query, table):
 
     cursor = db_PostGIS['cursor']
 
-    # try:
-    #     if query:
-    info (query)
-    #         cursor.execute(query)
-    # except:
-    #     if query:
-    #         error (query)
-    #     print "error {0}".format(sys.exc_info()[0])
-    #
-    # if (table != "") or (query == 'VACUUM'):
-    #     try:
-    #         cursor.execute("VACUUM ANALYZE %s  ;" % table)
-    #         print ("VACUUM ANALYZE %s  ;" % table)
-    #     except:
-    #         pass
+    try:
+        if query:
+            info (query)
+            cursor.execute(query)
+    except:
+        if query:
+            error (query)
+        print "error {0}".format(sys.exc_info()[0])
+
+    if (table != "") or (query == 'VACUUM'):
+        try:
+            cursor.execute("VACUUM ANALYZE %s  ;" % table)
+            print ("VACUUM ANALYZE %s  ;" % table)
+        except:
+            pass
 
 def create_table (table):
     return "DROP TABLE IF EXISTS {0};\nCREATE TABLE {0}".format (table)

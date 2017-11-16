@@ -192,9 +192,10 @@ SQL_distances = {
     'tolerance': 0.01,
     'max_travel': 50000,
     'manure': 10000,
-    'features': '1500',
-    'criteria': 'id_target > 750 AND id_target <= 1500',
+    'features': '2000',
+    'criteria': 'id_target > 1500 AND id_target <= 2000',
 }
+
 
 SQL_target = {
 	'site_targets' : SQL_obj ('site_targets', '', 'points equally dristributed over the main roads'),
@@ -211,6 +212,9 @@ SQL_buildings = {
 }
 
 SQL_farms= {
+	'lsu' : SQL_obj ('farm_lsu_calc', '', 'lsu calculated'),
+	'manure' : SQL_obj ('farm_manure_calc', '', 'manure calculated'),
+	'methane' : SQL_obj ('farm_methane_calc', '', 'methane calculated'),
 	'biomass' : SQL_obj ('farm_buildings_biomass', '', 'farms with join tables; manure and crop'),
 }
 
@@ -230,11 +234,30 @@ SQL_route= {
 
 SQL_plants= {
 	'initial' : SQL_obj ('plants_initial', '', 'merge of route tables '),
-	'resources' : SQL_obj ('plants_resources', '', 'join of resoureces '),
-	'grouped' : SQL_obj ('plants_resources_grouped', '', 'join of resoureces '),
+	'resources' : SQL_obj ('plants_resources', '', 'join of resources '),
+	'methane' : SQL_obj ('plants_methane_available', '', 'methane available on each farm '),
+	'capacity' : SQL_obj ('plants_capacity', '', 'capacity calculation '),
+	'cost' : SQL_obj ('plants_costs', '', 'cost calculation '),
+	'cost_total' : SQL_obj ('plants_costs_total', '', 'total cost '),
+	# 'grouped' : SQL_obj ('plants_resources_grouped', '', 'join of resoureces '),
 
 }
 
+SQL_methane_ratio = {
+    'manure': 0.3,
+    'crop': 0.7,
+}
+
+SQL_plant_capacity = {
+    '250': 560000,
+    '500': 1070000,
+    '750': 1560000,
+}
+
+SQL_costs = {
+    'harvest': 5,
+    'ensiling': 6,
+}
 
 prefix = 'osm'
 Files.class_counter = -99
@@ -266,13 +289,15 @@ LULC = OrderedDict({
 prefix = 'farm'
 Files.class_counter = -99
 FARM = OrderedDict({
-    'parameter':Files(prefix, 'biogas_potential.xlsx', 'parameters', 'liv_parameters', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'parameter':Files(prefix, 'biogas_potential.xlsx', 'parameters', 'parameters', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
     'heads':Files(prefix, 'biogas_potential.xlsx', 'heads', 'heads', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
 
     'lsu':Files(prefix, 'biogas_potential.xlsx', 'lsu', 'lsu', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
     'manure':Files(prefix, 'biogas_potential.xlsx', 'manure', 'manure', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
     'methane':Files(prefix, 'biogas_potential.xlsx', 'methane', 'methane', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
 
-    'crops':Files(prefix, 'biogas_potential.xlsx', 'crops', 'crop', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'crop_area':Files(prefix, 'biogas_potential.xlsx', 'crop_area', 'crop_area', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'crop_production':Files(prefix, 'biogas_potential.xlsx', 'crop_production', 'crop_production', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'crop_methane':Files(prefix, 'biogas_potential.xlsx', 'crop_methane', 'crop_methane', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
 
 })

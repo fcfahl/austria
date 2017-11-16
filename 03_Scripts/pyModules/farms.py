@@ -63,7 +63,7 @@ def Step_02_rank_Farm_Tables ():
                     select = "*, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order",
                     from_ = FARM[key].name,
                     sequence = sequence,
-                    order = 'mun_id ASC, total DESC'
+                    order = 'id_mun ASC, total DESC'
                     )
 
             sql_custom (table=table, sql=sql_rank)
@@ -75,28 +75,25 @@ def Step_02_rank_Farm_Tables ():
             # ______________ rank the farms according to municipal ID
             sql_rank2 = """
                 WITH a AS
-                (
-                    SELECT
-                        id_order, mun_id,
-                        row_number() OVER (ORDER BY mun_id) AS row1,
-                        rank() OVER (ORDER BY mun_id) AS rank1
-                    FROM {table}
-                )
-
+                    (
+                        SELECT
+                            id_order, id_mun,
+                            row_number() OVER (ORDER BY id_mun) AS row1,
+                            rank() OVER (ORDER BY id_mun) AS rank1
+                        FROM {table}
+                    )
                 UPDATE {table} AS b
-                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.mun_id, '_', (1 + a.row1 - a.rank1))
+                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
                    FROM  a
                    WHERE  a.id_order = b.id_order;
-            """.format (
-                    table = table
-                    )
+            """.format (table = table)
 
             sql_custom (table=table, sql=sql_rank2)
 
             drop_column (table = table, column = 'rank1')
             drop_column (table = table, column = 'row1')
 
-            add_Pkey (table=table, pkey='farm_id')
+            add_Pkey (table=table, pkey='id_farm')
 
             # ______________ replace tables
             drop_table (FARM[key].name)
@@ -458,13 +455,32 @@ def Step_14_join_Farm_Data ():
 
     # ______________ order farms by total column
     sql_join_left = """
-    	LEFT JOIN {0} AS b ON a.index = b.index1
-    	LEFT JOIN {1} AS c ON a.index = c.index1
-    	LEFT JOIN {2} AS d ON a.index = d.index1
-    	LEFT JOIN {3} AS e ON b.farm_id = e.farm_id
+        -- manure
+    	LEFT JOIN {head} AS b ON a.index = b.index1
+    	LEFT JOIN {lsu} AS c ON b.id_farm = c.id_farm
+    	LEFT JOIN {manure} AS d ON b.id_farm = d.id_farm
+    	LEFT JOIN {methane} AS e ON b.id_farm = e.id_farm
+        -- crop areas
+    	LEFT JOIN {crop_area} AS f ON a.index = f.index1
+    	LEFT JOIN {crop_production} AS g ON f.id_farm = g.id_farm
+    	LEFT JOIN {crop_methane} AS h ON f.id_farm = h.id_farm
     """.format(
-        FARM['lsu'].name, FARM['manure'].name, FARM['methane'].name, FARM['crops'].name
-    )
+            head = FARM['heads'].name,
+            lsu = FARM['lsu'].name,
+            manure = FARM['manure'].name,
+            methane = FARM['methane'].name,
+            crop_area = FARM['crop_area'].name,
+            crop_production = FARM['crop_production'].name,
+            crop_methane = FARM['crop_methane'].name
+            )
+
+    select = """
+        a.id_mun, a.id_building, a.index,
+        b.id_farm as id_manure, f.id_farm as id_crop,
+        b.total as heads, c.total as lsu, d.total as manure, e.total as life_methane,
+        f.total as crop_area, g.total as crop_production, h.total as crop_methane,
+        a.geom
+    """
 
     sql_join = """
         {create_table} AS
@@ -473,8 +489,7 @@ def Step_14_join_Farm_Data ():
         {join};
     """.format (
             create_table = create_table(SQL_farms['biomass'].name),
-            select = "a.*, b.total as total_lsu, c.total as total_manure, d.total as total_methane, \
-            e.total as total_crop, b.farm_id as manure_id, e.farm_id as crop_id, b.total / a.total_area * 100 AS head_density",
+            select = select,
             from_ = SQL_buildings['location'].name + " AS a ",
             join = sql_join_left
             )
