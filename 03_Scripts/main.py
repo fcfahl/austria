@@ -27,7 +27,7 @@ if __name__ == "__main__":
     #==============================================================================
 
     # create_DB ()
-    db_PostGIS['cursor'] = connect_PostGIS ()
+    connect_PostGIS ()
 
 
     # create_sequence (sequence='serial')
@@ -111,8 +111,8 @@ if __name__ == "__main__":
     # export_PostGIS(db_PostGIS['dbname'], outFile)
 
     # export tables instead of the whole db
-    export_PostGIS_Tables()
-    # restore_PostGIS_Tables()
+    # export_PostGIS_Tables()
+    restore_PostGIS_Tables()
 
     # size_DB()
 

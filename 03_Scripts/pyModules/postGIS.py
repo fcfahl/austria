@@ -49,27 +49,28 @@ def connect_PostGIS (db=db_PostGIS['dbname']):
     #     sys.exit(1)
 
     connect.autocommit = True
+    db_PostGIS['cursor'] = connect.cursor()
+
     return connect.cursor()
 
 def create_DB (db=db_PostGIS['dbname']):
 
     print "\n__________________ creating DB ______________________\n"
 
-    connect_PostGIS (db='postgres')
+    cursor = connect_PostGIS (db='postgres')
 
     # try:
     cursor.execute("DROP DATABASE IF EXISTS  %s  ;" % db)
     cursor.execute("CREATE DATABASE %s  ;" % db)
     print "created the database \t\t->\t {db}".format(db=db)
 
-    # except:
-    #     print "\n#######################################################"
-    #     print "\t\tunable to create the database \t->\t {db}".format(db=db)
-    #     print "#######################################################\n"
+    # # except:
+    # #     print "\n#######################################################"
+    # #     print "\t\tunable to create the database \t->\t {db}".format(db=db)
+    # #     print "#######################################################\n"
 
-    connect_PostGIS ()
-
-    # try:
+    cursor = connect_PostGIS ()
+    # # try:
     cursor.execute("CREATE EXTENSION hstore;")
     cursor.execute("CREATE EXTENSION postgis;")
     cursor.execute("CREATE EXTENSION pgrouting;")
@@ -347,20 +348,17 @@ def export_PostGIS_Tables ():
 
 def restore_PostGIS_Tables ():
 
-
     db_files = glob.glob(folder['DB'].outDir + '/*.backup')
-
-    print db_files
 
     for inFile  in db_files:
 
-        out_File = "{0}{1}".format(folder['DB'].outDir, inFile)
+        out_File = inFile
 
-        if platform == 'windows':           
+        if platform == 'windows':
 
             os.chdir(pg_win)
 
-            command = "pg_restore.exe -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --file={out_File}".format(
+            command = "pg_restore.exe -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --table={out_File}".format(
                 host=db_PostGIS['host'],
                 port=db_PostGIS['port'],
                 db=db_PostGIS['dbname'],
@@ -369,7 +367,7 @@ def restore_PostGIS_Tables ():
                 out_File=out_File)
 
         else:
-            command = "pg_restore -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --file={out_File}".format(
+            command = "pg_restore --clean --no-password  --username={user} --host={host} --port={port} --dbname={db} {out_File}".format(
                     host=db_PostGIS['host'],
                     port=db_PostGIS['port'],
                     db=db_PostGIS['dbname'],
