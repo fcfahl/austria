@@ -316,8 +316,9 @@ def export_PostGIS (db, outFile):
 
 def export_PostGIS_Tables ():
 
-    prefixes = ['farm_', 'adm_', 'lulc_', 'osm_', 'plants_', 'site_', 'topo_', 'roads_', 'route_node_', 'route_targets_']
-    # prefixes = ['route_distance_50km_250_', 'route_distance_50km_500_']
+    prefixes = ['adm_', 'lulc_']
+    # prefixes = ['farm_', 'adm_', 'lulc_', 'osm_', 'plants_', 'site_', 'topo_', 'roads_', 'route_node_', 'route_targets_']
+    # prefixes = ['route_distance_50km_250_', 'route_distance_50km_500_', 'route_distance_50km_750_', 'route_distance_50km_1500_', 'route_distance_50km_2000_']
 
 
     for prefix in prefixes:
@@ -358,16 +359,7 @@ def restore_PostGIS_Tables ():
 
             os.chdir(pg_win)
 
-            command = "pg_restore.exe -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --table={out_File}".format(
-                host=db_PostGIS['host'],
-                port=db_PostGIS['port'],
-                db=db_PostGIS['dbname'],
-                user=db_PostGIS['user'],
-                pwd=db_PostGIS['pwd'],
-                out_File=out_File)
-
-        else:
-            command = "pg_restore --clean --no-password  --username={user} --host={host} --port={port} --dbname={db} {out_File}".format(
+            command = "pg_restore.exe --clean --no-password --username={user} --host={host} --port={port} --dbname={db} {out_File}".format(
                     host=db_PostGIS['host'],
                     port=db_PostGIS['port'],
                     db=db_PostGIS['dbname'],
@@ -375,6 +367,14 @@ def restore_PostGIS_Tables ():
                     pwd=db_PostGIS['pwd'],
                     out_File=out_File)
 
+        else:
+            command = "pg_restore --clean --no-password --username={user} --host={host} --port={port} --dbname={db} {out_File}".format(
+                    host=db_PostGIS['host'],
+                    port=db_PostGIS['port'],
+                    db=db_PostGIS['dbname'],
+                    user=db_PostGIS['user'],
+                    pwd=db_PostGIS['pwd'],
+                    out_File=out_File)
 
         info (command)
         subprocess.call(command, shell=True)

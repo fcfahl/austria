@@ -152,11 +152,11 @@ folder = {
 }
 
 db_PostGIS = {
-    "dbname" :  'amstetten_biogas_2',
+    "dbname" :  'amstetten_biogas',
     "host"  :   'localhost',
     "user"  :   'postgres',
-    # "pwd"   :   'rosana',
-    "pwd"   :   'postgres',
+    "pwd"   :   'rosana',
+    # "pwd"   :   'postgres',
     "port"  :   '5432',
     'proj'  :   '3035',
     'cursor'  :  '',

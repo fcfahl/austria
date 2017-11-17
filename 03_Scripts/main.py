@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
     # PLT.Step_01_merge_Routes()
     # PLT.Step_02_join_Farm_Resources()
-    # PLT.Step_03_calculate_Methane()
+    PLT.Step_03_calculate_Methane()
     # PLT.Step_04_sum_Resources()
     # PLT.Step_05_calculate_Costs()
     # PLT.Step_06_aggregate_Demands()
@@ -112,7 +112,7 @@ if __name__ == "__main__":
 
     # export tables instead of the whole db
     # export_PostGIS_Tables()
-    restore_PostGIS_Tables()
+    # restore_PostGIS_Tables()
 
     # size_DB()
 
