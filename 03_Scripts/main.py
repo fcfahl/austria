@@ -101,7 +101,7 @@ if __name__ == "__main__":
     # PLT.Step_04_sum_Resources()
     # PLT.Step_05_calculate_Costs()
     # PLT.Step_06_aggregate_Demands()
-    PLT.Step_06_aggregate_Costs()
+    # PLT.Step_06_aggregate_Costs()
 
     #==============================================================================
     #           FINAL DATABASE
@@ -109,6 +109,10 @@ if __name__ == "__main__":
 
     # outFile = folder['OSM'].outDir + OSM_raw['austria'].outFile
     # export_PostGIS(db_PostGIS['dbname'], outFile)
+
+    # export tables instead of the whole db
+    export_PostGIS_Tables()
+    # restore_PostGIS_Tables()
 
     # size_DB()
 

@@ -1,17 +1,11 @@
-17:45:51 WARNING  is when this event was logged.
-17:45:51 INFO     
-        DROP TABLE IF EXISTS plants_costs_total;
-CREATE TABLE plants_costs_total AS
-        WITH
-            total AS (
-                SELECT a.id_target,
-                SUM (a.cost_manure) AS cost_manure, SUM (a.cost_harvest) AS cost_harvest, SUM (a.cost_ensiling) AS cost_ensiling, SUM (a.cost_total) AS cost_total
-                FROM plants_costs a
-                GROUP BY a.id_target
-                ORDER BY a.id_target
-            )
-        SELECT a.*, b.geom
-        FROM total AS a, topo_targets AS b
-        WHERE a.id_target = b.id_target
-            ;
-    
+13:25:22 WARNING  is when this event was logged.
+13:25:22 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^farm_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/farm_2017_11_17.backup
+13:25:24 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^adm_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/adm_2017_11_17.backup
+13:25:24 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^lulc_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/lulc_2017_11_17.backup
+13:25:25 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^osm_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/osm_2017_11_17.backup
+13:25:29 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^plants_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/plants_2017_11_17.backup
+13:26:27 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^site_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/site_2017_11_17.backup
+13:26:27 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^topo_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/topo_2017_11_17.backup
+13:26:35 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^roads_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/roads_2017_11_17.backup
+13:26:36 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^route_node_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/route_node_2017_11_17.backup
+13:26:41 INFO     pg_dump.exe -F c --dbname=postgresql://postgres:rosana@localhost:5432/amstetten_biogas --table "^route_targets_*" --file=E:/05_PostGIS_projects/03_Amstetten_Biogas/02_Output/00_DB/route_targets_2017_11_17.backup

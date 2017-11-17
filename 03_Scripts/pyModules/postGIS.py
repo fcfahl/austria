@@ -1,3 +1,4 @@
+import glob
 from variables import *
 from pyModules.logs import *
 from pg_queries import *
@@ -312,14 +313,71 @@ def export_PostGIS (db, outFile):
 
     subprocess.call(command, shell=True)
 
-        # command = r"C:\Program Files\PostgreSQL\9.5\bin\pg_dump.exe -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --file={outFile}.backup"
+def export_PostGIS_Tables ():
 
-    # except:
-    #     print "\n#######################################################"
-    #     print "\t\tunable to export the database"
-    #     print "#######################################################\n"
+    prefixes = ['farm_', 'adm_', 'lulc_', 'osm_', 'plants_', 'site_', 'topo_', 'roads_', 'route_node_', 'route_targets_']
+    # prefixes = ['route_distance_50km_250_', 'route_distance_50km_500_']
 
 
-# C:\Program Files\PostgreSQL\9.5\bin
-#
-# pg_dump.exe
+    for prefix in prefixes:
+
+        out_File = "{0}{1}{2}.backup".format(folder['DB'].outDir, prefix, time.strftime("%Y_%m_%d"))
+
+        if platform == 'windows':
+
+            os.chdir(pg_win)
+
+            command = "pg_dump.exe -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --table \"^{prefix}*\" --file={out_File}".format(
+                host=db_PostGIS['host'],
+                port=db_PostGIS['port'],
+                db=db_PostGIS['dbname'],
+                user=db_PostGIS['user'],
+                pwd=db_PostGIS['pwd'],
+                prefix=prefix,
+                out_File=out_File)
+
+        else:
+            command = ""
+
+        info (command)
+    #
+        subprocess.call(command, shell=True)
+
+        os.chdir(script_Folder)
+
+def restore_PostGIS_Tables ():
+
+
+    db_files = glob.glob(folder['DB'].outDir + '/*.backup')
+
+    print db_files
+
+    for inFile  in db_files:
+
+        out_File = "{0}{1}".format(folder['DB'].outDir, inFile)
+
+        if platform == 'windows':           
+
+            os.chdir(pg_win)
+
+            command = "pg_restore.exe -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --file={out_File}".format(
+                host=db_PostGIS['host'],
+                port=db_PostGIS['port'],
+                db=db_PostGIS['dbname'],
+                user=db_PostGIS['user'],
+                pwd=db_PostGIS['pwd'],
+                out_File=out_File)
+
+        else:
+            command = "pg_restore -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --file={out_File}".format(
+                    host=db_PostGIS['host'],
+                    port=db_PostGIS['port'],
+                    db=db_PostGIS['dbname'],
+                    user=db_PostGIS['user'],
+                    pwd=db_PostGIS['pwd'],
+                    out_File=out_File)
+
+
+        info (command)
+        subprocess.call(command, shell=True)
+        os.chdir(script_Folder)

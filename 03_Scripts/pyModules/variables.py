@@ -11,6 +11,8 @@ outDir = location + '02_Output'
 imposm3_cache = script_Folder + 'cache'
 yml_folder = script_Folder + 'styles'
 log_folder = script_Folder + 'log'
+pg_win = "C:/Program Files/PostgreSQL/9.5/bin/"
+
 
 #_________Check OS
 if sys.platform.startswith('linux'):
@@ -140,6 +142,7 @@ class SQL_obj:
 
 
 folder = {
+    'DB':  Mapsets ('DB', '00'),
     'OSM':  Mapsets ('OSM', '01'),
     'ADM':  Mapsets ('ADM', '02'),
     'LULC':  Mapsets ('LULC', '03'),
