@@ -40,6 +40,13 @@ def Step_01_import_Farm_Tables ():
 
         os.remove (csv_file)
 
+def Step_01b_clean_Manure_Tables ():
+
+    for key in FARM:
+
+        if key == 'heads' or  key == 'manure' or  key == 'methane' or  key == 'lsu' :
+
+            delete_records (table=FARM[key].name, where="bt_500 = 0")
 
 def Step_02_rank_Farm_Tables ():
 
@@ -457,13 +464,13 @@ def Step_14_join_Farm_Data ():
     sql_join_left = """
         -- manure
     	LEFT JOIN {head} AS b ON a.index = b.index1
-    	LEFT JOIN {lsu} AS c ON b.id_farm = c.id_farm
-    	LEFT JOIN {manure} AS d ON b.id_farm = d.id_farm
-    	LEFT JOIN {methane} AS e ON b.id_farm = e.id_farm
+    	LEFT JOIN {lsu} AS c ON a.index = c.index1
+    	LEFT JOIN {manure} AS d ON a.index = d.index1
+    	LEFT JOIN {methane} AS e ON a.index = e.index1
         -- crop areas
     	LEFT JOIN {crop_area} AS f ON a.index = f.index1
-    	LEFT JOIN {crop_production} AS g ON f.id_farm = g.id_farm
-    	LEFT JOIN {crop_methane} AS h ON f.id_farm = h.id_farm
+    	LEFT JOIN {crop_production} AS g ON a.index = g.index1
+    	LEFT JOIN {crop_methane} AS h ON a.index = h.index1
     """.format(
             head = FARM['heads'].name,
             lsu = FARM['lsu'].name,
@@ -477,7 +484,7 @@ def Step_14_join_Farm_Data ():
     select = """
         a.id_mun, a.id_building, a.index,
         b.id_farm as id_manure, f.id_farm as id_crop,
-        b.total as heads, c.total as lsu, d.total as manure, e.total as life_methane,
+        b.total as heads, c.total as lsu, d.total as manure, e.total as live_methane,
         f.total as crop_area, g.total as crop_production, h.total as crop_methane,
         a.geom
     """

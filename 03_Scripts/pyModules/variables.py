@@ -197,6 +197,7 @@ SQL_distances = {
     'manure': 10000,
     'features': '2000',
     'criteria': 'id_target > 1500 AND id_target <= 2000',
+    'manure_threshold': 500,
 }
 
 
@@ -235,23 +236,34 @@ SQL_route= {
 	'nodes' : SQL_obj ('route_node_ids', '', 'node ids'),
 }
 
+SQL_route_distance= {
+	'250' : SQL_obj ('route_distance_50km_250__', '', 'id target <= 250'),
+	'500' : SQL_obj ('route_distance_50km_500__', '', 'id target > 250 and <= 500'),
+	'750' : SQL_obj ('route_distance_50km_750__', '', 'id target > 500 and <= 750'),
+	'1500' : SQL_obj ('route_distance_50km_1500__', '', 'id target > 750 and <= 1500'),
+	'2000' : SQL_obj ('route_distance_50km_2000__', '', 'id target > 1500'),
+}
+
 SQL_plants= {
 	'initial' : SQL_obj ('plants_initial', '', 'merge of route tables '),
 	'resources' : SQL_obj ('plants_resources', '', 'join of resources '),
-	'methane' : SQL_obj ('plants_methane_available', '', 'methane available on each farm '),
 	'capacity' : SQL_obj ('plants_capacity', '', 'capacity calculation '),
-	'cost' : SQL_obj ('plants_costs', '', 'cost calculation '),
-	'manure' : SQL_obj ('plants_manure_demand', '', 'manure for feeding the plants '),
-	'crop' : SQL_obj ('plants_crop_demand', '', 'crop for feeding the plants '),
-	'cost_total' : SQL_obj ('plants_costs_total', '', 'total cost '),
-	# 'grouped' : SQL_obj ('plants_resources_grouped', '', 'join of resoureces '),
+}
 
+SQL_plant_costs= {
+	'100' : SQL_obj ('plants_costs_100kw', '', 'cost calculation '),
+	'250' : SQL_obj ('plants_costs_250kw', '', 'cost calculation '),
+	'500' : SQL_obj ('plants_costs_500kw', '', 'cost calculation '),
+	'750' : SQL_obj ('plants_costs_750kw', '', 'cost calculation '),
+	'cost' : SQL_obj ('plants_costs_total', '', 'total cost '),
+	'cost_total' : SQL_obj ('plants_costs_total', '', 'total cost '),
 }
 
 SQL_plant_capacity = {
-    '250': 560000,
-    '500': 1070000,
-    '750': 1560000,
+    '100': 224000,
+    # '250': 560000,
+    # '500': 1070000,
+    # '750': 1560000,
 }
 
 SQL_methane_ratio = {

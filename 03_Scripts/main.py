@@ -56,6 +56,7 @@ if __name__ == "__main__":
     #==============================================================================
     # FARM.Step_00_dissolve_Roads ()
     # FARM.Step_01_import_Farm_Tables ()
+    # FARM.Step_01b_clean_Manure_Tables ()
     # FARM.Step_02_rank_Farm_Tables ()
     # FARM.Step_03_create_Farm_Roads ()
     # FARM.Step_04_create_Target_Points ()
@@ -95,13 +96,16 @@ if __name__ == "__main__":
     #           PLANTS
     #==============================================================================
 
-    # PLT.Step_01_merge_Routes()
+    # PLT.Step_01_initiate_Plants()
     # PLT.Step_02_join_Farm_Resources()
-    PLT.Step_03_calculate_Methane()
-    # PLT.Step_04_sum_Resources()
+    # PLT.Step_03_calculate_Methane()
+    PLT.Step_04_calculate_Demands()
+
+
     # PLT.Step_05_calculate_Costs()
-    # PLT.Step_06_aggregate_Demands()
-    # PLT.Step_06_aggregate_Costs()
+    # PLT.Step_05_aggregate_Costs()
+
+    # PLT.Step_09_test_Route_Plants()
 
     #==============================================================================
     #           FINAL DATABASE

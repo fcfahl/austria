@@ -27,6 +27,9 @@ def execute_Query (query, table):
 def create_table (table):
     return "DROP TABLE IF EXISTS {0};\nCREATE TABLE {0}".format (table)
 
+def create_view (table):
+    return "DROP VIEW IF EXISTS {0};\nCREATE VIEW {0}".format (table)
+
 def select_data (select):
     return "SELECT {0}".format (select)
 

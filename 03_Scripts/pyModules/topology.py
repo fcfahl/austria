@@ -445,7 +445,6 @@ def Step_06_extract_Routes_DEPRECATED ():
     sql_farm_IDs = "SELECT id_target FROM topo_targets WHERE id_target = loop_targets.id_target"
 
     sql_nodes_IDs = """
-
     		nodes as (select * from jrc_get_ids_from_nodes (
                 -- get target id (from loop 1)
     			(SELECT id_target FROM {table} WHERE id_target =  loop_targets.id_target),
