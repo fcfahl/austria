@@ -99,7 +99,7 @@ class Files:
     def getName(self):
         return self.__class__.__name__
 
-    def __init__(self, ID, inFile, nameFile, outFile, mapset, inDir, outDir, **kargs):
+    def __init__(self, ID, inFile, nameFile, outFile, mapset, inDir, outDir, *parameter):
 
         if Files.class_counter < 0:    #skip numbering
             self.ID = ID
@@ -115,13 +115,13 @@ class Files:
         self.outDir = outDir
         self.inFile_Full = inDir + inFile
         self.outFile_Full = outDir + outFile
-        self.parameter = kargs
+        self.parameter = parameter
 
         Files.class_counter += 1
 
 class OSM_obj:
 
-    def __init__(self, continent, country, region, proj, **parameter):
+    def __init__(self, continent, country, region, proj, *parameter):
 
 		db_Parameters = get_DB (continent, country, region)
 
@@ -214,12 +214,12 @@ SQL_buildings = {
 	'location' : SQL_obj ('farm_buildings_location', '', 'final location of the clustered buildings'),
 }
 
-SQL_farms = {
-	'rank' : SQL_obj ('farm_rank_by_mun', '', 'rank of farms by id_mun'),
-	'resources' : SQL_obj ('farm_resources', '', 'create  of farms based'),
+SQL_farms= {
+	'lsu' : SQL_obj ('farm_lsu_calc', '', 'lsu calculated'),
+	'manure' : SQL_obj ('farm_manure_calc', '', 'manure calculated'),
+	'methane' : SQL_obj ('farm_methane_calc', '', 'methane calculated'),
+	'biomass' : SQL_obj ('farm_buildings_biomass', '', 'farms with join tables; manure and crop'),
 }
-
-
 
 SQL_topology= {
 	'targets' : SQL_obj ('topo_targets', '', 'targets and farms merged'),
@@ -288,24 +288,22 @@ LULC = OrderedDict({
     'corine_adm':Files(prefix, '', 'corine_12_adm', 'corine_12_adm', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir),
     'corine_crop':Files(prefix, '', 'corine_crop', 'corine_crop', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir),
     'corine_No_crop':Files(prefix, '', 'corine_No_crop', 'corine_No_crop', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir),
-    'legend':Files(prefix, 'clc_legend.csv', 'legend_12', 'legend_12', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir, columns='num,code,label3,color'),
+    'legend':Files(prefix, 'clc_legend.csv', 'legend_12', 'legend_12', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir, 'num,code,label3,color'),
 
 })
 
 prefix = 'farm'
 Files.class_counter = -99
 FARM = OrderedDict({
-    'parameter':Files(ID=prefix, inFile='biogas_potential.xlsx', nameFile='parameters', outFile='parameters', mapset=folder['FARM'].mapset, inDir=folder['FARM'].inDir, outDir=folder['FARM'].outDir, pk = None, fk= None  ),
-    'id_livestock':Files(prefix, 'biogas_potential.xlsx', 'id_livestock', 'id_livestock', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_livestock', fk= None),
-    'id_agriculture':Files(prefix, 'biogas_potential.xlsx', 'id_agriculture', 'id_agriculture', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_agriculture', fk= None),
+    'parameter':Files(prefix, 'biogas_potential.xlsx', 'parameters', 'parameters', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'heads':Files(prefix, 'biogas_potential.xlsx', 'heads', 'heads', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
 
-    'heads':Files(prefix, 'biogas_potential.xlsx', 'heads', 'heads', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_heads', fk= 'id_livestock'),
-    'lsu':Files(prefix, 'biogas_potential.xlsx', 'lsu', 'lsu', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_heads', fk= 'id_livestock'),
-    'manure':Files(prefix, 'biogas_potential.xlsx', 'manure', 'manure', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_heads', fk= 'id_livestock'),
-    'methane':Files(prefix, 'biogas_potential.xlsx', 'methane', 'methane', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_heads', fk= 'id_livestock'),
+    'lsu':Files(prefix, 'biogas_potential.xlsx', 'lsu', 'lsu', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'manure':Files(prefix, 'biogas_potential.xlsx', 'manure', 'manure', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'methane':Files(prefix, 'biogas_potential.xlsx', 'methane', 'methane', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
 
-    'crop_area':Files(prefix, 'biogas_potential.xlsx', 'crop_area', 'crop_area', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_crops', fk= 'id_agriculture'),
-    'crop_production':Files(prefix, 'biogas_potential.xlsx', 'crop_production', 'crop_production', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_crops', fk= 'id_agriculture'),
-    'crop_methane':Files(prefix, 'biogas_potential.xlsx', 'crop_methane', 'crop_methane', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir, pk = 'id_crops', fk= 'id_agriculture'),
+    'crop_area':Files(prefix, 'biogas_potential.xlsx', 'crop_area', 'crop_area', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'crop_production':Files(prefix, 'biogas_potential.xlsx', 'crop_production', 'crop_production', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
+    'crop_methane':Files(prefix, 'biogas_potential.xlsx', 'crop_methane', 'crop_methane', folder['FARM'].mapset, folder['FARM'].inDir, folder['FARM'].outDir),
 
 })

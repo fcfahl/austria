@@ -25,7 +25,7 @@ def execute_Query (query, table):
             pass
 
 def create_table (table):
-    return "DROP TABLE IF EXISTS {0} CASCADE;\nCREATE TABLE {0}".format (table)
+    return "DROP TABLE IF EXISTS {0};\nCREATE TABLE {0}".format (table)
 
 def select_data (select):
     return "SELECT {0}".format (select)
@@ -49,7 +49,7 @@ def restart_sequence (sequence):
     execute_Query (sql, "")
 
 def drop_table (table):
-    sql = "DROP TABLE IF EXISTS {0} CASCADE;".format (table)
+    sql = "DROP TABLE IF EXISTS {0};".format (table)
     execute_Query (sql, "")
 
 def rename_table (old_table, new_table):
@@ -62,10 +62,6 @@ def drop_key (table):
 
 def add_Pkey (table, pkey):
     sql = "ALTER TABLE {0} ADD PRIMARY KEY ({1});".format (table, pkey)
-    execute_Query (sql, "")
-
-def add_Fkey (table, constraint, fkey, reference, column):
-    sql = "ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3} ({4});".format (table, constraint, fkey, reference, column)
     execute_Query (sql, "")
 
 def add_column (table, column):
@@ -149,11 +145,14 @@ def sql_create_table_with (table, with_, where):
             create = create_table (table),
             with_ = with_
         )
+
     else:
+
         sql = "{create} AS\n{with_}\n{where};".format (
             create = create_table (table),
             with_ = with_,
             where = where
+
         )
 
     execute_Query (sql, table)
@@ -175,6 +174,7 @@ def sql_create_SQL_function (name, columns, return_, sql):
     )
 
     execute_Query (sql, "")
+
 
 
 def sql_create_PLPGSQL_function (name, columns, return_, declare, sql):

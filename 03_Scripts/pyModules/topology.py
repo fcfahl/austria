@@ -318,6 +318,7 @@ def Step_06_extract_Routes ():
     route_target_name = "route_targets_{0}__".format(number_features)
 
 
+
     # ________________________ Step 01 Create route table (structure only)
     sql_step1= "{create} (id_target int, id_building int, length double precision );".format (
         create = create_table(route_table_name)  )

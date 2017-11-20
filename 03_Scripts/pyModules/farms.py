@@ -36,26 +36,68 @@ def Step_01_import_Farm_Tables ():
 
         import_CSV_PostGIS (table=FARM[key].name, csv=csv_file, sep=',')
 
+        add_Pkey (table=FARM[key].name, pkey='id_farm')
+
         os.remove (csv_file)
 
-def Step_02_set_Keys ():
+
+def Step_02_rank_Farm_Tables ():
 
     for key in FARM:
 
-        parameter = FARM[key].parameter
-        if parameter:
-            pk = parameter['pk']
-            fk = parameter['fk']
+        if key != 'parameter':
 
-            if pk:
-                add_Pkey (table=FARM[key].name, pkey=pk)
+            table =  "rank_" + FARM[key].name
+            sequence = 'serial'
 
-            if fk:
-                constraint = "{0}_fkey".format(FARM[key].name)
-                reference = FARM[fk].name
-                column = fk
+            create_index (table=FARM[key].name, column='total')
 
-                add_Fkey(FARM[key].name, constraint, pk, reference, column)
+            # ______________ order farms by total column
+            sql_rank = """
+                {create_table} AS
+                SELECT {select}
+                FROM {from_}
+                ORDER BY {order};
+            """.format (
+                    create_table = create_table(table),
+                    select = "*, 0 as rank1, 0 AS row1, '0'::text AS index1, 0 as id_order",
+                    from_ = FARM[key].name,
+                    sequence = sequence,
+                    order = 'id_mun ASC, total DESC'
+                    )
+
+            sql_custom (table=table, sql=sql_rank)
+
+            # ______________ add IDS for each farm
+            restart_sequence (sequence)
+            update_column (table="rank_" + FARM[key].name, column="id_order", value="nextval('serial')")
+
+            # ______________ rank the farms according to municipal ID
+            sql_rank2 = """
+                WITH a AS
+                    (
+                        SELECT
+                            id_order, id_mun,
+                            row_number() OVER (ORDER BY id_mun) AS row1,
+                            rank() OVER (ORDER BY id_mun) AS rank1
+                        FROM {table}
+                    )
+                UPDATE {table} AS b
+                   SET rank1 =  a.rank1, row1 = a.row1, index1 = concat (a.id_mun, '_', (1 + a.row1 - a.rank1))
+                   FROM  a
+                   WHERE  a.id_order = b.id_order;
+            """.format (table = table)
+
+            sql_custom (table=table, sql=sql_rank2)
+
+            drop_column (table = table, column = 'rank1')
+            drop_column (table = table, column = 'row1')
+
+            add_Pkey (table=table, pkey='id_farm')
+
+            # ______________ replace tables
+            drop_table (FARM[key].name)
+            rename_table (old_table=table, new_table=FARM[key].name)
 
 def Step_03_create_Farm_Roads ():
 
@@ -409,108 +451,20 @@ def Step_13_rank_Buildings ():
 
         sql_custom (table=SQL_buildings['location'].name, sql=sql_rank2)
 
-def Step_14_rank_Farm_Tables ():
-
-    out_table = SQL_farms['rank'].name
-
-    # ______________ order farms by total column
-    sql_rank= "{create} (id_livestock int, id_agriculture int, row_heads int, row_crops int, index_heads varchar (10), index_crops varchar (10));".format (
-        create = create_table(out_table))
-
-    sql_custom (table=out_table, sql=sql_rank)
-
-    for key in ['heads','crop_area']:
-
-        in_table = FARM[key].name
-
-        pk = FARM[key].parameter['pk']
-        fk = FARM[key].parameter['fk']
-
-        if key == 'heads':
-            id_join = 'id_livestock'
-        else:
-            id_join = 'id_agriculture'
-
-        crops_join = FARM[id_join].name
-
-        index_column = "index_{0}".format(key)
-
-        tmp_table = "tmp_{0}".format(key)
-
-
-        # ______________ rank the farms according to municipal ID
-        sql_rank2 = """
-            WITH
-                selection_ AS
-                (
-                SELECT b.{fk}, b.id_mun, a.total, 0 as rank1, 0 AS row1, '0'::text AS {index_column}, 0 as id_order
-                FROM {in_table} a
-                INNER JOIN {crops_join} b ON a.{pk} = b.{fk}
-                ORDER BY b.id_mun ASC, a.total DESC
-                ),
-                rank_ AS
-                (
-                SELECT
-                    {fk}, id_order, id_mun,
-                    row_number() OVER (ORDER BY id_mun) AS row1,
-                    rank() OVER (ORDER BY id_mun) AS rank1
-                FROM selection_
-                ),
-                final_ AS
-                (
-                SELECT
-                    {fk}, id_mun, row1, rank1, concat (id_mun, '_', (1 + row1 - rank1)) AS index
-                FROM rank_
-                )
-                SELECT * FROM final_;
-
-        """.format (
-
-            in_table = in_table,
-            out_table = out_table,
-            crops_join = crops_join,
-            index_column = index_column,
-            pk = pk,
-            fk = fk
-
-            )
-
-        sql_create_table_with (table=tmp_table, with_=sql_rank2, where="")
-        # info (sql_rank2)
-
-    sql_merge= """
-        {create} AS
-        SELECT a.id_livestock, b.id_agriculture, a.index AS head_index, b.index AS crop_index
-        FROM tmp_crop_area b
-        LEFT OUTER JOIN  tmp_heads a
-        ON a.row1 = b.row1;
-    """.format (create = create_table(out_table))
-
-    sql_custom (table = out_table, sql=sql_merge)
-    add_column (table = out_table, column = 'id_rank SERIAL PRIMARY KEY')
-
-    drop_table (table = 'tmp_heads')
-    drop_table (table = 'tmp_crop_area')
-
-
-def Step_15_join_Farm_Data ():
+def Step_14_join_Farm_Data ():
 
     # ______________ order farms by total column
     sql_join_left = """
-        -- rank
-        LEFT JOIN {rank} AS r1 ON r1.head_index = a.index
-        LEFT JOIN {rank} AS r2 ON r1.crop_index = a.index
         -- manure
-    	LEFT JOIN {head} AS b ON b.id_heads = r1.id_livestock
-    	LEFT JOIN {lsu} AS c ON c.id_heads = r1.id_livestock
-    	LEFT JOIN {manure} AS d ON d.id_heads = r1.id_livestock
-    	LEFT JOIN {methane} AS e ON e.id_heads = r1.id_livestock
+    	LEFT JOIN {head} AS b ON a.index = b.index1
+    	LEFT JOIN {lsu} AS c ON b.id_farm = c.id_farm
+    	LEFT JOIN {manure} AS d ON b.id_farm = d.id_farm
+    	LEFT JOIN {methane} AS e ON b.id_farm = e.id_farm
         -- crop areas
-    	LEFT JOIN {crop_area} AS f ON f.id_crops = r2.id_agriculture
-    	LEFT JOIN {crop_production} AS g ON g.id_crops = r2.id_agriculture
-    	LEFT JOIN {crop_methane} AS h ON h.id_crops = r2.id_agriculture
+    	LEFT JOIN {crop_area} AS f ON a.index = f.index1
+    	LEFT JOIN {crop_production} AS g ON f.id_farm = g.id_farm
+    	LEFT JOIN {crop_methane} AS h ON f.id_farm = h.id_farm
     """.format(
-            rank = SQL_farms['rank'].name,
             head = FARM['heads'].name,
             lsu = FARM['lsu'].name,
             manure = FARM['manure'].name,
@@ -522,8 +476,8 @@ def Step_15_join_Farm_Data ():
 
     select = """
         a.id_mun, a.id_building, a.index,
-        b.id_heads, f.id_crops,
-        b.total as heads, c.total as lsu, d.total as manure, e.total as live_methane,
+        b.id_farm as id_manure, f.id_farm as id_crop,
+        b.total as heads, c.total as lsu, d.total as manure, e.total as life_methane,
         f.total as crop_area, g.total as crop_production, h.total as crop_methane,
         a.geom
     """
@@ -534,11 +488,11 @@ def Step_15_join_Farm_Data ():
         FROM {from_}
         {join};
     """.format (
-            create_table = create_table(SQL_farms['resources'].name),
+            create_table = create_table(SQL_farms['biomass'].name),
             select = select,
             from_ = SQL_buildings['location'].name + " AS a ",
             join = sql_join_left
             )
 
-    sql_custom (table=SQL_farms['resources'].name, sql=sql_join)
-    add_Pkey (table=SQL_farms['resources'].name, pkey = 'id_building')
+    sql_custom (table=SQL_farms['biomass'].name, sql=sql_join)
+    add_Pkey (table=SQL_farms['biomass'].name, pkey = 'id_building')

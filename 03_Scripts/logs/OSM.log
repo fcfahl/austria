@@ -1,29 +1,14 @@
-20:18:32 WARNING  is when this event was logged.
-20:18:32 INFO     
-        DROP TABLE IF EXISTS farm_resources CASCADE;
-CREATE TABLE farm_resources AS
-        SELECT 
-        a.id_mun, a.id_building, a.index,
-        b.id_heads, f.id_crops,
-        b.total as heads, c.total as lsu, d.total as manure, e.total as live_methane,
-        f.total as crop_area, g.total as crop_production, h.total as crop_methane,
-        a.geom
+14:42:31 WARNING  is when this event was logged.
+14:42:31 INFO     
+        DROP TABLE IF EXISTS plants_methane_available;
+CREATE TABLE plants_methane_available AS
+        SELECT id_plants, id_mun, id_target, id_building, length, manure, life_methane, crop_production, crop_methane,
+        CASE
+            WHEN length <= 10000 THEN (life_methane * 0.3) + (crop_methane * 0.7)
+            ELSE (crop_methane * 0.7)
+        END AS methane
+        FROM plants_resources
+        ORDER BY id_target, length ASC;
     
-        FROM farm_buildings_location AS a 
-        
-        -- rank
-        LEFT JOIN farm_rank_by_mun AS r1 ON r1.head_index = a.index
-        LEFT JOIN farm_rank_by_mun AS r2 ON r1.crop_index = a.index
-        -- manure
-    	LEFT JOIN farm_heads AS b ON b.id_heads = r1.id_livestock
-    	LEFT JOIN farm_lsu AS c ON c.id_heads = r1.id_livestock
-    	LEFT JOIN farm_manure AS d ON d.id_heads = r1.id_livestock
-    	LEFT JOIN farm_methane AS e ON e.id_heads = r1.id_livestock
-        -- crop areas
-    	LEFT JOIN farm_crop_area AS f ON f.id_crops = r2.id_agriculture
-    	LEFT JOIN farm_crop_production AS g ON g.id_crops = r2.id_agriculture
-    	LEFT JOIN farm_crop_methane AS h ON h.id_crops = r2.id_agriculture
-    ;
-    
-20:18:33 INFO     ALTER TABLE farm_resources ADD PRIMARY KEY (id_building);
-20:18:33 ERROR    ALTER TABLE farm_resources ADD PRIMARY KEY (id_building);
+14:42:40 INFO     ALTER TABLE plants_methane_available ADD COLUMN  id_plants SERIAL PRIMARY KEY;
+14:42:40 ERROR    ALTER TABLE plants_methane_available ADD COLUMN  id_plants SERIAL PRIMARY KEY;

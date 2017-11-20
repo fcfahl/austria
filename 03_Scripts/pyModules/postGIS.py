@@ -270,8 +270,6 @@ def import_CSV_PostGIS (table, csv, sep=','):
         host=db_PostGIS['host'])
     con = sa.create_engine(engine)
 
-    drop_table(table)
-
     #_________read csv:
     df = pd.read_csv(csv, sep=sep, chunksize=100000)
 
@@ -352,7 +350,6 @@ def export_PostGIS_Tables ():
 def restore_PostGIS_Tables ():
 
     db_files = glob.glob(folder['DB'].outDir + '/*.backup')
-    # db_files = ['adm_2017_11_17.backup','farm_2017_11_17.backup']
 
     for inFile  in db_files:
 
