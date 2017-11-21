@@ -255,15 +255,25 @@ SQL_plant_costs= {
 	'250' : SQL_obj ('plants_costs_250kw', '', 'cost calculation '),
 	'500' : SQL_obj ('plants_costs_500kw', '', 'cost calculation '),
 	'750' : SQL_obj ('plants_costs_750kw', '', 'cost calculation '),
-	'cost' : SQL_obj ('plants_costs_total', '', 'total cost '),
+	'cost' : SQL_obj ('plants_costs', '', 'total cost '),
 	'cost_total' : SQL_obj ('plants_costs_total', '', 'total cost '),
+}
+
+SQL_optmization= {
+    'residual' : SQL_obj ('optimal_plant_residual', '', 'residual resources'),
+    'residual_aggr' : SQL_obj ('optimal_plant_residual_aggr', '', 'residual resources'),
+	'location' : SQL_obj ('optimal_plant_location', '', 'first plant '),
+	'links' : SQL_obj ('optimal_plant_links', '', 'first plant '),
+	'cost' : SQL_obj ('optimal_plant_costs', '', 'costs of residual resources'),
+	'cost_aggr' : SQL_obj ('optimal_plant_costs_aggr', '', 'aggregated costs'),
+	'final' : SQL_obj ('optimal_plant_final', '', 'route and plants in the same layer'),
 }
 
 SQL_plant_capacity = {
     '100': 224000,
-    # '250': 560000,
-    # '500': 1070000,
-    # '750': 1560000,
+    '250': 560000,
+    '500': 1070000,
+    '750': 1560000,
 }
 
 SQL_methane_ratio = {

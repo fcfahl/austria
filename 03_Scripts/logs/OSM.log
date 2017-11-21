@@ -1,55 +1,28 @@
-18:56:41 WARNING  is when this event was logged.
-18:56:41 INFO     ALTER TABLE plants_capacity ADD COLUMN  live_100kW DOUBLE PRECISION;
-18:56:41 ERROR    ALTER TABLE plants_capacity ADD COLUMN  live_100kW DOUBLE PRECISION;
-18:56:41 INFO     ALTER TABLE plants_capacity ADD COLUMN  crop_100kW DOUBLE PRECISION;
-18:56:41 ERROR    ALTER TABLE plants_capacity ADD COLUMN  crop_100kW DOUBLE PRECISION;
-18:56:42 INFO     ALTER TABLE plants_capacity ADD COLUMN  residual_live_100kW DOUBLE PRECISION;
-18:56:42 ERROR    ALTER TABLE plants_capacity ADD COLUMN  residual_live_100kW DOUBLE PRECISION;
-18:56:42 INFO     ALTER TABLE plants_capacity ADD COLUMN  residual_crop_100kW DOUBLE PRECISION;
-18:56:42 ERROR    ALTER TABLE plants_capacity ADD COLUMN  residual_crop_100kW DOUBLE PRECISION;
-18:56:42 INFO     
-            WITH
-            livestock AS
-            (
-                SELECT id_plants, id_target,
-                live_capacity_aggr - 67200.0 AS live_allocation,
-	            ROW_NUMBER() OVER (PARTITION BY id_target ORDER BY live_capacity_aggr ASC) AS rank_1
-                FROM plants_capacity
-                WHERE live_capacity_aggr > 0
-                ORDER BY id_target, live_capacity_aggr
-            ),
-            crop AS
-            (
-                SELECT id_plants, id_target,
-                crop_capacity_aggr - 156800.0 AS crop_allocation,
-	            ROW_NUMBER() OVER (PARTITION BY id_target ORDER BY crop_capacity_aggr ASC) AS rank_2
-                FROM plants_capacity
-                WHERE crop_capacity_aggr > 0
-                ORDER BY id_target, crop_capacity_aggr
-            ),
-            residuals AS (
-                SELECT
-                    -- livestock
-                    a.id_plants, a.id_target, a.live_allocation AS residual_live_100kW,
-                    -- crops
-                    b.id_plants, b.id_target, b.crop_allocation AS residual_crop_100kW
-                FROM crop b
-                LEFT JOIN livestock a
-                ON  a.id_plants = b.id_plants
-            ),
-            allocation AS (
-                SELECT a.live_allocation, b.*,
-            		case when a.live_allocation <=0 then 1 else 0 end as live_100kW,
-            		case when b.crop_allocation <=0 then 1 else 0 end as crop_100kW
-                FROM crop b
-                LEFT JOIN livestock a
-                ON  a.id_plants = b.id_plants
-            )
-
-            UPDATE plants_capacity AS c
-            SET live_100kW = d.live_100kW,
-                crop_100kW = d.crop_100kW
-            FROM allocation AS d, livestock AS e, crop AS f
-            WHERE c.id_plants = d.id_plants
+19:19:56 WARNING  is when this event was logged.
+19:19:56 INFO     
+        DROP TABLE IF EXISTS optimal_plant_costs;
+CREATE TABLE optimal_plant_costs AS
+        WITH
+        costs AS
+        (
+            SELECT id_aggregate, id_target, id_building, rank, length, plant_capacity, manure, crop_production, live_methane, crop_methane,
+            (crop_production * 5) AS cost_harvest,
+            ((length / 1000) * crop_production * 6) AS cost_ensiling,
+            ((length / 1000) * manure * 0.2) AS cost_manure
+            FROM optimal_plant_residual
+            WHERE plant_capacity <= 100
+        ),
+        total AS (
+            SELECT *,
+            CASE
+                WHEN cost_manure is not null THEN cost_manure + cost_harvest + cost_ensiling
+                ELSE cost_harvest + cost_ensiling
+            END AS cost_100kw,
+            COALESCE (live_methane, 0) + crop_methane AS methane_100kw
+            FROM costs
+        )
+        SELECT id_aggregate, id_target, id_building, rank, length, plant_capacity, manure, crop_production, live_methane, crop_methane, methane_100kw, cost_100kw
+        FROM total
+        WHERE plant_capacity <= 100
             ;
-        
+    

@@ -16,7 +16,6 @@ def Step_01_initiate_Plants ():
         create = create_table(SQL_plants['initial'].name), columns=columns )
 
     sql_custom (table = "", sql=sql_results)
-    # add_geometry (scheme = 'public', table = SQL_plants['initial'].name, column = 'geom', srid = 3035, type_='POINT', dimension=2)
 
     routes = ['250', '500', '750', '1500', '2000']
 
@@ -35,7 +34,6 @@ def Step_01_initiate_Plants ():
 
         sql_custom (table = SQL_plants['initial'].name, sql=sql_merge)
 
-
 def Step_02_join_Farm_Resources ():
 
     sql_join = """
@@ -53,7 +51,6 @@ def Step_02_join_Farm_Resources ():
 
     sql_custom (table=SQL_plants['resources'].name, sql=sql_join)
     drop_table (SQL_plants['initial'].name)
-
 
 def Step_03_calculate_Methane ():
     # ______ select resources until reach the plant capacity
@@ -110,244 +107,140 @@ def Step_03_calculate_Methane ():
 
     sql_custom (table=SQL_plants['capacity'].name, sql=sql_sum)
 
-    add_column (table = SQL_plants['capacity'].name, column = 'id_plants SERIAL PRIMARY KEY')
+    add_column (table = SQL_plants['capacity'].name, column = 'id_aggregate SERIAL PRIMARY KEY')
 
-
-def Step_04_calculate_Demands_OLD ():
-
-    for key in SQL_plant_capacity:
-
-        manure_demand = SQL_plant_capacity[key] * SQL_methane_ratio['manure']
-        crop_demand = SQL_plant_capacity[key] * SQL_methane_ratio['crop']
-
-        tmp_table = "tmp_{0}".format(SQL_plant_costs[key].name)
-
-        print " capacity = {0} \n manure denand = {1} \n crop demand = {2}\n\n".format(key,manure_demand,crop_demand)
-
-        # ________________________ TARGETS
-        sql_tmp = "CREATE TEMPORARY TABLE IF NOT EXISTS {0} AS (SELECT * FROM {1}  WHERE id_target < 4 ORDER BY id_target, plant_capacity, crop_capacity_aggr, live_capacity_aggr);".format(tmp_table, SQL_plants['capacity'].name)
-
-        sql_loop_01 = "FOR loop_plants IN SELECT * FROM {0}".format(tmp_table)
-
-        sql_main = """
-        DO
-        $$
-        DECLARE
-            capacity int := {key};
-
-            manure double precision;
-            manure_residues double precision;
-            manure_demand double precision := {manure_demand};
-
-            crop_demand double precision := {crop_demand};
-
-        	loop_plants record;
-        	manure_target boolean;
-        	crop_target boolean;
-
-
-        BEGIN
-            {sql_tmp}
-            -- LOOP 1 (TARGET)
-                {loop_01}
-            LOOP
-                manure := loop_plants.live_capacity_aggr;
-                manure_residues := manure_demand - manure;
-                RAISE NOTICE 'id_target = % | attr = %', loop_plants.id_target, manure_residues;
-
-            END LOOP;
-        END
-        $$;
-
-        """.format(
-            key = key,
-            capacity = SQL_plants['capacity'].name,
-            sql_tmp = sql_tmp,
-            loop_01 = sql_loop_01,
-            manure_demand = manure_demand,
-            crop_demand = crop_demand,
-            tmp_table = tmp_table,
-        )
-
-        sql_custom (table = "",  sql=sql_main)
-
-        # sql_demand = """
-        #     {create} AS
-        #     SELECT id_plants, id_target, id_building, length, plant_capacity, live_capacity_aggr, crop_capacity_aggr, total_capacity_aggr,
-        #     CASE
-        #         WHEN live_capacity_aggr <= {manure_demand} THEN live_capacity_aggr ELSE {manure_demand} - live_capacity_aggr
-        #     END AS live_residuals
-        #     FROM {capacity}
-        #     ORDER BY id_target, plant_capacity, crop_capacity_aggr, live_capacity_aggr
-        #     ;
-        # """.format (
-        #         create = create_table(SQL_plant_costs[key].name),
-        #         capacity = SQL_plants['capacity'].name,
-        #         manure_demand = manure_demand,
-        #         )
-        #
-        # sql_custom (table="", sql=sql_demand)
-
-def Step_04_calculate_Demands ():
-
-    for key in SQL_plant_capacity:
-
-        col_manure = "live_{0}kW".format(key)
-        col_crop = "crop_{0}kW".format(key)
-
-        residual_manure = "residual_live_{0}kW".format(key)
-        residual_crop = "residual_crop_{0}kW".format(key)
-
-        add_column (table = SQL_plants['capacity'].name, column = "{0} DOUBLE PRECISION".format(col_manure))
-        add_column (table = SQL_plants['capacity'].name, column = "{0} DOUBLE PRECISION".format(col_crop))
-        add_column (table = SQL_plants['capacity'].name, column = "{0} DOUBLE PRECISION".format(residual_manure))
-        add_column (table = SQL_plants['capacity'].name, column = "{0} DOUBLE PRECISION".format(residual_crop))
-
-        manure_demand = SQL_plant_capacity[key] * SQL_methane_ratio['manure']
-        crop_demand = SQL_plant_capacity[key] * SQL_methane_ratio['crop']
-
-        print " capacity = {0} \n manure denand = {1} \n crop demand = {2}\n\n".format(key,manure_demand,crop_demand)
-
-        sql_demand = """
-            WITH
-            livestock AS
-            (
-                SELECT id_plants, id_target,
-                live_capacity_aggr - {manure_demand} AS live_allocation,
-	            ROW_NUMBER() OVER (PARTITION BY id_target ORDER BY live_capacity_aggr ASC) AS rank_1
-                FROM {capacity}
-                WHERE live_capacity_aggr > 0
-                ORDER BY id_target, live_capacity_aggr
-            ),
-            crop AS
-            (
-                SELECT id_plants, id_target,
-                crop_capacity_aggr - {crop_demand} AS crop_allocation,
-	            ROW_NUMBER() OVER (PARTITION BY id_target ORDER BY crop_capacity_aggr ASC) AS rank_2
-                FROM {capacity}
-                WHERE crop_capacity_aggr > 0
-                ORDER BY id_target, crop_capacity_aggr
-            ),
-            residuals AS (
-                SELECT
-                    -- livestock
-                    a.id_plants, a.id_target, a.live_allocation AS {residual_manure},
-                    -- crops
-                    b.id_plants, b.id_target, b.crop_allocation AS {residual_crop}
-                FROM crop b
-                LEFT JOIN livestock a
-                ON  a.id_plants = b.id_plants
-            ),
-            allocation AS (
-                SELECT a.live_allocation, b.*,
-            		case when a.live_allocation <=0 then 1 else 0 end as {col_manure},
-            		case when b.crop_allocation <=0 then 1 else 0 end as {col_crop}
-                FROM crop b
-                LEFT JOIN livestock a
-                ON  a.id_plants = b.id_plants
-            )
-
-            UPDATE {capacity} AS c
-            SET {col_manure} = d.{col_manure},
-                {col_crop} = d.{col_crop}
-            FROM allocation AS d, livestock AS e, crop AS f
-            WHERE c.id_plants = d.id_plants
-            ;
-        """.format (
-                capacity = SQL_plants['capacity'].name,
-                table = SQL_plants['capacity'].name,
-                col_manure = col_manure,
-                col_crop = col_crop,
-                manure_demand = manure_demand,
-                crop_demand = crop_demand,
-                residual_manure = residual_manure,
-                residual_crop = residual_crop,
-                )
-
-        sql_custom (table="", sql=sql_demand)
-
-
-
-def Step_05_calculate_Costs ():
+def Step_04_calculate_Costs ():
 
     cost_harvest = "(crop_production * {0})".format(SQL_costs['harvest'])
     cost_ensiling = "((length / 1000) * crop_production * {0})".format(SQL_costs['ensiling'])
     cost_manure = "((length / 1000) * manure * {0})".format(SQL_costs['manure'])
 
-    sql_cost1 = """
-        {create_table} AS
-        SELECT id_target, id_building, length, live_capacity_aggr, crop_capacity_aggr, plant_capacity,
-        0.0 AS cost_100km
+    for key in SQL_plant_capacity:
 
-        FROM {capacity}
-        ORDER BY id_target, plant_capacity, crop_capacity_aggr, live_capacity_aggr
+        plant_capacity = int(key)
+
+        sql_cost = """
+            {create_table} AS
+            WITH
+            costs AS
+            (
+                SELECT *,
+                {harvest} AS cost_harvest,
+                {ensiling} AS cost_ensiling,
+                CASE
+                    WHEN live_capacity_aggr > 0 THEN {manure}
+                    ELSE 0
+                END AS cost_manure
+                FROM {capacity}
+                WHERE plant_capacity <= {plant_capacity}
+            )
+            SELECT *,
+            CASE
+                WHEN cost_manure is not null THEN cost_manure + cost_harvest + cost_ensiling
+                ELSE cost_harvest + cost_ensiling
+            END AS cost_total_{key}kw,
+            COALESCE (live_methane,0) + crop_methane AS methane_total_{key}kw
+            FROM costs
+                ;
+        """.format (
+            create_table = create_table(SQL_plant_costs[key].name),
+            capacity = SQL_plants['capacity'].name,
+            harvest = cost_harvest,
+            ensiling = cost_ensiling,
+            manure = cost_manure,
+            plant_capacity=plant_capacity,
+            key=key
+            )
+
+        sql_custom (table=SQL_plant_costs[key].name, sql=sql_cost)
+
+def Step_05_join_Costs ():
+
+    sql_costs = """
+        {create_table} AS
+        SELECT a.id_aggregate, a.id_target, a.id_building, a.length, a.plant_capacity,
+            a.manure, a.crop_production, a.live_methane, a.crop_methane,
+            d.methane_total_100kw, c.methane_total_250kw,
+            b.methane_total_500kw, a.methane_total_750kw,
+            d.cost_total_100kw, c.cost_total_250kw,
+            b.cost_total_500kw, a.cost_total_750kw
+        FROM {cost_750kw} AS a
+        LEFT JOIN {cost_500kw} AS b ON a.id_aggregate = b.id_aggregate
+        LEFT JOIN {cost_250kw} AS c ON a.id_aggregate = c.id_aggregate
+        LEFT JOIN {cost_100kw} AS d ON a.id_aggregate = d.id_aggregate
+
+
             ;
     """.format (
         create_table = create_table(SQL_plant_costs['cost'].name),
-        capacity = SQL_plants['capacity'].name,
+        cost_100kw = SQL_plant_costs['100'].name,
+        cost_250kw = SQL_plant_costs['250'].name,
+        cost_500kw = SQL_plant_costs['500'].name,
+        cost_750kw = SQL_plant_costs['750'].name,
         )
 
-    sql_custom (table=SQL_plant_costs['cost'].name, sql=sql_cost1)
-
-
-    # for key in SQL_plant_capacity:
-
-    # sql_cost = """
-    #     {create_table} AS
-    #     WITH
-    #     costs AS
-    #     (
-    #         SELECT *,
-    #         {harvest} AS cost_harvest,
-    #         {ensiling} AS cost_ensiling,
-    #         CASE
-    #             WHEN live_100kw = 1 THEN {manure}
-    #             ELSE 0
-    #         END AS cost_manure
-    #         FROM {capacity}
-    #     )
-    #     SELECT *, cost_harvest + cost_ensiling + cost_manure as cost_total
-    #     FROM costs
-    #         ;
-    # """.format (
-    #     create_table = create_table(SQL_plant_costs['cost'].name),
-    #     capacity = SQL_plants['capacity'].name,
-    #     harvest = cost_harvest,
-    #     ensiling = cost_ensiling,
-    #     manure = cost_manure
-    #     )
-    #
-    # sql_custom (table=SQL_plant_costs['cost'].name, sql=sql_cost)
-
+    sql_custom (table=SQL_plant_costs['cost'].name, sql=sql_costs)
 
 def Step_05_aggregate_Costs ():
 
     sql_aggr = """
         {create_table} AS
         WITH
-            total AS (
-                SELECT *,
-                SUM (cost_total) OVER (PARTITION BY plant_capacity ORDER BY length ASC) AS costs
-                FROM {cost}
+            p100kw AS (
+                SELECT id_target,
+                SUM (cost_total_100kw) AS cost_100kw,
+                SUM (methane_total_100kw) AS methane_100kw
+                FROM {cost_100kw}
+                GROUP BY id_target
+                ORDER BY id_target
+            ),
+            p250kw AS (
+                SELECT id_target,
+                SUM (cost_total_250kw) AS cost_250kw,
+                SUM (methane_total_250kw) AS methane_250kw
+                FROM {cost_250kw}
+                GROUP BY id_target
+                ORDER BY id_target
+            ),
+            p500kw AS (
+                SELECT id_target,
+                SUM (cost_total_500kw) AS cost_500kw,
+                SUM (methane_total_500kw) AS methane_500kw
+                FROM {cost_500kw}
+                GROUP BY id_target
+                ORDER BY id_target
+            ),
+            p750kw AS (
+                SELECT id_target,
+                SUM (cost_total_750kw) AS cost_750kw,
+                SUM (methane_total_750kw) AS methane_750kw
+                FROM {cost_750kw}
                 GROUP BY id_target
                 ORDER BY id_target
             )
-        SELECT a.*, b.geom
-        FROM total AS a, {targets} AS b
-        WHERE a.id_target = b.id_target
+        SELECT a.id_target, a.rank,
+        b.methane_100kw, c.methane_250kw, d.methane_500kw, e.methane_750kw,
+        b.cost_100kw, c.cost_250kw, d.cost_500kw, e.cost_750kw, a.geom
+        FROM {target}  AS a
+        LEFT JOIN p100kw AS b ON a.id_target = b.id_target
+        LEFT JOIN p250kw AS c ON a.id_target = c.id_target
+        LEFT JOIN p500kw AS d ON a.id_target = d.id_target
+        LEFT JOIN p750kw AS e ON a.id_target = e.id_target
             ;
     """.format (
         create_table = create_table(SQL_plant_costs['cost_total'].name),
-        cost = SQL_plant_costs['cost'].name,
-        targets = SQL_topology['targets'].name
+        target = SQL_target['site_clean'].name,
+        cost_100kw = SQL_plant_costs['100'].name,
+        cost_250kw = SQL_plant_costs['250'].name,
+        cost_500kw = SQL_plant_costs['500'].name,
+        cost_750kw = SQL_plant_costs['750'].name,
         )
 
     sql_custom (table=SQL_plant_costs['cost_total'].name, sql=sql_aggr)
 
-
 def Step_09_test_Route_Plants ():
 
-    plant_id = 116
+    plant_id = 102
 
     if plant_id <= 250:
         route = SQL_route_distance['250'].name
@@ -360,9 +253,7 @@ def Step_09_test_Route_Plants ():
     else:
         route = SQL_route_distance['2000'].name
 
-
-
-    sql_view = """
+    sql_test = """
         {create_table} AS
         SELECT a.*, b.geom as farms, c.geom as route
         FROM {cost} AS a
@@ -374,116 +265,27 @@ def Step_09_test_Route_Plants ():
     """.format (
         create_table = create_table('test_plants_route'),
         plant = plant_id,
-        targets = SQL_topology['targets'].name,
+        targets = SQL_target['site_clean'].name,
         farms = SQL_farms['biomass'].name,
         capacity = SQL_plants['capacity'].name,
-        cost = SQL_plants['cost'].name,
+        cost = SQL_plant_costs['cost'].name,
         route = route,
         )
 
-    sql_custom (table='', sql=sql_view)
+    sql_custom (table='', sql=sql_test)
 
 
     sql_target = """
         {create_table} AS
-        SELECT a.*, b.geom
-        FROM {capacity} AS a
-        LEFT JOIN {targets} AS b ON a.id_target = b.id_target
-        WHERE a.id_target = {plant}
-
+        SELECT *
+        FROM {cost}
+        WHERE id_target = {plant}
             ;
     """.format (
         create_table = create_table('test_plants_target'),
         plant = plant_id,
-        capacity = SQL_plants['capacity'].name,
-        targets = SQL_topology['targets'].name,
+        cost = SQL_plant_costs['cost_total'].name,
+        targets = SQL_target['site_clean'].name,
         )
 
     sql_custom (table='', sql=sql_target)
-
-
-    # sql_sum = """
-    #     {create_table} AS
-    #     SELECT id_plants, id_mun, id_target, id_building, length, capacity
-    #     FROM (
-    #         SELECT id_plants, id_mun, id_target, id_building, length,
-    #         SUM (methane) OVER (ORDER BY length ASC) AS capacity
-    #         FROM {resources}
-    #     ) AS capacity
-    #     WHERE capacity <= {capacity}
-    #         ;
-    # """.format (
-    #     create_table = create_table(SQL_plants['capacity'].name),
-    #     resources = SQL_plants['methane'].name,
-    #     capacity = SQL_plant_capacity['250'],
-    #     )
-    #
-    # sql_custom (table=SQL_plants['capacity'].name, sql=sql_sum)
-
-
-
-
-    # sql_sum = """
-    #     {create_table} AS
-    #     SELECT a.id_target, sum(a.methane) AS total_methane, b.geom
-    #         FROM {resources} AS a
-    #         LEFT JOIN (SELECT DISTINCT ON (id_target) * FROM {targets})  AS b
-    #         ON a.id_target = b.id_target
-    #         GROUP BY a.id_target, b.geom
-    #         ORDER BY a.id_target
-    #         ;
-    # """.format (
-    #     create_table = create_table(SQL_plants['capacity'].name),
-    #     resources = SQL_plants['methane'].name,
-    #     targets = SQL_topology['targets'].name
-    #     )
-    #
-    # sql_custom (table=SQL_plants['capacity'].name, sql=sql_sum)
-
-
-
-
-    # sql_sum = """
-    #     WITH
-    #         selection AS (
-    #             SELECT a.id_target, a.length, a.lsu, a.manure, a.methane, a.crop, a.total_area, a.geom
-    #                  FROM plants_resources AS a
-    #                  LEFT JOIN topo_targets AS b
-    #                  ON a.id_target = b.id_target
-    #                  ORDER BY a.id_target, a.length
-    #             ),
-    #         manure AS (
-    #             SELECT b.id_target, sum(b.lsu) AS lsu, sum(b.manure) AS manure, sum(b.methane) AS methane, sum(b.length) AS manure_distance
-    #             FROM (SELECT * FROM  selection WHERE length < {manure_distance}) AS b
-    #             GROUP BY b.id_target
-    #            ),
-    #         crop AS (
-    #             SELECT b.id_target, sum(b.crop) AS crop, sum(b.total_area) as total_area, sum(b.length) AS crop_distance
-    #             FROM selection AS b
-    #             GROUP BY b.id_target
-    #            ),
-    #         join_tables AS (
-    #             SELECT m.id_target, m.lsu, m.manure, m.methane, c.crop, c.total_area, m.manure_distance, c.crop_distance
-    #             FROM manure AS m
-    #             LEFT JOIN crop AS c
-    #             ON m.id_target = c.id_target
-    #            )
-    #     SELECT
-    #         a.*, s.geom
-    #     FROM
-    #         join_tables AS a
-    #     LEFT JOIN (SELECT DISTINCT ON (id_target) * FROM selection) AS s
-    #     ON a.id_target = s.id_target
-    # """.format (
-    #     resources = SQL_plants['methane'].name,
-    #     targets = SQL_topology['targets'].name,
-    #     manure_distance = SQL_distances['manure'])
-    #
-    # sql_create_table_with (
-    #     table = SQL_plants['grouped'].name,
-    #     with_ = sql_sum,
-    #     where = ""
-    #     )
-    #
-    #
-    # add_column (table = SQL_plants['grouped'].name, column = 'id_plants SERIAL PRIMARY KEY')

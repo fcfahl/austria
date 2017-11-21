@@ -102,3 +102,5 @@ def Step_03_clean_Target_Points ():
 
     drop_column (table = SQL_target['site_clean'].name, column = 'id_target')
     add_column (table = SQL_target['site_clean'].name, column = 'id_target SERIAL PRIMARY KEY')
+
+    drop_table (SQL_target['site_targets'].name)
