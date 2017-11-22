@@ -1,28 +1,165 @@
-19:19:56 WARNING  is when this event was logged.
-19:19:56 INFO     
-        DROP TABLE IF EXISTS optimal_plant_costs;
-CREATE TABLE optimal_plant_costs AS
-        WITH
-        costs AS
-        (
-            SELECT id_aggregate, id_target, id_building, rank, length, plant_capacity, manure, crop_production, live_methane, crop_methane,
-            (crop_production * 5) AS cost_harvest,
-            ((length / 1000) * crop_production * 6) AS cost_ensiling,
-            ((length / 1000) * manure * 0.2) AS cost_manure
-            FROM optimal_plant_residual
-            WHERE plant_capacity <= 100
-        ),
-        total AS (
-            SELECT *,
-            CASE
-                WHEN cost_manure is not null THEN cost_manure + cost_harvest + cost_ensiling
-                ELSE cost_harvest + cost_ensiling
-            END AS cost_100kw,
-            COALESCE (live_methane, 0) + crop_methane AS methane_100kw
-            FROM costs
-        )
-        SELECT id_aggregate, id_target, id_building, rank, length, plant_capacity, manure, crop_production, live_methane, crop_methane, methane_100kw, cost_100kw
-        FROM total
-        WHERE plant_capacity <= 100
-            ;
+18:25:16 WARNING  is when this event was logged.
+18:25:16 INFO     
+        DROP TABLE IF EXISTS optimal_plant_map_100kw;
+CREATE TABLE optimal_plant_map_100kw AS
+        SELECT a.*, b.geom AS farms, c.geom AS route
+        FROM optimal_plant_links_100kw AS a
+        LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+        LEFT JOIN route_distance_50km_250__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+        ;
     
+18:25:17 INFO     
+            INSERT INTO optimal_plant_map_100kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_100kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_500__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:18 INFO     
+            INSERT INTO optimal_plant_map_100kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_100kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_750__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:18 INFO     
+            INSERT INTO optimal_plant_map_100kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_100kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_1500__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:20 INFO     
+            INSERT INTO optimal_plant_map_100kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_100kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_2000__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:20 INFO     
+        DROP TABLE IF EXISTS optimal_plant_map_250kw;
+CREATE TABLE optimal_plant_map_250kw AS
+        SELECT a.*, b.geom AS farms, c.geom AS route
+        FROM optimal_plant_links_250kw AS a
+        LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+        LEFT JOIN route_distance_50km_250__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+        ;
+    
+18:25:21 INFO     
+            INSERT INTO optimal_plant_map_250kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_250kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_500__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:21 INFO     
+            INSERT INTO optimal_plant_map_250kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_250kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_750__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:22 INFO     
+            INSERT INTO optimal_plant_map_250kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_250kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_1500__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:24 INFO     
+            INSERT INTO optimal_plant_map_250kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_250kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_2000__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:24 INFO     
+        DROP TABLE IF EXISTS optimal_plant_map_500kw;
+CREATE TABLE optimal_plant_map_500kw AS
+        SELECT a.*, b.geom AS farms, c.geom AS route
+        FROM optimal_plant_links_500kw AS a
+        LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+        LEFT JOIN route_distance_50km_250__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+        ;
+    
+18:25:25 INFO     
+            INSERT INTO optimal_plant_map_500kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_500kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_500__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:25 INFO     
+            INSERT INTO optimal_plant_map_500kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_500kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_750__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:26 INFO     
+            INSERT INTO optimal_plant_map_500kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_500kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_1500__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:28 INFO     
+            INSERT INTO optimal_plant_map_500kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_500kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_2000__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:28 INFO     
+        DROP TABLE IF EXISTS optimal_plant_map_750kw;
+CREATE TABLE optimal_plant_map_750kw AS
+        SELECT a.*, b.geom AS farms, c.geom AS route
+        FROM optimal_plant_links_750kw AS a
+        LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+        LEFT JOIN route_distance_50km_250__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+        ;
+    
+18:25:29 INFO     
+            INSERT INTO optimal_plant_map_750kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_750kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_500__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:29 INFO     
+            INSERT INTO optimal_plant_map_750kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_750kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_750__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:30 INFO     
+            INSERT INTO optimal_plant_map_750kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_750kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_1500__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        
+18:25:32 INFO     
+            INSERT INTO optimal_plant_map_750kw (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM optimal_plant_links_750kw AS a
+            LEFT JOIN farm_buildings_biomass AS b  ON a.id_building = b.id_building
+            LEFT JOIN route_distance_50km_2000__ AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        

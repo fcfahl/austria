@@ -1,3 +1,111 @@
+    sql_test = """
+        {create_table} AS
+        SELECT a.*, b.geom AS farms,
+            CASE
+                WHEN a.id_target < 250 THEN
+                    (SELECT c.geom FROM {route1} AS c WHERE a.id_building = c.id_building AND a.id_target = c.id_target)
+                WHEN a.id_target < 500 THEN
+                    (SELECT d.geom FROM {route2} AS d WHERE a.id_building = d.id_building AND a.id_target = d.id_target)
+                WHEN a.id_target < 750 THEN
+                    (SELECT e.geom FROM {route3} AS e WHERE a.id_building = e.id_building AND a.id_target = e.id_target)
+                WHEN a.id_target < 1500 THEN
+                    (SELECT f.geom FROM {route3} AS f WHERE a.id_building = f.id_building AND a.id_target = f.id_target)
+                ELSE
+                    (SELECT g.geom FROM {route3} AS g WHERE a.id_building = g.id_building AND a.id_target = g.id_target)
+            END AS route
+        FROM {links} AS a
+        LEFT JOIN {farms} AS b  ON a.id_building = b.id_building
+            ;
+    """.format (
+        create_table = create_table('test_optimization_route'),
+        location = SQL_optmization['location'].name,
+        links = SQL_optmization['links'].name,
+        farms = SQL_farms['biomass'].name,
+        route1 = SQL_route_distance['250'].name,
+        route2 = SQL_route_distance['500'].name,
+        route3 = SQL_route_distance['750'].name,
+        route4 = SQL_route_distance['1500'].name,
+        route5 = SQL_route_distance['2000'].name,
+
+        )
+
+    sql_remove = """
+        UPDATE {residual} AS a
+        SET manure = 0, crop_production = 0, live_methane = 0, crop_methane = 0
+        FROM
+        (
+            SELECT c.id_building FROM {residual} AS c, {links} AS d
+            WHERE c.id_target = d.id_target
+            AND c.plant_capacity <= {plant_capacity}
+        ) AS b
+        WHERE a.id_building = b.id_building
+
+        ;
+    """.format (
+        residual = SQL_optmization['residual'].name,
+        location = SQL_optmization['location'].name,
+        links = SQL_optmization['links'].name,
+        plant_capacity = plant_capacity,
+        )
+
+    sql_custom (table=SQL_optmization['residual'].name, sql=sql_remove)
+
+    sql_test = """
+        {create_table} AS
+        WITH
+        plants AS (
+            SELECT id_target FROM {location}
+        ),
+        buildings AS (
+            SELECT id_building
+            FROM plants AS a, {links} AS b
+            WHERE a.id_target = b.id_target
+        ),
+        points AS (
+            SELECT d.*
+            FROM buildings AS c, {farms} AS d
+            WHERE c.id_building = d.id_building
+        ),
+        lines AS (
+            SELECT f.id_target, f.geom
+            FROM plants AS a, points AS e, {route} AS f
+            WHERE a.id_target = f.id_target
+            AND e.id_building = f.id_building
+
+        )
+        SELECT l.id_target, p.id_building,  p.geom AS farms, l.geom AS routes
+        FROM points AS p, lines AS l
+            ;
+    """.format (
+        create_table = create_table('test_optimization_route'),
+        location = SQL_optmization['location'].name,
+        links = SQL_optmization['links'].name,
+        farms = SQL_farms['biomass'].name,
+        route = SQL_route_distance['250'].name,
+
+        )
+
+    sql_custom (table='', sql=sql_test)
+
+
+
+    DO
+    $$
+    DECLARE
+        plant_id int;
+        building_id int;
+        r record;
+    BEGIN
+        FOR r IN SELECT * FROM {location}
+        LOOP
+            SELECT id_building FROM {links} AS b WHERE id_target = r.id_target;
+            RAISE NOTICE 'id_target = % | attr = %', r.id_target, b.id_building;
+            RETURN NEXT;
+        END LOOP;
+    END
+    $$;
+
+
 def Step_05_update_Demands ():
 
     for key in SQL_plant_capacity:

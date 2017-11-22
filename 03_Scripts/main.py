@@ -101,7 +101,7 @@ if __name__ == "__main__":
     # PLT.Step_02_join_Farm_Resources()
     # PLT.Step_03_calculate_Methane()
     # PLT.Step_04_calculate_Costs()
-    # PLT.Step_05_join_Costs()#
+    # PLT.Step_05_join_Costs()
     # PLT.Step_05_aggregate_Costs()
 
     # PLT.Step_09_test_Route_Plants()
@@ -109,18 +109,9 @@ if __name__ == "__main__":
     #==============================================================================
     #           OPTMIZATION (location of plants)
     #==============================================================================
-    #
-    # OPT.Step_01_create_Residuals()
-    # OPT.Step_02_initialize_Plant()
-    # OPT.Step_03_aggregate_Residuals()
-    # OPT.Step_04_select_Plant()
-    # OPT.Step_05_update_ID_Links()
-    #
-    # OPT.Step_06_remove_Resources()
 
-    OPT.Step_07_redo_Cost_Analysis()
-    # OPT.Step_05_aggregate_Costs()
-    # OPT.Step_06_next_Plant()
+    # OPT.extract_plants ()
+    OPT.create_maps ()
 
     #==============================================================================
     #           FINAL DATABASE

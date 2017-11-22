@@ -3,35 +3,30 @@ from pyModules.postGIS import *
 from pg_queries import *
 
 
-def Step_01_create_Residuals ():
-
-    plant_capacity = 100
+def Step_01_create_Residuals (residual, plant_costs, plant_capacity, cost_column, methane_colum):
 
     sql_residual = """
     {create_table} AS
     SELECT a.id_aggregate, a.id_target, a.id_building, b.rank, a.length, a.plant_capacity,
         a.manure, a.crop_production, a.live_methane, a.crop_methane,
-        a.methane_total_100kw AS methane_100kw, a.cost_total_100kw AS cost_100kw
+        a.{methane_colum} AS {methane_colum}, a.{cost_column} AS {cost_column}
     FROM {cost} AS a
     LEFT JOIN {costs_total} AS b
     ON a.id_target = b.id_target
     WHERE a.plant_capacity <= {plant_capacity}
     ;
     """.format (
-        create_table = create_table(SQL_optmization['residual'].name),
-        cost = SQL_plant_costs['cost'].name,
+        create_table = create_table(residual),
+        cost = plant_costs,
         costs_total = SQL_plant_costs['cost_total'].name,
         plant_capacity = plant_capacity,
+        methane_colum = methane_colum,
+        cost_column = cost_column,
     )
 
-    sql_custom (table=SQL_optmization['residual'].name, sql=sql_residual)
+    sql_custom (table=residual, sql=sql_residual)
 
-def Step_02_initialize_Plant ():
-
-    cost_column = "cost_100kw"
-    methane_column = "methane_100kw"
-
-    plant_capacity = 100
+def Step_02_initialize_Plant (location, links, plant_capacity, cost_column, methane_column):
 
     # ______________ copy table structure (empty)
     sql_empty = """
@@ -41,30 +36,23 @@ def Step_02_initialize_Plant ():
             WHERE 0 > 1
             ;
     """.format(
-        create_table = create_table(SQL_optmization['location'].name),
+        create_table = create_table(location),
         cost_total = SQL_plant_costs['cost_total'].name,
         methane_column = methane_column,
         cost_column = cost_column,
         )
 
-    sql_custom (table=SQL_optmization['location'].name, sql=sql_empty)
+    sql_custom (table=location, sql=sql_empty)
 
-    add_column (table = SQL_optmization['location'].name, column = 'plant_capacity int')
-    update_column (table = SQL_optmization['location'].name, column = 'plant_capacity', value=plant_capacity)
-
+    add_column (table = location, column = 'plant_capacity int')
+    update_column (table = location, column = 'plant_capacity', value=plant_capacity)
+    add_column (table = location, column = 'id_order SERIAL PRIMARY KEY')
 
     # ______________ tble to hold the links between target and farms
-    sql_empty2 = "{0} (id_aggregate int, id_target int, id_building int, plant_capacity int);".format(create_table(SQL_optmization['links'].name))
-    sql_custom (table=SQL_optmization['links'].name, sql=sql_empty2)
+    sql_empty2 = "{0} (id_aggregate int, id_target int, id_building int, plant_capacity int);".format(create_table(links))
+    sql_custom (table=links, sql=sql_empty2)
 
-    add_column (table = SQL_optmization['location'].name, column = 'id_order SERIAL PRIMARY KEY')
-
-def Step_03_aggregate_Residuals ():
-
-    cost_column = "cost_100kw"
-    methane_column = "methane_100kw"
-
-    plant_capacity = 100
+def Step_03_aggregate_Costs (residual, residual_aggr, plant_capacity, cost_column, methane_colum):
 
     sql_cost = """
         {create_table} AS
@@ -78,32 +66,28 @@ def Step_03_aggregate_Residuals ():
             GROUP BY id_target
             ORDER BY id_target
         )
-        SELECT a.id_target, c.rank, a.{methane_column}, a.{cost_column}, {plant_capacity} AS plant_capacity, c.geom
+        SELECT a.id_target, b.rank, a.{methane_column}, a.{cost_column}, {plant_capacity} AS plant_capacity, b.geom
         FROM aggregated AS a
-        LEFT JOIN {target} AS c ON a.id_target = c.id_target
+        LEFT JOIN {target} AS b ON a.id_target = b.id_target
+        ORDER BY b.rank DESC
             ;
     """.format (
-        create_table = create_table(SQL_optmization['residual_aggr'].name),
-        residual = SQL_optmization['residual'].name,
+        create_table = create_table(residual_aggr),
+        residual =residual,
         target = SQL_target['site_clean'].name,
-        methane_column = methane_column,
+        methane_column = methane_colum,
         cost_column = cost_column,
         plant_capacity = plant_capacity,
         )
 
-    sql_custom (table=SQL_optmization['residual_aggr'].name, sql=sql_cost)
+    sql_custom (table=residual_aggr, sql=sql_cost)
 
-def Step_04_select_Plant ():
+def Step_04_select_Plant (location, residual_aggr, plant_capacity, cost_column, methane_column, rank, minimum_value):
 
-    cost_column = "cost_100kw"
-    methane_column = "methane_100kw"
-    minimum_value = SQL_plant_capacity['100'] * 0.9
-    rank = 3
+    global n_plants
+    global n_rank
 
-    plant_capacity = 100
-
-    sql_insert = """
-		INSERT INTO {location} (id_target, rank,  methane_100kw, cost_100kw, plant_capacity, geom)
+    sql_select = """
 		SELECT id_target, rank, {methane_column}, {cost_column}, {plant_capacity}, geom
         FROM {residual_aggr}
         WHERE {methane_column} > {minimum_value} AND {cost_column} > 0 AND rank = {rank}
@@ -111,8 +95,7 @@ def Step_04_select_Plant ():
         LIMIT 1
             ;
     """.format(
-        location = SQL_optmization['location'].name,
-        residual_aggr = SQL_optmization['residual_aggr'].name,
+        residual_aggr = residual_aggr,
         cost_column = cost_column,
         methane_column = methane_column,
         minimum_value = minimum_value,
@@ -120,16 +103,32 @@ def Step_04_select_Plant ():
         plant_capacity = plant_capacity,
         )
 
-    sql_custom (table=SQL_optmization['location'].name, sql=sql_insert)
+    sql_custom (table="", sql=sql_select)
 
-def Step_05_update_ID_Links ():
+    n_plants = db_PostGIS['cursor'].rowcount
 
-    cost_column = "cost_100kw"
-    methane_column = "methane_100kw"
-    minimum_value = SQL_plant_capacity['100'] * 0.9
-    rank = 3
+    if n_plants > 0:
 
-    plant_capacity = 100
+        info ("found plant ")
+
+        sql_insert = """
+    		INSERT INTO {location} (id_target, rank,  {methane_column}, {cost_column}, plant_capacity, geom)
+    		{sql_select}
+                ;
+        """.format(
+            location = location,
+            sql_select = sql_select,
+            cost_column = cost_column,
+            methane_column = methane_column,
+            )
+
+        sql_custom (table=location, sql=sql_insert)
+
+    else:
+        debug ("no more plants for the rank {0}".format(n_rank))
+        n_rank -= 1
+
+def Step_05_update_ID_Links (links, location, residual, plant_capacity, cost_column, methane_column, minimum_value):
 
     sql_links = """
         WITH
@@ -142,62 +141,47 @@ def Step_05_update_ID_Links ():
         INSERT INTO {links} (id_aggregate, id_target, id_building, plant_capacity)
         SELECT b.id_aggregate, a.id_target, b.id_building, b.plant_capacity
         FROM last_record AS a, {residual} AS b
-        WHERE a.id_target = b.id_target AND b.plant_capacity <= {plant_capacity}
+        WHERE a.id_target = b.id_target AND b.plant_capacity <= {plant_capacity} AND {methane_column} < {minimum_value}
         ;
     """.format (
-        links = SQL_optmization['links'].name,
-        location = SQL_optmization['location'].name,
-        residual = SQL_optmization['residual'].name,
+        links = links,
+        location = location,
+        residual = residual,
         cost_column = cost_column,
         plant_capacity = plant_capacity,
+        methane_column = methane_column,
+        minimum_value = minimum_value,
         )
 
-    sql_custom (table=SQL_optmization['links'].name, sql=sql_links)
+    sql_custom (table=links, sql=sql_links)
 
-def Step_06_remove_Resources ():
-
-    cost_column = "cost_100kw"
-    methane_column = "methane_100kw"
-    minimum_value = SQL_plant_capacity['100'] * 0.9
-    rank = 3
-
-    plant_capacity = 100
+def Step_06_remove_Resources (residual, location, links, plant_capacity):
 
     sql_remove = """
-        UPDATE {residual} AS a
-        SET manure = 0, crop_production = 0, live_methane = 0, crop_methane = 0
-        FROM
-        (
-            SELECT c.id_building FROM {residual} AS c, {links} AS d
-            WHERE c.id_target = d.id_target
-            AND c.plant_capacity <= {plant_capacity}
-        ) AS b
-        WHERE a.id_building = b.id_building
-
+        DELETE FROM {residual} AS a
+        WHERE EXISTS  (
+            SELECT *
+            FROM {links} AS b
+            WHERE a.id_building = b.id_building
+            AND a.plant_capacity <= {plant_capacity}
+        )
         ;
     """.format (
-        residual = SQL_optmization['residual'].name,
-        location = SQL_optmization['location'].name,
-        links = SQL_optmization['links'].name,
+        residual = residual,
+        location = location,
+        links = links,
         plant_capacity = plant_capacity,
         )
 
-    sql_custom (table=SQL_optmization['residual'].name, sql=sql_remove)
+    sql_custom (table=residual, sql=sql_remove)
 
-def Step_07_redo_Cost_Analysis ():
-
-    cost_column = "cost_100kw"
-    methane_column = "methane_100kw"
-    minimum_value = SQL_plant_capacity['100'] * 0.9
+def Step_07_redo_Cost_Analysis (residual, plant_capacity, cost_column, methane_column):
 
     cost_harvest = "(crop_production * {0})".format(SQL_costs['harvest'])
     cost_ensiling = "((length / 1000) * crop_production * {0})".format(SQL_costs['ensiling'])
     cost_manure = "((length / 1000) * manure * {0})".format(SQL_costs['manure'])
 
-    plant_capacity = 100
-
     sql_cost = """
-        {create_table} AS
         WITH
         costs AS
         (
@@ -217,93 +201,112 @@ def Step_07_redo_Cost_Analysis ():
             COALESCE (live_methane, 0) + crop_methane AS {methane_column}
             FROM costs
         )
-        SELECT id_aggregate, id_target, id_building, rank, length, plant_capacity, manure, crop_production, live_methane, crop_methane, methane_100kw, cost_100kw
-        FROM total
-        WHERE plant_capacity <= {plant_capacity}
+        UPDATE {residual} AS a
+        SET {methane_column} = b.{methane_column},
+            {cost_column} = b.{cost_column}
+        FROM total AS b
+        WHERE a.id_aggregate = b.id_aggregate
             ;
     """.format (
-        create_table = create_table(SQL_optmization['cost'].name),
-        residual = SQL_optmization['residual'].name,
+        residual = residual,
         harvest = cost_harvest,
         ensiling = cost_ensiling,
         manure = cost_manure,
         plant_capacity=plant_capacity,
-        farms = SQL_farms['biomass'].name,
-        target = SQL_target['site_clean'].name,
         methane_column = methane_column,
         cost_column = cost_column,
         )
 
-    sql_custom (table=SQL_optmization['cost'].name, sql=sql_cost)
+    sql_custom (table=SQL_optmization['residual'].name, sql=sql_cost)
 
-def Step_05_aggregate_Costs ():
+def Step_08_map_Route_Plants (map_routes, location, links):
 
-    plant_capacity = 100
-
-    sql_cost = """
+    sql_map = """
         {create_table} AS
-        WITH
-        aggregated AS (
-            SELECT id_target,
-            SUM (methane_{plant_capacity}kw) AS methane_{plant_capacity}kw,
-            SUM (cost_{plant_capacity}kw) AS cost_{plant_capacity}kw
-            FROM {costs}
-            GROUP BY id_target
-            ORDER BY id_target
-        )
-        SELECT a.id_target, c.rank, a.cost_{plant_capacity}kw, a.methane_{plant_capacity}kw, c.geom
-        FROM aggregated AS a
-        LEFT JOIN {target} AS c ON a.id_target = c.id_target
-            ;
-    """.format (
-        create_table = create_table(SQL_optmization['cost_aggr'].name),
-        costs = SQL_optmization['cost'].name,
-        plant_capacity=plant_capacity,
-        target = SQL_target['site_clean'].name,
-        )
-
-    sql_custom (table=SQL_optmization['cost_aggr'].name, sql=sql_cost)
-
-def Step_06_next_Plant ():
-
-    column = "cost_100kw"
-
-    sql_insert = """
-		INSERT INTO {location} (id_target, rank,  methane_100kw, cost_100kw, geom)
-		SELECT id_target, rank, methane_100kw, cost_100kw, geom
-        FROM {cost}
-        WHERE methane_100kw > 200000 and cost_100kw > 0 and rank = 3
-        ORDER BY cost_100kw ASC
-        LIMIT 1
+        SELECT a.*, b.geom AS farms, c.geom AS route
+        FROM {links} AS a
+        LEFT JOIN {farms} AS b  ON a.id_building = b.id_building
+        LEFT JOIN {route} AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
         ;
-    """.format(
-        location = SQL_optmization['location'].name,
-        cost = SQL_optmization['cost_aggr'].name,
-        )
-
-    sql_custom (table=SQL_optmization['location'].name, sql=sql_insert)
-
-
-def Step_09_test_Route_Plants ():
-
-
-    sql_test = """
-        {create_table} AS
-        SELECT a.*, b.geom as farms, c.geom as route
-        FROM {cost} AS a
-        LEFT JOIN {farms} AS b ON a.id_building = b.id_building
-        LEFT JOIN {route} AS c ON a.id_building = c.id_building
-        WHERE a.id_target = {plant_id}
-        AND c.id_target = {plant_id}
-            ;
     """.format (
-        create_table = create_table('test_optimization_route'),
-        plant_id = plant_id,
-        targets = SQL_target['site_clean'].name,
+        create_table = create_table(map_routes),
+        location = location,
+        links = links,
         farms = SQL_farms['biomass'].name,
-        capacity = SQL_plants['capacity'].name,
-        cost = SQL_plant_costs['cost'].name,
-        route = route,
+        route = SQL_route_distance['250'].name,
         )
 
-    sql_custom (table='', sql=sql_test)
+    sql_custom (table=map_routes, sql=sql_map)
+
+
+    for distance in ['500', '750', '1500', '2000']:
+
+        sql_merge= """
+            INSERT INTO {map_routes} (id_aggregate, id_target, id_building, plant_capacity, farms, route)
+            SELECT a.*, b.geom AS farms, c.geom AS route
+            FROM {links} AS a
+            LEFT JOIN {farms} AS b  ON a.id_building = b.id_building
+            LEFT JOIN {route} AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            ;
+        """.format (
+                map_routes = map_routes,
+                location = location,
+                links = links,
+                farms = SQL_farms['biomass'].name,
+                route = SQL_route_distance[distance].name,
+                )
+
+        sql_custom (table = map_routes, sql=sql_merge)
+
+
+
+def extract_plants ():
+
+    global n_plants
+    global n_rank
+
+    for plant_capacity in [100, 250, 500, 750]:
+
+        count = 0
+        n_plants = 1
+        n_rank = 3
+
+        cost_column = "cost_{0}kw".format(plant_capacity)
+        methane_column = "methane_{0}kw".format(plant_capacity)
+        minimum_value = SQL_plant_capacity[str(plant_capacity)] * 0.9
+
+        residual = "{0}_{1}kw".format(SQL_optmization['residual'].name, plant_capacity)
+        location = "{0}_{1}kw".format(SQL_optmization['location'].name, plant_capacity)
+        links = "{0}_{1}kw".format(SQL_optmization['links'].name, plant_capacity)
+        residual_aggr = "{0}_{1}kw".format(SQL_optmization['residual_aggr'].name, plant_capacity)
+        map_routes = "{0}_{1}kw".format(SQL_optmization['map_routes'].name, plant_capacity)
+        plant_costs = "{0}_{1}kw".format(SQL_plant_costs['cost'].name, plant_capacity)
+
+
+        Step_01_create_Residuals(residual, plant_costs, plant_capacity, cost_column, methane_column)
+        Step_02_initialize_Plant(location, links, plant_capacity, cost_column, methane_column)
+
+        while n_rank > 0:
+
+            Step_03_aggregate_Costs(residual, residual_aggr, plant_capacity, cost_column, methane_column)
+            Step_04_select_Plant(location, residual_aggr, plant_capacity, cost_column, methane_column, n_rank, minimum_value)
+            Step_05_update_ID_Links(links, location, residual, plant_capacity, cost_column, methane_column, minimum_value)
+            Step_06_remove_Resources(residual, location, links, plant_capacity)
+            Step_07_redo_Cost_Analysis(residual, plant_capacity, cost_column, methane_column)
+
+            count += 1
+
+            debug ("plant capacity: {0} \t iteration: {1} \t rank: {2}".format(plant_capacity, count, n_rank))
+
+            if count >= 100:
+                break
+
+def create_maps ():
+
+    for plant_capacity in [100, 250, 500, 750]:
+
+        location = "{0}_{1}kw".format(SQL_optmization['location'].name, plant_capacity)
+        links = "{0}_{1}kw".format(SQL_optmization['links'].name, plant_capacity)
+        map_routes = "{0}_{1}kw".format(SQL_optmization['map_routes'].name, plant_capacity)
+
+        Step_08_map_Route_Plants(map_routes, location, links)

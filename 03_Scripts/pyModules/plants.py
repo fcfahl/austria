@@ -138,8 +138,8 @@ def Step_04_calculate_Costs ():
             CASE
                 WHEN cost_manure is not null THEN cost_manure + cost_harvest + cost_ensiling
                 ELSE cost_harvest + cost_ensiling
-            END AS cost_total_{key}kw,
-            COALESCE (live_methane,0) + crop_methane AS methane_total_{key}kw
+            END AS cost_{key}kw,
+            COALESCE (live_methane,0) + crop_methane AS methane_{key}kw
             FROM costs
                 ;
         """.format (
@@ -160,10 +160,10 @@ def Step_05_join_Costs ():
         {create_table} AS
         SELECT a.id_aggregate, a.id_target, a.id_building, a.length, a.plant_capacity,
             a.manure, a.crop_production, a.live_methane, a.crop_methane,
-            d.methane_total_100kw, c.methane_total_250kw,
-            b.methane_total_500kw, a.methane_total_750kw,
-            d.cost_total_100kw, c.cost_total_250kw,
-            b.cost_total_500kw, a.cost_total_750kw
+            d.methane_100kw, c.methane_250kw,
+            b.methane_500kw, a.methane_750kw,
+            d.cost_100kw, c.cost_250kw,
+            b.cost_500kw, a.cost_750kw
         FROM {cost_750kw} AS a
         LEFT JOIN {cost_500kw} AS b ON a.id_aggregate = b.id_aggregate
         LEFT JOIN {cost_250kw} AS c ON a.id_aggregate = c.id_aggregate
@@ -188,32 +188,32 @@ def Step_05_aggregate_Costs ():
         WITH
             p100kw AS (
                 SELECT id_target,
-                SUM (cost_total_100kw) AS cost_100kw,
-                SUM (methane_total_100kw) AS methane_100kw
+                SUM (cost_100kw) AS cost_100kw,
+                SUM (methane_100kw) AS methane_100kw
                 FROM {cost_100kw}
                 GROUP BY id_target
                 ORDER BY id_target
             ),
             p250kw AS (
                 SELECT id_target,
-                SUM (cost_total_250kw) AS cost_250kw,
-                SUM (methane_total_250kw) AS methane_250kw
+                SUM (cost_250kw) AS cost_250kw,
+                SUM (methane_250kw) AS methane_250kw
                 FROM {cost_250kw}
                 GROUP BY id_target
                 ORDER BY id_target
             ),
             p500kw AS (
                 SELECT id_target,
-                SUM (cost_total_500kw) AS cost_500kw,
-                SUM (methane_total_500kw) AS methane_500kw
+                SUM (cost_500kw) AS cost_500kw,
+                SUM (methane_500kw) AS methane_500kw
                 FROM {cost_500kw}
                 GROUP BY id_target
                 ORDER BY id_target
             ),
             p750kw AS (
                 SELECT id_target,
-                SUM (cost_total_750kw) AS cost_750kw,
-                SUM (methane_total_750kw) AS methane_750kw
+                SUM (cost_750kw) AS cost_750kw,
+                SUM (methane_750kw) AS methane_750kw
                 FROM {cost_750kw}
                 GROUP BY id_target
                 ORDER BY id_target

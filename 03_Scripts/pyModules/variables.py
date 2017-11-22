@@ -148,7 +148,6 @@ folder = {
     'LULC':  Mapsets ('LULC', '03'),
     'FARM':  Mapsets ('FARM', '04'),
     'DEM':  Mapsets ('DEM', '05'),
-
 }
 
 db_PostGIS = {
@@ -199,7 +198,6 @@ SQL_distances = {
     'criteria': 'id_target > 1500 AND id_target <= 2000',
     'manure_threshold': 500,
 }
-
 
 SQL_target = {
 	'site_targets' : SQL_obj ('site_targets', '', 'points equally dristributed over the main roads'),
@@ -264,9 +262,7 @@ SQL_optmization= {
     'residual_aggr' : SQL_obj ('optimal_plant_residual_aggr', '', 'residual resources'),
 	'location' : SQL_obj ('optimal_plant_location', '', 'first plant '),
 	'links' : SQL_obj ('optimal_plant_links', '', 'first plant '),
-	'cost' : SQL_obj ('optimal_plant_costs', '', 'costs of residual resources'),
-	'cost_aggr' : SQL_obj ('optimal_plant_costs_aggr', '', 'aggregated costs'),
-	'final' : SQL_obj ('optimal_plant_final', '', 'route and plants in the same layer'),
+	'map_routes' : SQL_obj ('optimal_plant_map', '', 'route and plants in the same layer'),
 }
 
 SQL_plant_capacity = {
