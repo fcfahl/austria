@@ -14,6 +14,7 @@ import pyModules.targets as TRG
 import pyModules.topology as TOPO
 import pyModules.plants as PLT
 import pyModules.optimization as OPT
+import pyModules.optimization_all as OPT2
 
 
 
@@ -110,8 +111,10 @@ if __name__ == "__main__":
     #           OPTMIZATION (location of plants)
     #==============================================================================
 
-    # OPT.extract_plants ()
-    OPT.create_maps ()
+    OPT.extract_plants_by_capacity ()
+    # OPT2.extract_plants_all ()
+
+
 
     #==============================================================================
     #           FINAL DATABASE
