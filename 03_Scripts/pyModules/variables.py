@@ -254,7 +254,7 @@ SQL_plant_costs= {
 	'500' : SQL_obj ('plants_costs_500kw', '', 'cost calculation '),
 	'750' : SQL_obj ('plants_costs_750kw', '', 'cost calculation '),
 	'cost' : SQL_obj ('plants_costs', '', 'total cost '),
-	'cost_total' : SQL_obj ('plants_costs_total', '', 'total cost '),
+	'cost_aggr' : SQL_obj ('plants_costs_aggregated', '', 'total cost aggregated by id_target '),
 }
 
 SQL_optmization= {

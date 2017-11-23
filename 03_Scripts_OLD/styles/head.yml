@@ -1,9 +1,0 @@
-areas:
-  area_tags: [buildings, landuse, natural, aeroway]
-  linear_tags: [power, highway, barrier]
-
-tags:
-  load_all: true
-  exclude: [geological, shop, emergency, leisure]
-
-tables:

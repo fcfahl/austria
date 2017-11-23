@@ -100,12 +100,11 @@ if __name__ == "__main__":
 
     # PLT.Step_01_initiate_Plants()
     # PLT.Step_02_join_Farm_Resources()
-    # PLT.Step_03_calculate_Methane()
+    # PLT.Step_03_aggregate_Methane()
     # PLT.Step_04_calculate_Costs()
-    # PLT.Step_05_join_Costs()
     # PLT.Step_05_aggregate_Costs()
 
-    # PLT.Step_09_test_Route_Plants()
+    # PLT.Step_06_test_Route_Plants()
 
     #==============================================================================
     #           OPTMIZATION (location of plants)

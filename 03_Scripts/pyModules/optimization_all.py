@@ -136,7 +136,7 @@ def Step_05_update_ID_Links (links, location, residual, plant_capacity, minimum_
         INSERT INTO {links} (id_aggregate, id_target, id_building, plant_capacity)
         SELECT b.id_aggregate, a.id_target, b.id_building, b.plant_capacity
         FROM last_record AS a, {residual} AS b
-        WHERE a.id_target = b.id_target AND methane_total < {minimum_value}
+        WHERE a.id_target = b.id_target AND methane_total <= {minimum_value}
         ;
     """.format (
         links = links,
@@ -208,7 +208,6 @@ def Step_07_redo_Cost_Analysis (residual, plant_capacity):
 
     sql_custom (table=SQL_optmization['residual'].name, sql=sql_cost)
 
-
 def Step_08_map_Route_Plants (map_routes, location, links):
 
     sql_map = """
@@ -247,8 +246,6 @@ def Step_08_map_Route_Plants (map_routes, location, links):
                 )
 
         sql_custom (table = map_routes, sql=sql_merge)
-
-
 
 def extract_plants_all ():
 

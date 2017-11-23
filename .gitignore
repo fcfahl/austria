@@ -18,8 +18,11 @@
 **/02_Output/**
 **/03_Scripts/cache/**
 **/TMP
+**/TMP/**
+
 
 # python files
+**/03_Scripts/*.pyc
 *.pyc
 
 
