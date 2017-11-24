@@ -258,7 +258,8 @@ SQL_plant_costs= {
 }
 
 SQL_optmization= {
-    'residual' : SQL_obj ('optimal_plant_residual', '', 'residual resources'),
+    'allocation' : SQL_obj ('optimal_plant_resources_allocated', '', 'resources allocated'),
+    'residual' : SQL_obj ('optimal_plant_resources_residual', '', 'residual resources'),
     'residual_aggr' : SQL_obj ('optimal_plant_residual_aggr', '', 'residual resources'),
 	'location' : SQL_obj ('optimal_plant_location', '', 'first plant '),
 	'links' : SQL_obj ('optimal_plant_links', '', 'first plant '),
