@@ -1,56 +1,42 @@
-﻿--         DROP TABLE IF EXISTS optimal_plant_residual_aggr_750kw;
--- CREATE TABLE optimal_plant_residual_aggr_750kw AS
-        WITH
-        total AS (
-            SELECT id_target,
-                SUM (live_methane)  AS live_total,
-                SUM (crop_methane) AS crop_total
-            FROM optimal_plant_resources_residual_750kw
-            GROUP BY id_target
-            ORDER BY id_target
-        ),
-        ratio AS (
-            SELECT *,
-		live_total * 1560000 * 0.3 AS live_demand,
-		crop_total * 1560000 * 0.7 AS crop_demand
-	    FROM total
-        ),
-        demand AS (
-            SELECT *,
-                CASE
-                    -- manure not reach the minimin ratio amount
-                    WHEN live_demand > 1560000 * 0.3 THEN  1560000 * 0.3
-                    ELSE live_demand
-                END AS live_methane_required,
-                CASE
-                    -- manure not reach the minimin ratio amount
-                    WHEN crop_demand > 1560000 * 0.7 THEN  1560000 * 0.7
-                    ELSE crop_demand
-                END AS crop_methane_required                
-	    FROM ratio
-	  ),
-        required AS (
-            SELECT *,
-                CASE
-                    -- manure not reach the minimin ratio amount
-                    WHEN live_methane_required = 1560000 * 0.3 THEN 0
-                    WHEN crop_total + live_methane_required > 1560000  THEN  1560000 - live_total
-                    ELSE 0
-                END AS crop
-	    FROM demand
-	  ),	    
+﻿-- select * from optimal_plant_residual_aggr_750kw limit 100;
+-- select * from optimal_plant_location_750kw order by id_order limit 100;
+-- select * from optimal_plant_links_750kw  limit 100;
 
-        aggregation AS (
-            SELECT
-                id_target,
-                SUM (methane_total) AS methane_total_available,
-                SUM (cost_harvest) AS cost_harvest_aggr,
-                SUM (cost_ensiling) AS cost_ensiling_aggr,
-                SUM (cost_manure) AS cost_manure_aggr,
-                SUM (cost_total) AS cost_total_aggr
-            FROM optimal_plant_resources_residual_750kw
-            GROUP BY id_target
-            ORDER BY id_target
+
+  WITH
+        last_record AS (
+            SELECT *
+            FROM optimal_plant_location_750kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+         manure AS (
+            SELECT *
+            FROM (
+                SELECT a.id_aggregate, a.manure, a.live_methane, b.live_required,
+                SUM (a.live_methane) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS live_methane_aggregated,
+                row_number () OVER (ORDER BY a.length ASC) AS live_row
+                FROM optimal_plant_resources_residual_750kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target AND a.live_methane > 0
+                ) AS f, live_columns AS g
+            WHERE live_methane_aggregated <= g.live_aggr + 1 -- grab the next value of the sequence
+        ),
+        crop AS (
+            SELECT *
+            FROM (
+                SELECT a.id_aggregate, a.id_building, a.id_target, a.length, a.crop_production, a.crop_methane, b.crop_required,
+                SUM (a.crop_methane) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_methane_aggregated,
+                row_number () OVER (ORDER BY a.length ASC) AS crop_row
+                FROM optimal_plant_resources_residual_750kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target AND a.crop_production > 0
+                ) AS f, crop_columns AS g
+            WHERE f.crop_row <= g.crop_row + 1 -- grab the next value of the sequence
+        ),
+        cost_total AS (
+            SELECT a.id_aggregate, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_plant_resources_residual_750kw AS a, crop AS b
+            WHERE a.id_aggregate = b.id_aggregate
         )
-        SELECT * from crop
-            ;
+	select * from live_columns
+
+        ;
