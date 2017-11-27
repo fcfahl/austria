@@ -103,15 +103,15 @@ if __name__ == "__main__":
     # PLT.Step_03_aggregate_Methane()
     # PLT.Step_04_calculate_Costs()
     # PLT.Step_05_aggregate_Costs()
-
+    #
     # PLT.Step_06_test_Route_Plants()
 
     #==============================================================================
     #           OPTMIZATION (location of plants)
     #==============================================================================
-
-    # OPT.extract_plants_by_capacity ()
-    OPT2.extract_plants_all ()
+#
+    OPT.extract_plants_by_capacity ()
+    # OPT2.extract_plants_all ()
 
 
 

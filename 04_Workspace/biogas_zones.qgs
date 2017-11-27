@@ -9,75 +9,69 @@
       <customproperties/>
       <layer-tree-group expanded="1" checked="Qt::Unchecked" name="100kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_100kw20171123153904722" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_100kw&quot; (geom) sql=" name="optimal_plant_location_100kw">
-          <customproperties>
-            <property key="showFeatureCount" value="1"/>
-          </customproperties>
-        </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_100kw_farms20171122182657852" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_100kw&quot; (farms) sql=" name="optimal_plant_map_100kw.farms">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_100kw20171127113043657" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_100kw&quot; (geom) sql=" name="optimal_plant_location_100kw">
           <customproperties/>
         </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_100kw_route20171122182659884" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_100kw&quot; (route) sql=" name="optimal_plant_map_100kw.route">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_100kw_farms20171127113043450" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_100kw&quot; (farms) sql=" name="optimal_plant_map_100kw.farms">
+          <customproperties/>
+        </layer-tree-layer>
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_100kw_route20171127113043247" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_100kw&quot; (route) sql=" name="optimal_plant_map_100kw.route">
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
       <layer-tree-group expanded="1" checked="Qt::Unchecked" name="250kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_250kw20171123153826280" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_250kw&quot; (geom) sql=" name="optimal_plant_location_250kw">
-          <customproperties>
-            <property key="showFeatureCount" value="1"/>
-          </customproperties>
-        </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_250kw_farms20171122182838702" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_250kw&quot; (farms) sql=" name="optimal_plant_map_250kw.farms">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_250kw20171127113021016" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_250kw&quot; (geom) sql=" name="optimal_plant_location_250kw">
           <customproperties/>
         </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_250kw_route20171122182838504" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_250kw&quot; (route) sql=" name="optimal_plant_map_250kw.route">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_250kw_farms20171127113020812" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_250kw&quot; (farms) sql=" name="optimal_plant_map_250kw.farms">
+          <customproperties/>
+        </layer-tree-layer>
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_250kw_route20171127113020614" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_250kw&quot; (route) sql=" name="optimal_plant_map_250kw.route">
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
       <layer-tree-group expanded="1" checked="Qt::Unchecked" name="500kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_500kw20171122182846242" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_500kw&quot; (geom) sql=" name="optimal_plant_location_500kw">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_500kw20171127112948012" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_500kw&quot; (geom) sql=" name="optimal_plant_location_500kw">
+          <customproperties/>
+        </layer-tree-layer>
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_500kw_farms20171127112947803" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_500kw&quot; (farms) sql=" name="optimal_plant_map_500kw.farms">
+          <customproperties/>
+        </layer-tree-layer>
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_500kw_route20171127112947605" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_500kw&quot; (route) sql=" name="optimal_plant_map_500kw.route">
+          <customproperties/>
+        </layer-tree-layer>
+      </layer-tree-group>
+      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="750kw">
+        <customproperties/>
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_750kw20171127112726560" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_750kw&quot; (geom) sql=" name="optimal_plant_location_750kw">
+          <customproperties/>
+        </layer-tree-layer>
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_750kw_farms20171127112839730" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_750kw&quot; (farms) sql=" name="optimal_plant_map_750kw.farms">
+          <customproperties/>
+        </layer-tree-layer>
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_750kw_route20171127112907635" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_750kw&quot; (route) sql=" name="optimal_plant_map_750kw.route">
+          <customproperties/>
+        </layer-tree-layer>
+      </layer-tree-group>
+      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="All">
+        <customproperties/>
+        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_location_all20171127113116046" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_all&quot; (geom) sql=" name="optimal_plant_location_all">
           <customproperties>
             <property key="showFeatureCount" value="1"/>
           </customproperties>
         </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_500kw_farms20171122182846047" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_500kw&quot; (farms) sql=" name="optimal_plant_map_500kw.farms">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_all_farms20171127113115839" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_all&quot; (farms) sql=" name="optimal_plant_map_all.farms">
           <customproperties/>
         </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_500kw_route20171122182845856" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_500kw&quot; (route) sql=" name="optimal_plant_map_500kw.route">
-          <customproperties/>
-        </layer-tree-layer>
-      </layer-tree-group>
-      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="750kw">
-        <customproperties/>
-        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_location_750kw20171123182925830" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_750kw&quot; (geom) sql=" name="optimal_plant_location_750kw">
-          <customproperties>
-            <property key="showFeatureCount" value="1"/>
-          </customproperties>
-        </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_750kw_farms20171123150715910" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_750kw&quot; (farms) sql=" name="optimal_plant_map_750kw.farms">
-          <customproperties/>
-        </layer-tree-layer>
-        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_map_750kw_route20171123145832407" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_750kw&quot; (route) sql=" name="optimal_plant_map_750kw.route">
-          <customproperties/>
-        </layer-tree-layer>
-      </layer-tree-group>
-      <layer-tree-group expanded="0" checked="Qt::Unchecked" name="All">
-        <customproperties/>
-        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_all20171123103256876" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_all&quot; (geom) sql=" name="optimal_plant_location_all">
-          <customproperties/>
-        </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_all_farms20171123105058692" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_all&quot; (farms) sql=" name="optimal_plant_map_all.farms">
-          <customproperties/>
-        </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_all_route20171123105100396" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_all&quot; (route) sql=" name="optimal_plant_map_all.route">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_map_all_route20171127113115633" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_all&quot; (route) sql=" name="optimal_plant_map_all.route">
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
       <layer-tree-group expanded="0" checked="Qt::Unchecked" name="Individual_plant">
         <customproperties/>
-        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="test_plants_target20171123134717814" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;test_plants_target&quot; (geom) sql=" name="test_plants_target">
+        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="test_plants_target20171127105317244" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;test_plants_target&quot; (geom) sql=" name="test_plants_target">
           <customproperties/>
         </layer-tree-layer>
         <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="test_plants_route_farms20171123134707558" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;test_plants_route&quot; (farms) sql=" name="test_plants_route.farms">
@@ -111,10 +105,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>4642281.29608865827322006</xmin>
-      <ymin>2754830.40818122494965792</ymin>
-      <xmax>4704901.19608865678310394</xmax>
-      <ymax>2806882.58318122569471598</ymax>
+      <xmin>4640548.00228315126150846</xmin>
+      <ymin>2753209.47673131246119738</ymin>
+      <xmax>4703167.90228315722197294</xmax>
+      <ymax>2805261.65173130948096514</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>0</projections>
@@ -145,118 +139,118 @@
       <item>lulc_zones20171116165020771</item>
       <item>roads_main20171116165415827</item>
       <item>DEM_Shadows_EPSG303520171120112810998</item>
-      <item>optimal_plant_map_100kw_farms20171122182657852</item>
-      <item>optimal_plant_map_100kw_route20171122182659884</item>
-      <item>optimal_plant_map_250kw_route20171122182838504</item>
-      <item>optimal_plant_map_250kw_farms20171122182838702</item>
-      <item>optimal_plant_map_500kw_route20171122182845856</item>
-      <item>optimal_plant_map_500kw_farms20171122182846047</item>
-      <item>optimal_plant_location_500kw20171122182846242</item>
       <item>site_clean20171123085349351</item>
-      <item>optimal_plant_location_all20171123103256876</item>
-      <item>optimal_plant_map_all_farms20171123105058692</item>
-      <item>optimal_plant_map_all_route20171123105100396</item>
       <item>test_plants_route_route20171123134654694</item>
       <item>test_plants_route_farms20171123134707558</item>
-      <item>test_plants_target20171123134717814</item>
-      <item>optimal_plant_map_750kw_route20171123145832407</item>
-      <item>optimal_plant_map_750kw_farms20171123150715910</item>
-      <item>optimal_plant_location_250kw20171123153826280</item>
-      <item>optimal_plant_location_100kw20171123153904722</item>
-      <item>optimal_plant_location_750kw20171123182925830</item>
+      <item>test_plants_target20171127105317244</item>
+      <item>optimal_plant_location_750kw20171127112726560</item>
+      <item>optimal_plant_map_750kw_farms20171127112839730</item>
+      <item>optimal_plant_map_750kw_route20171127112907635</item>
+      <item>optimal_plant_map_500kw_route20171127112947605</item>
+      <item>optimal_plant_map_500kw_farms20171127112947803</item>
+      <item>optimal_plant_location_500kw20171127112948012</item>
+      <item>optimal_plant_map_250kw_route20171127113020614</item>
+      <item>optimal_plant_map_250kw_farms20171127113020812</item>
+      <item>optimal_plant_location_250kw20171127113021016</item>
+      <item>optimal_plant_map_100kw_route20171127113043247</item>
+      <item>optimal_plant_map_100kw_farms20171127113043450</item>
+      <item>optimal_plant_location_100kw20171127113043657</item>
+      <item>optimal_plant_map_all_route20171127113115633</item>
+      <item>optimal_plant_map_all_farms20171127113115839</item>
+      <item>optimal_plant_location_all20171127113116046</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
     <legendgroup open="true" checked="Qt::PartiallyChecked" name="Optimization">
       <legendgroup open="true" checked="Qt::Unchecked" name="100kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_100kw" showFeatureCount="1">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_100kw" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_100kw20171123153904722" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_100kw20171127113043657" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_100kw.farms" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_100kw_farms20171122182657852" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_100kw_farms20171127113043450" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_100kw.route" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_100kw_route20171122182659884" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_100kw_route20171127113043247" visible="0"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
       <legendgroup open="true" checked="Qt::Unchecked" name="250kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_250kw" showFeatureCount="1">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_250kw" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_250kw20171123153826280" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_250kw20171127113021016" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_250kw.farms" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_250kw_farms20171122182838702" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_250kw_farms20171127113020812" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_250kw.route" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_250kw_route20171122182838504" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_250kw_route20171127113020614" visible="0"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
       <legendgroup open="true" checked="Qt::Unchecked" name="500kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_500kw" showFeatureCount="1">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_500kw" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_500kw20171122182846242" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_500kw20171127112948012" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_500kw.farms" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_500kw_farms20171122182846047" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_500kw_farms20171127112947803" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_500kw.route" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_500kw_route20171122182845856" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_500kw_route20171127112947605" visible="0"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="true" checked="Qt::PartiallyChecked" name="750kw">
-        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="optimal_plant_location_750kw" showFeatureCount="1">
-          <filegroup open="true" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_750kw20171123182925830" visible="1"/>
+      <legendgroup open="true" checked="Qt::Unchecked" name="750kw">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_750kw" showFeatureCount="0">
+          <filegroup open="false" hidden="false">
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_750kw20171127112726560" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_750kw.farms" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_750kw_farms20171123150715910" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_750kw_farms20171127112839730" visible="0"/>
           </filegroup>
         </legendlayer>
-        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="optimal_plant_map_750kw.route" showFeatureCount="0">
-          <filegroup open="true" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_750kw_route20171123145832407" visible="1"/>
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_750kw.route" showFeatureCount="0">
+          <filegroup open="false" hidden="false">
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_750kw_route20171127112907635" visible="0"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="false" checked="Qt::Unchecked" name="All">
-        <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="optimal_plant_location_all" showFeatureCount="0">
+      <legendgroup open="true" checked="Qt::PartiallyChecked" name="All">
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="optimal_plant_location_all" showFeatureCount="1">
           <filegroup open="true" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_all20171123103256876" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_all20171127113116046" visible="1"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_all.farms" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_all_farms20171123105058692" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_all_farms20171127113115839" visible="0"/>
           </filegroup>
         </legendlayer>
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_all.route" showFeatureCount="0">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="optimal_plant_map_all.route" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_all_route20171123105100396" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_all_route20171127113115633" visible="1"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
       <legendgroup open="false" checked="Qt::Unchecked" name="Individual_plant">
         <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="test_plants_target" showFeatureCount="0">
           <filegroup open="true" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="test_plants_target20171123134717814" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="test_plants_target20171127105317244" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="test_plants_route.farms" showFeatureCount="0">
@@ -762,7 +756,7 @@
       <previewExpression>COALESCE( "id_zones", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_location_100kw20171123153904722</id>
+      <id>optimal_plant_location_100kw20171127113043657</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='id_order' srid=3035 type=Point table="public"."optimal_plant_location_100kw" (geom) sql=</datasource>
       <keywordList>
         <value></value>
@@ -788,22 +782,46 @@
         <map-layer-style name=""/>
       </map-layer-style-manager>
       <edittypes>
+        <edittype widgetv2type="TextEdit" name="id_order">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="id_target">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="rank">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="methane_total">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
-        <edittype widgetv2type="TextEdit" name="id_order">
+        <edittype widgetv2type="TextEdit" name="rank">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_required">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
@@ -3726,12 +3744,20 @@
       </labelattributes>
       <annotationform>.</annotationform>
       <aliases>
-        <alias field="id_target" index="0" name=""/>
-        <alias field="rank" index="1" name=""/>
-        <alias field="methane_total" index="2" name=""/>
-        <alias field="cost_total" index="3" name=""/>
-        <alias field="plant_capacity" index="4" name=""/>
-        <alias field="id_order" index="5" name=""/>
+        <alias field="id_order" index="0" name=""/>
+        <alias field="id_target" index="1" name=""/>
+        <alias field="plant_capacity" index="2" name=""/>
+        <alias field="rank" index="3" name=""/>
+        <alias field="live_methane_req" index="4" name=""/>
+        <alias field="crop_methane_req" index="5" name=""/>
+        <alias field="methane_required" index="6" name=""/>
+        <alias field="live_methane_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -3761,17 +3787,25 @@
         <fieldstyles/>
       </conditionalstyles>
       <defaults>
-        <default field="id_target" expression=""/>
-        <default field="rank" expression=""/>
-        <default field="methane_total" expression=""/>
-        <default field="cost_total" expression=""/>
-        <default field="plant_capacity" expression=""/>
         <default field="id_order" expression=""/>
+        <default field="id_target" expression=""/>
+        <default field="plant_capacity" expression=""/>
+        <default field="rank" expression=""/>
+        <default field="live_methane_req" expression=""/>
+        <default field="crop_methane_req" expression=""/>
+        <default field="methane_required" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_location_250kw20171123153826280</id>
+      <id>optimal_plant_location_250kw20171127113021016</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='id_order' srid=3035 type=Point table="public"."optimal_plant_location_250kw" (geom) sql=</datasource>
       <keywordList>
         <value></value>
@@ -3797,22 +3831,46 @@
         <map-layer-style name=""/>
       </map-layer-style-manager>
       <edittypes>
+        <edittype widgetv2type="TextEdit" name="id_order">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="id_target">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="rank">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="methane_total">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
-        <edittype widgetv2type="TextEdit" name="id_order">
+        <edittype widgetv2type="TextEdit" name="rank">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_required">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
@@ -4972,12 +5030,20 @@
       </labelattributes>
       <annotationform>.</annotationform>
       <aliases>
-        <alias field="id_target" index="0" name=""/>
-        <alias field="rank" index="1" name=""/>
-        <alias field="methane_total" index="2" name=""/>
-        <alias field="cost_total" index="3" name=""/>
-        <alias field="plant_capacity" index="4" name=""/>
-        <alias field="id_order" index="5" name=""/>
+        <alias field="id_order" index="0" name=""/>
+        <alias field="id_target" index="1" name=""/>
+        <alias field="plant_capacity" index="2" name=""/>
+        <alias field="rank" index="3" name=""/>
+        <alias field="live_methane_req" index="4" name=""/>
+        <alias field="crop_methane_req" index="5" name=""/>
+        <alias field="methane_required" index="6" name=""/>
+        <alias field="live_methane_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -5007,17 +5073,25 @@
         <fieldstyles/>
       </conditionalstyles>
       <defaults>
-        <default field="id_target" expression=""/>
-        <default field="rank" expression=""/>
-        <default field="methane_total" expression=""/>
-        <default field="cost_total" expression=""/>
-        <default field="plant_capacity" expression=""/>
         <default field="id_order" expression=""/>
+        <default field="id_target" expression=""/>
+        <default field="plant_capacity" expression=""/>
+        <default field="rank" expression=""/>
+        <default field="live_methane_req" expression=""/>
+        <default field="crop_methane_req" expression=""/>
+        <default field="methane_required" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_location_500kw20171122182846242</id>
+      <id>optimal_plant_location_500kw20171127112948012</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='id_order' srid=3035 type=Point table="public"."optimal_plant_location_500kw" (geom) sql=</datasource>
       <keywordList>
         <value></value>
@@ -5043,22 +5117,46 @@
         <map-layer-style name=""/>
       </map-layer-style-manager>
       <edittypes>
+        <edittype widgetv2type="TextEdit" name="id_order">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="id_target">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="rank">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="methane_total">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
-        <edittype widgetv2type="TextEdit" name="id_order">
+        <edittype widgetv2type="TextEdit" name="rank">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_required">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
@@ -5659,12 +5757,20 @@
       </labelattributes>
       <annotationform>.</annotationform>
       <aliases>
-        <alias field="id_target" index="0" name=""/>
-        <alias field="rank" index="1" name=""/>
-        <alias field="methane_total" index="2" name=""/>
-        <alias field="cost_total" index="3" name=""/>
-        <alias field="plant_capacity" index="4" name=""/>
-        <alias field="id_order" index="5" name=""/>
+        <alias field="id_order" index="0" name=""/>
+        <alias field="id_target" index="1" name=""/>
+        <alias field="plant_capacity" index="2" name=""/>
+        <alias field="rank" index="3" name=""/>
+        <alias field="live_methane_req" index="4" name=""/>
+        <alias field="crop_methane_req" index="5" name=""/>
+        <alias field="methane_required" index="6" name=""/>
+        <alias field="live_methane_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -5694,23 +5800,25 @@
         <fieldstyles/>
       </conditionalstyles>
       <defaults>
-        <default field="id_target" expression=""/>
-        <default field="rank" expression=""/>
-        <default field="methane_total" expression=""/>
-        <default field="cost_total" expression=""/>
-        <default field="plant_capacity" expression=""/>
         <default field="id_order" expression=""/>
+        <default field="id_target" expression=""/>
+        <default field="plant_capacity" expression=""/>
+        <default field="rank" expression=""/>
+        <default field="live_methane_req" expression=""/>
+        <default field="crop_methane_req" expression=""/>
+        <default field="methane_required" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <extent>
-        <xmin>4657253</xmin>
-        <ymin>2770147</ymin>
-        <xmax>4687072</xmax>
-        <ymax>2794933.75</ymax>
-      </extent>
-      <id>optimal_plant_location_750kw20171123182925830</id>
+      <id>optimal_plant_location_750kw20171127112726560</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='id_order' srid=3035 type=Point table="public"."optimal_plant_location_750kw" (geom) sql=</datasource>
       <keywordList>
         <value></value>
@@ -5736,40 +5844,65 @@
         <map-layer-style name=""/>
       </map-layer-style-manager>
       <edittypes>
+        <edittype widgetv2type="TextEdit" name="id_order">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="id_target">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="rank">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="methane_total">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
-        <edittype widgetv2type="TextEdit" name="id_order">
+        <edittype widgetv2type="TextEdit" name="rank">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_required">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
       <renderer-v2 attr="id_target" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
-          <category render="true" symbol="0" value="9" label="9"/>
+          <category render="true" symbol="0" value="11" label="11"/>
           <category render="true" symbol="1" value="102" label="102"/>
           <category render="true" symbol="2" value="107" label="107"/>
           <category render="true" symbol="3" value="113" label="113"/>
           <category render="true" symbol="4" value="122" label="122"/>
-          <category render="true" symbol="5" value="589" label="589"/>
-          <category render="true" symbol="6" value="" label=""/>
+          <category render="true" symbol="5" value="485" label="485"/>
+          <category render="true" symbol="6" value="567" label="567"/>
+          <category render="true" symbol="7" value="" label=""/>
         </categories>
         <symbols>
           <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="204,57,54,255"/>
+              <prop k="color" v="67,227,99,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -5789,7 +5922,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="204,57,54,255"/>
+              <prop k="color" v="67,227,99,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -5811,7 +5944,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="1">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="208,186,41,255"/>
+              <prop k="color" v="226,71,78,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -5831,7 +5964,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="208,186,41,255"/>
+              <prop k="color" v="226,71,78,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -5853,7 +5986,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="2">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="93,220,47,255"/>
+              <prop k="color" v="95,137,235,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -5873,7 +6006,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="93,220,47,255"/>
+              <prop k="color" v="95,137,235,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -5895,7 +6028,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="3">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="58,155,235,255"/>
+              <prop k="color" v="203,147,15,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -5915,7 +6048,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="58,155,235,255"/>
+              <prop k="color" v="203,147,15,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -5937,7 +6070,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="4">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="233,22,198,255"/>
+              <prop k="color" v="203,27,168,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -5957,7 +6090,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="233,22,198,255"/>
+              <prop k="color" v="203,27,168,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -5979,7 +6112,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="5">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="42,230,155,255"/>
+              <prop k="color" v="56,216,208,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -5999,7 +6132,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="42,230,155,255"/>
+              <prop k="color" v="56,216,208,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -6021,7 +6154,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="6">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="98,50,209,255"/>
+              <prop k="color" v="136,213,41,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -6041,7 +6174,49 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="98,50,209,255"/>
+              <prop k="color" v="136,213,41,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="255,255,255,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.4"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2.4"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="7">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="174,131,225,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="square"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="3.6"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="174,131,225,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -6137,12 +6312,20 @@
       </labelattributes>
       <annotationform>.</annotationform>
       <aliases>
-        <alias field="id_target" index="0" name=""/>
-        <alias field="rank" index="1" name=""/>
-        <alias field="methane_total" index="2" name=""/>
-        <alias field="cost_total" index="3" name=""/>
-        <alias field="plant_capacity" index="4" name=""/>
-        <alias field="id_order" index="5" name=""/>
+        <alias field="id_order" index="0" name=""/>
+        <alias field="id_target" index="1" name=""/>
+        <alias field="plant_capacity" index="2" name=""/>
+        <alias field="rank" index="3" name=""/>
+        <alias field="live_methane_req" index="4" name=""/>
+        <alias field="crop_methane_req" index="5" name=""/>
+        <alias field="methane_required" index="6" name=""/>
+        <alias field="live_methane_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -6172,17 +6355,25 @@
         <fieldstyles/>
       </conditionalstyles>
       <defaults>
-        <default field="id_target" expression=""/>
-        <default field="rank" expression=""/>
-        <default field="methane_total" expression=""/>
-        <default field="cost_total" expression=""/>
-        <default field="plant_capacity" expression=""/>
         <default field="id_order" expression=""/>
+        <default field="id_target" expression=""/>
+        <default field="plant_capacity" expression=""/>
+        <default field="rank" expression=""/>
+        <default field="live_methane_req" expression=""/>
+        <default field="crop_methane_req" expression=""/>
+        <default field="methane_required" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_location_all20171123103256876</id>
+      <id>optimal_plant_location_all20171127113116046</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='id_order' srid=3035 type=Point table="public"."optimal_plant_location_all" (geom) sql=</datasource>
       <keywordList>
         <value></value>
@@ -6208,38 +6399,61 @@
         <map-layer-style name=""/>
       </map-layer-style-manager>
       <edittypes>
+        <edittype widgetv2type="TextEdit" name="id_order">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="id_target">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="rank">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="methane_total">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
-        <edittype widgetv2type="TextEdit" name="id_order">
+        <edittype widgetv2type="TextEdit" name="rank">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_req">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_required">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
       <renderer-v2 attr="plant_capacity" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
-          <category render="false" symbol="0" value="100" label="100"/>
-          <category render="false" symbol="1" value="250" label="250"/>
-          <category render="false" symbol="2" value="500" label="500"/>
-          <category render="false" symbol="3" value="750" label="750"/>
-          <category render="false" symbol="4" value="" label=""/>
+          <category render="true" symbol="0" value="100" label="100"/>
+          <category render="true" symbol="1" value="500" label="500"/>
+          <category render="true" symbol="2" value="750" label="750"/>
+          <category render="true" symbol="3" value="" label=""/>
         </categories>
         <symbols>
           <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="206,120,165,255"/>
+              <prop k="color" v="203,212,66,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -6259,7 +6473,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="206,120,165,255"/>
+              <prop k="color" v="203,212,66,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -6281,7 +6495,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="1">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="52,186,201,255"/>
+              <prop k="color" v="142,137,227,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -6301,7 +6515,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="52,186,201,255"/>
+              <prop k="color" v="142,137,227,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -6323,7 +6537,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="2">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="96,201,83,255"/>
+              <prop k="color" v="92,227,166,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -6343,7 +6557,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="96,201,83,255"/>
+              <prop k="color" v="92,227,166,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -6365,7 +6579,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="3">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="151,114,237,255"/>
+              <prop k="color" v="225,56,132,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -6385,49 +6599,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="151,114,237,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="255,255,255,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.4"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2.4"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="4">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="220,182,99,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="square"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3.6"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="220,182,99,255"/>
+              <prop k="color" v="225,56,132,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -6523,12 +6695,20 @@
       </labelattributes>
       <annotationform>.</annotationform>
       <aliases>
-        <alias field="id_target" index="0" name=""/>
-        <alias field="rank" index="1" name=""/>
-        <alias field="methane_total" index="2" name=""/>
-        <alias field="cost_total" index="3" name=""/>
-        <alias field="plant_capacity" index="4" name=""/>
-        <alias field="id_order" index="5" name=""/>
+        <alias field="id_order" index="0" name=""/>
+        <alias field="id_target" index="1" name=""/>
+        <alias field="plant_capacity" index="2" name=""/>
+        <alias field="rank" index="3" name=""/>
+        <alias field="live_methane_req" index="4" name=""/>
+        <alias field="crop_methane_req" index="5" name=""/>
+        <alias field="methane_required" index="6" name=""/>
+        <alias field="live_methane_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -6558,23 +6738,25 @@
         <fieldstyles/>
       </conditionalstyles>
       <defaults>
-        <default field="id_target" expression=""/>
-        <default field="rank" expression=""/>
-        <default field="methane_total" expression=""/>
-        <default field="cost_total" expression=""/>
-        <default field="plant_capacity" expression=""/>
         <default field="id_order" expression=""/>
+        <default field="id_target" expression=""/>
+        <default field="plant_capacity" expression=""/>
+        <default field="rank" expression=""/>
+        <default field="live_methane_req" expression=""/>
+        <default field="crop_methane_req" expression=""/>
+        <default field="methane_required" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <extent>
-        <xmin>4653260.5</xmin>
-        <ymin>2762630.25</ymin>
-        <xmax>4694231.5</xmax>
-        <ymax>2801075</ymax>
-      </extent>
-      <id>optimal_plant_map_100kw_farms20171122182657852</id>
+      <id>optimal_plant_map_100kw_farms20171127113043450</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=Point table="public"."optimal_plant_map_100kw" (farms) sql=</datasource>
       <keywordList>
         <value></value>
@@ -6610,6 +6792,36 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="route">
@@ -7762,7 +7974,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="route" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="route" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -7794,12 +8016,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_100kw_route20171122182659884</id>
+      <id>optimal_plant_map_100kw_route20171127113043247</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=MultiLineString table="public"."optimal_plant_map_100kw" (route) sql=</datasource>
       <keywordList>
         <value></value>
@@ -7835,6 +8067,36 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
@@ -9223,7 +9485,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="farms" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="farms" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -9255,12 +9527,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_250kw_farms20171122182838702</id>
+      <id>optimal_plant_map_250kw_farms20171127113020812</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=Point table="public"."optimal_plant_map_250kw" (farms) sql=</datasource>
       <keywordList>
         <value></value>
@@ -9296,6 +9578,36 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="route">
@@ -9804,7 +10116,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="route" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="route" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -9829,12 +10151,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_250kw_route20171122182838504</id>
+      <id>optimal_plant_map_250kw_route20171127113020614</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=MultiLineString table="public"."optimal_plant_map_250kw" (route) sql=</datasource>
       <keywordList>
         <value></value>
@@ -9870,6 +10202,36 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
@@ -10438,7 +10800,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="farms" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="farms" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -10463,12 +10835,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_500kw_farms20171122182846047</id>
+      <id>optimal_plant_map_500kw_farms20171127112947803</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=Point table="public"."optimal_plant_map_500kw" (farms) sql=</datasource>
       <keywordList>
         <value></value>
@@ -10504,6 +10886,36 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="route">
@@ -10851,7 +11263,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="route" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="route" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -10876,12 +11298,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_500kw_route20171122182845856</id>
+      <id>optimal_plant_map_500kw_route20171127112947605</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=MultiLineString table="public"."optimal_plant_map_500kw" (route) sql=</datasource>
       <keywordList>
         <value></value>
@@ -10917,6 +11349,36 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="plant_capacity">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
@@ -11205,7 +11667,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="farms" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="farms" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -11230,12 +11702,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_750kw_farms20171123150715910</id>
+      <id>optimal_plant_map_750kw_farms20171127112839730</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=Point table="public"."optimal_plant_map_750kw" (farms) sql=</datasource>
       <keywordList>
         <value></value>
@@ -11273,26 +11755,56 @@
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="route">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
       <renderer-v2 attr="id_target" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
-          <category render="true" symbol="0" value="8" label="8"/>
-          <category render="true" symbol="1" value="78" label="78"/>
-          <category render="true" symbol="2" value="102" label="102"/>
-          <category render="true" symbol="3" value="107" label="107"/>
-          <category render="true" symbol="4" value="113" label="113"/>
-          <category render="true" symbol="5" value="122" label="122"/>
-          <category render="true" symbol="6" value="211" label="211"/>
+          <category render="true" symbol="0" value="11" label="11"/>
+          <category render="true" symbol="1" value="102" label="102"/>
+          <category render="true" symbol="2" value="107" label="107"/>
+          <category render="true" symbol="3" value="113" label="113"/>
+          <category render="true" symbol="4" value="122" label="122"/>
+          <category render="true" symbol="5" value="485" label="485"/>
+          <category render="true" symbol="6" value="567" label="567"/>
           <category render="true" symbol="7" value="" label=""/>
         </categories>
         <symbols>
           <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="91,107,210,255"/>
+              <prop k="color" v="210,137,236,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11314,7 +11826,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="1">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="72,211,229,255"/>
+              <prop k="color" v="78,81,240,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11336,7 +11848,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="2">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="132,239,65,255"/>
+              <prop k="color" v="226,48,143,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11358,7 +11870,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="3">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="165,47,238,255"/>
+              <prop k="color" v="80,198,234,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11380,7 +11892,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="4">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="37,235,109,255"/>
+              <prop k="color" v="123,236,178,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11402,7 +11914,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="5">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="230,213,98,255"/>
+              <prop k="color" v="211,206,50,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11424,7 +11936,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="6">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="204,60,154,255"/>
+              <prop k="color" v="107,202,72,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11446,7 +11958,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="7">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="233,119,104,255"/>
+              <prop k="color" v="222,79,39,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11526,13 +12038,40 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="route" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="route" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
       <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
-        <columns/>
+        <columns>
+          <column width="-1" hidden="0" type="field" name="id_aggregate"/>
+          <column width="-1" hidden="0" type="field" name="id_target"/>
+          <column width="-1" hidden="0" type="field" name="id_building"/>
+          <column width="-1" hidden="0" type="field" name="plant_capacity"/>
+          <column width="-1" hidden="0" type="field" name="length"/>
+          <column width="-1" hidden="0" type="field" name="manure_used"/>
+          <column width="-1" hidden="0" type="field" name="live_methane_used"/>
+          <column width="-1" hidden="0" type="field" name="crop_used"/>
+          <column width="-1" hidden="0" type="field" name="crop_methane_used"/>
+          <column width="-1" hidden="0" type="field" name="methane_used"/>
+          <column width="-1" hidden="0" type="field" name="cost_harvest"/>
+          <column width="-1" hidden="0" type="field" name="cost_ensiling"/>
+          <column width="-1" hidden="0" type="field" name="cost_manure"/>
+          <column width="-1" hidden="0" type="field" name="cost_total"/>
+          <column width="-1" hidden="0" type="field" name="route"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
       </attributetableconfig>
       <editform>.</editform>
       <editforminit/>
@@ -11551,12 +12090,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="route" expression=""/>
       </defaults>
-      <previewExpression></previewExpression>
+      <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_750kw_route20171123145832407</id>
+      <id>optimal_plant_map_750kw_route20171127112907635</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=MultiLineString table="public"."optimal_plant_map_750kw" (route) sql=</datasource>
       <keywordList>
         <value></value>
@@ -11594,19 +12143,50 @@
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
       <renderer-v2 attr="id_target" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
-          <category render="true" symbol="0" value="9" label="9"/>
+          <category render="true" symbol="0" value="11" label="11"/>
           <category render="true" symbol="1" value="102" label="102"/>
           <category render="true" symbol="2" value="107" label="107"/>
           <category render="true" symbol="3" value="113" label="113"/>
           <category render="true" symbol="4" value="122" label="122"/>
-          <category render="true" symbol="5" value="589" label="589"/>
-          <category render="true" symbol="6" value="" label=""/>
+          <category render="true" symbol="5" value="485" label="485"/>
+          <category render="true" symbol="6" value="567" label="567"/>
+          <category render="true" symbol="7" value="" label=""/>
         </categories>
         <symbols>
           <symbol alpha="1" clip_to_extent="1" type="line" name="0">
@@ -11617,7 +12197,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="202,140,52,255"/>
+              <prop k="line_color" v="115,223,164,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -11636,7 +12216,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="56,240,108,255"/>
+              <prop k="line_color" v="156,238,120,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -11655,7 +12235,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="58,55,240,255"/>
+              <prop k="line_color" v="240,227,42,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -11674,7 +12254,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="204,113,139,255"/>
+              <prop k="line_color" v="227,118,93,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -11693,7 +12273,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="176,213,126,255"/>
+              <prop k="line_color" v="218,76,157,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -11712,7 +12292,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="217,109,233,255"/>
+              <prop k="line_color" v="176,99,212,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -11731,7 +12311,26 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="71,194,218,255"/>
+              <prop k="line_color" v="73,83,230,255"/>
+              <prop k="line_style" v="solid"/>
+              <prop k="line_width" v="0.26"/>
+              <prop k="line_width_unit" v="MM"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="line" name="7">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="line_color" v="26,183,222,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -11800,7 +12399,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="farms" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="farms" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -11825,12 +12434,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_all_farms20171123105058692</id>
+      <id>optimal_plant_map_all_farms20171127113115839</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=Point table="public"."optimal_plant_map_all" (farms) sql=</datasource>
       <keywordList>
         <value></value>
@@ -11868,29 +12487,65 @@
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="route">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
       <renderer-v2 attr="id_target" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
-          <category render="true" symbol="0" value="102" label="102"/>
-          <category render="true" symbol="1" value="104" label="104"/>
+          <category render="true" symbol="0" value="11" label="11"/>
+          <category render="true" symbol="1" value="102" label="102"/>
           <category render="true" symbol="2" value="107" label="107"/>
-          <category render="true" symbol="3" value="110" label="110"/>
-          <category render="true" symbol="4" value="113" label="113"/>
-          <category render="true" symbol="5" value="116" label="116"/>
-          <category render="true" symbol="6" value="117" label="117"/>
-          <category render="true" symbol="7" value="118" label="118"/>
-          <category render="true" symbol="8" value="121" label="121"/>
-          <category render="true" symbol="9" value="122" label="122"/>
-          <category render="true" symbol="10" value="" label=""/>
+          <category render="true" symbol="3" value="113" label="113"/>
+          <category render="true" symbol="4" value="122" label="122"/>
+          <category render="true" symbol="5" value="300" label="300"/>
+          <category render="true" symbol="6" value="312" label="312"/>
+          <category render="true" symbol="7" value="463" label="463"/>
+          <category render="true" symbol="8" value="485" label="485"/>
+          <category render="true" symbol="9" value="567" label="567"/>
+          <category render="true" symbol="10" value="635" label="635"/>
+          <category render="true" symbol="11" value="666" label="666"/>
+          <category render="true" symbol="12" value="703" label="703"/>
+          <category render="true" symbol="13" value="832" label="832"/>
+          <category render="true" symbol="14" value="880" label="880"/>
+          <category render="true" symbol="15" value="1607" label="1607"/>
+          <category render="true" symbol="16" value="" label=""/>
         </categories>
         <symbols>
           <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="63,94,204,255"/>
+              <prop k="color" v="54,101,220,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11912,7 +12567,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="1">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="66,190,227,255"/>
+              <prop k="color" v="124,205,150,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11934,7 +12589,139 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="10">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="119,204,177,255"/>
+              <prop k="color" v="202,188,61,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="11">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="226,94,64,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="12">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="221,92,113,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="13">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="218,85,154,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="14">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="25,12,213,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="15">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="213,65,194,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="16">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="129,57,224,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11956,7 +12743,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="2">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="134,216,79,255"/>
+              <prop k="color" v="47,148,207,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -11978,7 +12765,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="3">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="231,153,75,255"/>
+              <prop k="color" v="97,209,172,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -12000,7 +12787,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="4">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="224,74,82,255"/>
+              <prop k="color" v="119,229,50,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -12022,7 +12809,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="5">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="197,205,46,255"/>
+              <prop k="color" v="210,145,65,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -12044,7 +12831,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="6">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="205,108,165,255"/>
+              <prop k="color" v="184,232,50,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -12066,7 +12853,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="7">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="106,231,125,255"/>
+              <prop k="color" v="50,210,44,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -12088,7 +12875,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="8">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="217,133,229,255"/>
+              <prop k="color" v="98,220,222,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -12110,7 +12897,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="9">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="161,128,234,255"/>
+              <prop k="color" v="167,21,207,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -12190,7 +12977,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="route" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="route" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -12215,12 +13012,22 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>optimal_plant_map_all_route20171123105100396</id>
+      <id>optimal_plant_map_all_route20171127113115633</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=MultiLineString table="public"."optimal_plant_map_all" (route) sql=</datasource>
       <keywordList>
         <value></value>
@@ -12258,27 +13065,59 @@
         <edittype widgetv2type="TextEdit" name="plant_capacity">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
+        <edittype widgetv2type="TextEdit" name="length">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="manure_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="live_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="crop_methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="methane_used">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
       <renderer-v2 attr="id_target" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
-          <category render="true" symbol="0" value="4" label="4"/>
-          <category render="true" symbol="1" value="77" label="77"/>
-          <category render="true" symbol="2" value="91" label="91"/>
-          <category render="true" symbol="3" value="102" label="102"/>
-          <category render="true" symbol="4" value="107" label="107"/>
-          <category render="true" symbol="5" value="113" label="113"/>
-          <category render="true" symbol="6" value="119" label="119"/>
-          <category render="true" symbol="7" value="122" label="122"/>
-          <category render="true" symbol="8" value="172" label="172"/>
-          <category render="true" symbol="9" value="388" label="388"/>
-          <category render="true" symbol="10" value="478" label="478"/>
-          <category render="true" symbol="11" value="589" label="589"/>
-          <category render="true" symbol="12" value="821" label="821"/>
-          <category render="true" symbol="13" value="1408" label="1408"/>
-          <category render="true" symbol="14" value="" label=""/>
+          <category render="true" symbol="0" value="11" label="11"/>
+          <category render="true" symbol="1" value="102" label="102"/>
+          <category render="true" symbol="2" value="107" label="107"/>
+          <category render="true" symbol="3" value="113" label="113"/>
+          <category render="true" symbol="4" value="122" label="122"/>
+          <category render="true" symbol="5" value="300" label="300"/>
+          <category render="true" symbol="6" value="312" label="312"/>
+          <category render="true" symbol="7" value="463" label="463"/>
+          <category render="true" symbol="8" value="485" label="485"/>
+          <category render="true" symbol="9" value="567" label="567"/>
+          <category render="true" symbol="10" value="635" label="635"/>
+          <category render="true" symbol="11" value="666" label="666"/>
+          <category render="true" symbol="12" value="703" label="703"/>
+          <category render="true" symbol="13" value="832" label="832"/>
+          <category render="true" symbol="14" value="880" label="880"/>
+          <category render="true" symbol="15" value="1607" label="1607"/>
+          <category render="true" symbol="16" value="" label=""/>
         </categories>
         <symbols>
           <symbol alpha="1" clip_to_extent="1" type="line" name="0">
@@ -12289,7 +13128,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="213,123,109,255"/>
+              <prop k="line_color" v="160,119,222,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12308,7 +13147,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="148,50,240,255"/>
+              <prop k="line_color" v="119,221,41,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12327,7 +13166,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="95,173,208,255"/>
+              <prop k="line_color" v="180,223,23,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12346,7 +13185,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="93,133,234,255"/>
+              <prop k="line_color" v="131,127,240,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12365,7 +13204,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="41,237,64,255"/>
+              <prop k="line_color" v="212,35,195,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12384,7 +13223,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="79,58,239,255"/>
+              <prop k="line_color" v="140,230,132,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12403,7 +13242,45 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="234,147,54,255"/>
+              <prop k="line_color" v="62,167,215,255"/>
+              <prop k="line_style" v="solid"/>
+              <prop k="line_width" v="0.26"/>
+              <prop k="line_width_unit" v="MM"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="line" name="15">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="line_color" v="89,217,168,255"/>
+              <prop k="line_style" v="solid"/>
+              <prop k="line_width" v="0.26"/>
+              <prop k="line_width_unit" v="MM"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="line" name="16">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="line_color" v="52,111,227,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12422,7 +13299,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="121,218,171,255"/>
+              <prop k="line_color" v="76,211,112,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12441,7 +13318,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="224,74,114,255"/>
+              <prop k="line_color" v="172,29,219,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12460,7 +13337,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="169,203,96,255"/>
+              <prop k="line_color" v="234,131,28,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12479,7 +13356,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="43,210,196,255"/>
+              <prop k="line_color" v="224,209,119,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12498,7 +13375,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="226,217,112,255"/>
+              <prop k="line_color" v="215,99,163,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12517,7 +13394,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="213,67,164,255"/>
+              <prop k="line_color" v="71,220,215,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12536,7 +13413,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="200,85,210,255"/>
+              <prop k="line_color" v="211,66,40,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12555,7 +13432,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="106,222,60,255"/>
+              <prop k="line_color" v="200,50,80,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
@@ -12624,7 +13501,17 @@
         <alias field="id_target" index="1" name=""/>
         <alias field="id_building" index="2" name=""/>
         <alias field="plant_capacity" index="3" name=""/>
-        <alias field="farms" index="4" name=""/>
+        <alias field="length" index="4" name=""/>
+        <alias field="manure_used" index="5" name=""/>
+        <alias field="live_methane_used" index="6" name=""/>
+        <alias field="crop_used" index="7" name=""/>
+        <alias field="crop_methane_used" index="8" name=""/>
+        <alias field="methane_used" index="9" name=""/>
+        <alias field="cost_harvest" index="10" name=""/>
+        <alias field="cost_ensiling" index="11" name=""/>
+        <alias field="cost_manure" index="12" name=""/>
+        <alias field="cost_total" index="13" name=""/>
+        <alias field="farms" index="14" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -12649,6 +13536,16 @@
         <default field="id_target" expression=""/>
         <default field="id_building" expression=""/>
         <default field="plant_capacity" expression=""/>
+        <default field="length" expression=""/>
+        <default field="manure_used" expression=""/>
+        <default field="live_methane_used" expression=""/>
+        <default field="crop_used" expression=""/>
+        <default field="crop_methane_used" expression=""/>
+        <default field="methane_used" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
@@ -13591,7 +14488,7 @@
       <previewExpression></previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <id>test_plants_target20171123134717814</id>
+      <id>test_plants_target20171127105317244</id>
       <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=Point table="public"."test_plants_target" (geom) sql=</datasource>
       <keywordList>
         <value></value>
@@ -13626,26 +14523,29 @@
         <edittype widgetv2type="TextEdit" name="methane_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
         <edittype widgetv2type="TextEdit" name="cost_total">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
       <renderer-v2 attr="id_target" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
-          <category render="true" symbol="0" value="8" label="8"/>
-          <category render="true" symbol="1" value="78" label="78"/>
-          <category render="true" symbol="2" value="102" label="102"/>
-          <category render="true" symbol="3" value="107" label="107"/>
-          <category render="true" symbol="4" value="113" label="113"/>
-          <category render="true" symbol="5" value="122" label="122"/>
-          <category render="true" symbol="6" value="211" label="211"/>
-          <category render="true" symbol="7" value="" label=""/>
+          <category render="true" symbol="0" value="113" label="113"/>
+          <category render="true" symbol="1" value="" label=""/>
         </categories>
         <symbols>
           <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="192,50,231,255"/>
+              <prop k="color" v="238,190,113,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -13665,7 +14565,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="192,50,231,255"/>
+              <prop k="color" v="238,190,113,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -13687,7 +14587,7 @@
           <symbol alpha="1" clip_to_extent="1" type="marker" name="1">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="120,193,221,255"/>
+              <prop k="color" v="46,104,203,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="square"/>
@@ -13707,259 +14607,7 @@
             </layer>
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="120,193,221,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="255,255,255,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.4"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2.4"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="2">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="101,204,73,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="square"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3.6"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="101,204,73,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="255,255,255,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.4"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2.4"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="3">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="234,90,33,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="square"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3.6"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="234,90,33,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="255,255,255,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.4"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2.4"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="4">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="33,226,136,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="square"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3.6"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="33,226,136,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="255,255,255,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.4"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2.4"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="5">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="197,203,83,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="square"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3.6"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="197,203,83,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="255,255,255,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.4"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2.4"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="6">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="21,15,214,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="square"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3.6"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="21,15,214,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="255,255,255,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.4"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2.4"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-          </symbol>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="7">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="209,21,109,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="square"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="3.6"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
-            </layer>
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="209,21,109,255"/>
+              <prop k="color" v="46,104,203,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -14058,7 +14706,10 @@
         <alias field="id_target" index="0" name=""/>
         <alias field="rank" index="1" name=""/>
         <alias field="methane_total" index="2" name=""/>
-        <alias field="cost_total" index="3" name=""/>
+        <alias field="cost_harvest" index="3" name=""/>
+        <alias field="cost_ensiling" index="4" name=""/>
+        <alias field="cost_manure" index="5" name=""/>
+        <alias field="cost_total" index="6" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -14091,6 +14742,9 @@
         <default field="id_target" expression=""/>
         <default field="rank" expression=""/>
         <default field="methane_total" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
         <default field="cost_total" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
@@ -14148,26 +14802,26 @@
       <DefaultSnapToleranceUnit type="int">2</DefaultSnapToleranceUnit>
       <LayerSnappingList type="QStringList">
         <value>lulc_zones20171116165020771</value>
-        <value>optimal_plant_location_500kw20171122182846242</value>
-        <value>optimal_plant_location_all20171123103256876</value>
-        <value>optimal_plant_map_100kw_farms20171122182657852</value>
-        <value>optimal_plant_map_100kw_route20171122182659884</value>
-        <value>optimal_plant_map_250kw_farms20171122182838702</value>
-        <value>optimal_plant_map_250kw_route20171122182838504</value>
-        <value>optimal_plant_map_500kw_farms20171122182846047</value>
-        <value>optimal_plant_map_500kw_route20171122182845856</value>
-        <value>optimal_plant_map_all_farms20171123105058692</value>
-        <value>optimal_plant_map_all_route20171123105100396</value>
         <value>roads_main20171116165415827</value>
         <value>site_clean20171123085349351</value>
         <value>test_plants_route_farms20171123134707558</value>
         <value>test_plants_route_route20171123134654694</value>
-        <value>test_plants_target20171123134717814</value>
-        <value>optimal_plant_map_750kw_route20171123145832407</value>
-        <value>optimal_plant_map_750kw_farms20171123150715910</value>
-        <value>optimal_plant_location_250kw20171123153826280</value>
-        <value>optimal_plant_location_100kw20171123153904722</value>
-        <value>optimal_plant_location_750kw20171123182925830</value>
+        <value>test_plants_target20171127105317244</value>
+        <value>optimal_plant_location_750kw20171127112726560</value>
+        <value>optimal_plant_map_750kw_farms20171127112839730</value>
+        <value>optimal_plant_map_750kw_route20171127112907635</value>
+        <value>optimal_plant_map_500kw_route20171127112947605</value>
+        <value>optimal_plant_map_500kw_farms20171127112947803</value>
+        <value>optimal_plant_location_500kw20171127112948012</value>
+        <value>optimal_plant_map_250kw_route20171127113020614</value>
+        <value>optimal_plant_map_250kw_farms20171127113020812</value>
+        <value>optimal_plant_location_250kw20171127113021016</value>
+        <value>optimal_plant_map_100kw_route20171127113043247</value>
+        <value>optimal_plant_map_100kw_farms20171127113043450</value>
+        <value>optimal_plant_location_100kw20171127113043657</value>
+        <value>optimal_plant_map_all_route20171127113115633</value>
+        <value>optimal_plant_map_all_farms20171127113115839</value>
+        <value>optimal_plant_location_all20171127113116046</value>
       </LayerSnappingList>
       <LayerSnappingEnabledList type="QStringList">
         <value>disabled</value>

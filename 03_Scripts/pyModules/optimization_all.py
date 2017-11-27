@@ -8,7 +8,7 @@ def Step_01_create_Residuals (allocation, residual):
     # _________________________ Residual resources
     sql_residual = """
     {create_table} AS
-    SELECT a.id_aggregate, a.id_target, a.id_building, a.length, b.rank, a.plant_capacity, a.manure, a.crop_production, a.live_methane, a.crop_methane, a.methane_total, a.cost_total
+    SELECT a.id_aggregate, a.id_target, a.id_building, a.length, b.rank, a.plant_capacity, a.manure, a.crop_production, a.live_methane, a.crop_methane, a.methane_total, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
     FROM {cost} AS a
     LEFT JOIN {cost_aggr} AS b
     ON a.id_target = b.id_target
@@ -34,7 +34,6 @@ def Step_01_create_Residuals (allocation, residual):
 
     sql_custom (table=allocation, sql=sql_allocation)
 
-
 def Step_02_initialize_Plant (location, links):
 
     # ______________ copy table structure (empty)
@@ -44,9 +43,12 @@ def Step_02_initialize_Plant (location, links):
             live_methane_req double precision, crop_methane_req double precision,
             methane_required double precision, live_methane_used double precision,
             crop_methane_used double precision, methane_used double precision,
-            cost_total double precision
+            cost_harvest double precision, cost_ensiling double precision, cost_manure double precision, cost_total double precision
         );
-    """.format(create_table = create_table(location))
+    """.format(
+        create_table = create_table(location),
+        )
+
     sql_custom (table=location, sql=sql_plants)
 
     add_geometry (scheme = 'public', table = location, column = 'geom', srid = 3035, type_='POINT', dimension=2)
@@ -58,12 +60,12 @@ def Step_02_initialize_Plant (location, links):
             manure_used double precision, live_methane_used double precision,
             crop_used double precision, crop_methane_used double precision,
             methane_used double precision,
-            cost_total double precision
+            cost_harvest double precision, cost_ensiling double precision, cost_manure double precision, cost_total double precision
         );
     """.format(create_table = create_table(links))
     sql_custom (table=links, sql=sql_links)
 
-def Step_03_aggregate_Costs (residual, residual_aggr, plant_capacity):
+def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
 
     sql_cost = """
         {create_table} AS
@@ -71,12 +73,15 @@ def Step_03_aggregate_Costs (residual, residual_aggr, plant_capacity):
         aggregated AS (
             SELECT id_target,
             SUM (methane_total) AS methane_total_aggr,
+            SUM (cost_harvest) AS cost_harvest_aggr,
+            SUM (cost_ensiling) AS cost_ensiling_aggr,
+            SUM (cost_manure) AS cost_manure_aggr,
             SUM (cost_total) AS cost_total_aggr
             FROM {residual}
             GROUP BY id_target
             ORDER BY id_target
         )
-        SELECT a.id_target, b.rank, {plant_capacity} AS plant_capacity, a.methane_total_aggr, a.cost_total_aggr, b.geom
+        SELECT a.id_target, b.rank, {plant_capacity} AS plant_capacity, a.methane_total_aggr, a.cost_harvest_aggr, a.cost_ensiling_aggr, a.cost_manure_aggr, a.cost_total_aggr, b.geom
         FROM aggregated AS a
         LEFT JOIN {target} AS b ON a.id_target = b.id_target
         ORDER BY b.rank DESC, a.methane_total_aggr DESC, a.cost_total_aggr ASC
@@ -193,21 +198,20 @@ def Step_05_select_Farms (links, location, residual, plant_capacity, minimum_val
             WHERE crop_methane_aggregated <= (crop_methane_req)
         ),
         cost_total AS (
-            SELECT a.id_aggregate, a.cost_total
+            SELECT a.id_aggregate, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
             FROM {residual} AS a, crop AS b
             WHERE a.id_aggregate = b.id_aggregate
         )
         INSERT INTO {links} (
-            id_aggregate, id_target, id_building, plant_capacity, length,
-            manure_used, crop_used, live_methane_used, crop_methane_used, methane_used, cost_total
+            id_aggregate, id_target, id_building, length,
+            manure_used, crop_used, live_methane_used, crop_methane_used, methane_used, cost_harvest, cost_ensiling, cost_manure, cost_total
             )
         SELECT
-            p.id_aggregate, p.id_target, p.id_building,
-            {plant_capacity} AS plant_capacity,  p.length,
+            p.id_aggregate, p.id_target, p.id_building, p.length,
             r.manure AS manure_used, p.crop_production AS crop_used,
             r.live_methane AS live_methane_used, p.crop_methane AS crop_methane_used,
             COALESCE(r.live_methane,0) + COALESCE(p.crop_methane,0) AS methane_used,
-            s.cost_total
+            s.cost_harvest, s.cost_ensiling, s.cost_manure, s.cost_total
         FROM crop AS p
         LEFT JOIN manure AS r ON p.id_aggregate = r.id_aggregate
         LEFT JOIN cost_total AS s ON p.id_aggregate = s.id_aggregate
@@ -234,6 +238,9 @@ def Step_06_update_Plant_Capacity (location, links):
             SUM (live_methane_used) AS live_methane_used,
             SUM (crop_methane_used) AS crop_methane_used,
             SUM (methane_used) AS methane_used,
+            SUM (cost_harvest) AS cost_harvest,
+            SUM (cost_ensiling) AS cost_ensiling,
+            SUM (cost_manure) AS cost_manure,
             SUM (cost_total) AS cost_total
             FROM {links}
             GROUP BY id_target
@@ -243,6 +250,9 @@ def Step_06_update_Plant_Capacity (location, links):
         SET live_methane_used = b.live_methane_used,
             crop_methane_used = b.crop_methane_used,
             methane_used = b.methane_used,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
             cost_total = b.cost_total
         FROM aggretate AS b
         WHERE a.id_target = b.id_target
@@ -254,7 +264,11 @@ def Step_06_update_Plant_Capacity (location, links):
 
     sql_custom (table=location, sql=sql_update)
 
-def Step_07_update_Resources (allocation, residual, links):
+def Step_07_update_Residuals (allocation, residual, links):
+
+    cost_harvest = "(crop_production * {0})".format(SQL_costs['harvest'])
+    cost_ensiling = "((length / 1000) * crop_production * {0})".format(SQL_costs['ensiling'])
+    cost_manure = "((length / 1000) * manure * {0})".format(SQL_costs['manure'])
 
     # __________________________ update allocation
     sql_allocation = """
@@ -273,6 +287,15 @@ def Step_07_update_Resources (allocation, residual, links):
 
     # __________________________ update residuals
     sql_residual= """
+        WITH
+        costs AS
+        (
+            SELECT *,
+            {harvest} AS cost_harvest,
+            {ensiling} AS cost_ensiling,
+            {manure} AS cost_manure
+            FROM {allocation}
+        )
         UPDATE {residual} AS a
         SET
             manure = a.manure - b.manure,
@@ -280,13 +303,20 @@ def Step_07_update_Resources (allocation, residual, links):
             live_methane = a.live_methane - b.live_methane,
             crop_methane = a.crop_methane - b.crop_methane,
             methane_total = a.methane_total - b.methane_total,
-            cost_total = a.cost_total - b.cost_total
+            cost_harvest = a.cost_harvest,
+            cost_ensiling = a.cost_ensiling,
+            cost_manure = a.cost_manure,
+            cost_total = COALESCE(a.cost_harvest,0) + COALESCE(a.cost_ensiling,0) +  COALESCE(a.cost_manure,0)
         FROM {links} AS b
         WHERE a.id_building = b.id_building
         ;
     """.format (
         residual = residual,
         links = allocation,
+        harvest = cost_harvest,
+        ensiling = cost_ensiling,
+        manure = cost_manure,
+        allocation = allocation,
         )
 
     sql_custom (table=residual, sql=sql_residual)
@@ -306,9 +336,10 @@ def Step_08_map_Route_Plants (map_routes, location, links):
     sql_map = """
         {create_table} AS
         SELECT a.*, b.geom AS farms, c.geom AS route
-        FROM {links} AS a
+        FROM {links} AS a, {farms} AS b, {route} AS c
         LEFT JOIN {farms} AS b  ON a.id_building = b.id_building
         LEFT JOIN {route} AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+        WHERE a.id_building = b.id_building AND a.id_building = c.id_building
         ;
     """.format (
         create_table = create_table(map_routes),
@@ -326,12 +357,13 @@ def Step_08_map_Route_Plants (map_routes, location, links):
         sql_merge= """
             INSERT INTO {map_routes} (
                 id_aggregate, id_target, id_building, plant_capacity, length,
-                manure_used, crop_used, live_methane_used, crop_methane_used, methane_used, cost_total,
+                manure_used, crop_used, live_methane_used, crop_methane_used, methane_used, cost_harvest, cost_ensiling, cost_manure, cost_total,
                 farms, route)
             SELECT a.*, b.geom AS farms, c.geom AS route
             FROM {links} AS a
             LEFT JOIN {farms} AS b  ON a.id_building = b.id_building
             LEFT JOIN {route} AS c  ON a.id_building = c.id_building AND a.id_target = c.id_target
+            WHERE a.id_building = b.id_building AND a.id_building = c.id_building
             ;
         """.format (
                 map_routes = map_routes,
@@ -342,7 +374,6 @@ def Step_08_map_Route_Plants (map_routes, location, links):
                 )
 
         sql_custom (table = map_routes, sql=sql_merge)
-
 
 
 def extract_plants_all ():
@@ -362,8 +393,8 @@ def extract_plants_all ():
 
     Step_02_initialize_Plant(location, links)
 
-    for plant_capacity in [500, 100]:
-    # for plant_capacity in [750, 500]:
+    # for plant_capacity in [500, 100]:
+    for plant_capacity in [500, 250, 100]:
 #
         select_fist_plant = True
         first_plant = 113
@@ -375,7 +406,7 @@ def extract_plants_all ():
 
         while n_rank > 0:
 
-            Step_03_aggregate_Costs(residual, residual_aggr, plant_capacity)
+            Step_03_aggregate_Resources(residual, residual_aggr, plant_capacity)
             Step_04_select_Plant(links, location, residual_aggr, plant_capacity, n_rank, minimum_value)
 
             if n_rank == 0:
@@ -383,7 +414,7 @@ def extract_plants_all ():
 
             Step_05_select_Farms(links, location, residual, plant_capacity, minimum_value)
             Step_06_update_Plant_Capacity (location, links)
-            Step_07_update_Resources(allocation, residual, links)
+            Step_07_update_Residuals(allocation, residual, links)
 
 
 
@@ -391,8 +422,8 @@ def extract_plants_all ():
 
             debug ("plant capacity: {0} \t iteration: {1} \t rank: {2}".format(plant_capacity, count, n_rank))
 
-            if count >= 100:
-                exit()
+            if count >= 4:
+                # exit()
                 break
 
     Step_08_map_Route_Plants(map_routes, location, links)

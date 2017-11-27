@@ -155,12 +155,15 @@ def Step_05_aggregate_Costs ():
         aggregated AS (
             SELECT id_target,
             SUM (methane_total) AS methane_total,
+            SUM (cost_harvest) AS cost_harvest,
+            SUM (cost_ensiling) AS cost_ensiling,
+            SUM (cost_manure) AS cost_manure,
             SUM (cost_total) AS cost_total
             FROM {cost_total}
             GROUP BY id_target
             ORDER BY id_target
         )
-        SELECT a.id_target, b.rank, a.methane_total, a.cost_total, b.geom
+        SELECT a.id_target, b.rank, a.methane_total, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total, b.geom
         FROM aggregated AS a
         LEFT JOIN {target} AS b ON a.id_target = b.id_target
         ORDER BY  b.rank DESC, a.methane_total DESC, a.cost_total ASC
@@ -175,7 +178,7 @@ def Step_05_aggregate_Costs ():
 
 def Step_06_test_Route_Plants ():
 
-    plant_id = 112
+    plant_id = 113
 
     if plant_id <= 250:
         route = SQL_route_distance['250'].name
