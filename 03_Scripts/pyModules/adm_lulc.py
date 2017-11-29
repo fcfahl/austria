@@ -114,51 +114,66 @@ def Step_06_create_LULC_Zones ():
     sql_zones = """
         {create} AS
         WITH
-           urban AS (
-        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
-        	FROM {lulc}
-        	WHERE code_12 = '111' OR code_12 = '112'
-        	),
-           industrial AS (
-        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
-        	FROM {lulc}
-        	WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
-        	),
-           forest AS (
-        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.0001)),1) as geom
-        	FROM {lulc}
-        	WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
-        	OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
-        	),
-           agriculture AS (
-        	SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
-        	FROM {lulc}
-        	WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
-        	),
-           buffer AS (
-        	SELECT ST_Union(ST_Buffer(geom, {buffer})) as geom
-        	FROM {lulc}
-        	WHERE code_12 = '111' OR code_12 = '112' OR code_12 = '121' OR code_12 = '122' OR code_12 = '131'
-        	),
-            diff AS (
-        	SELECT ST_SimplifyVW(ST_Difference(ST_Difference(ST_Difference(a.geom, b.geom),c.geom),d.geom),1) AS geom
-        	FROM buffer a, urban b, industrial c, forest d
-        	)
-
-        SELECT 3 as rank, 'industrial zone' as zone, geom FROM industrial
-            UNION ALL
-        SELECT 2 as rank, 'buffer zone' as zone, geom FROM diff
-            UNION ALL
-        SELECT 1 as rank, 'agriculture area' as zone, ST_Difference(a.geom, b.geom) AS geom
-        FROM agriculture a, buffer b
-            UNION ALL
-        SELECT 0 as rank, 'urban area' as zone, geom FROM urban
-            UNION ALL
-        SELECT 0 as rank, 'forest area' as zone, geom FROM forest;
+            boundary AS (
+                SELECT ST_Union(geom) as geom
+                FROM {amd}
+            ),
+            urban AS (
+                SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+                FROM {lulc}
+                WHERE code_12 = '111' OR code_12 = '112'
+            ),
+            industrial AS (
+                SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+                FROM {lulc}
+                WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
+            ),
+            buffer AS (
+                SELECT ST_Union(ST_Buffer(ST_Union(a.geom, b.geom), 1000)) as geom
+          		FROM urban a, industrial b
+            ),
+    	    buffer_clip AS (
+                SELECT ST_SimplifyVW(ST_Difference(c.geom, ST_Union(a.geom, b.geom)),1) AS geom
+                FROM urban a, industrial b, buffer c
+            ),
+            forest AS (
+                SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.0001)),1) as geom
+                FROM {lulc}
+                WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
+                OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
+            ),
+	        forest_clip AS (
+                SELECT ST_SimplifyVW(ST_Difference(a.geom, b.geom),1) AS geom
+                FROM forest a, buffer_clip b
+            ),
+            agriculture AS (
+                SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
+                FROM {lulc}
+                WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
+            ),
+            agriculture_clip AS (
+                SELECT ST_SimplifyVW(ST_Difference(a.geom, b.geom),1) AS geom
+                FROM agriculture a, buffer_clip b
+            ),
+            merge_all AS (
+                SELECT 2 as rank, 'buffer zone' as zone, geom FROM buffer_clip
+                    UNION ALL
+                SELECT 3 as rank, 'industrial zone' as zone, geom FROM industrial
+                    UNION ALL
+                SELECT 0 as rank, 'urban area' as zone, geom FROM urban
+                    UNION ALL
+                SELECT 1 as rank, 'agriculture area' as zone, geom FROM agriculture_clip
+                    UNION ALL
+                SELECT 0 as rank, 'forest area' as zone, geom FROM forest_clip
+            )
+            SELECT a.rank, a.zone, ST_Intersection (a.geom, b.geom) AS geom
+            FROM merge_all AS a, boundary AS b
+        ;
     """.format (
             create = create_table(SQL_target['lulc_zones'].name),
             lulc = LULC['corine_adm'].name,
-            buffer = SQL_distances['lulc_zones']
+            buffer = SQL_distances['lulc_zones'],
+            amd = ADM['communes'].name,
             )
 
     sql_custom (table = SQL_target['lulc_zones'].name, sql=sql_zones)

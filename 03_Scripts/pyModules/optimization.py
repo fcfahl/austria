@@ -141,7 +141,7 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity, minimu
 
 def Step_04_select_Plant (links, location, residual_aggr, plant_capacity, rank, minimum_value):
 
-    global n_plants, n_rank, select_fist_plant, first_plant, found_plant
+    global n_plants, n_rank, select_fist_plant, first_plant, found_plant, proximity_plant
 
     if select_fist_plant:
         first_plant = "AND a.id_target = {0}".format(first_plant)
@@ -525,7 +525,7 @@ def pause_script (count, step):
 
 def extract_plants_by_capacity ():
 
-    global n_plants, n_rank, select_fist_plant, first_plant, found_plant
+    global n_plants, n_rank, select_fist_plant, first_plant, found_plant, proximity_plant
 
     for plant_capacity in [250, 1]:
     # for plant_capacity in [750, 500]:
@@ -534,11 +534,13 @@ def extract_plants_by_capacity ():
             exit()
 #
         select_fist_plant = False
+        proximity_plant = True  # select plants based on distance: SQL_distances['proximity']
         found_plant = False
         first_plant = 113
         count = 0
         n_plants = 1
         n_rank = 3
+
 
         cost_column = "cost_total"
         methane_column = "methane_total"

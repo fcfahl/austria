@@ -197,6 +197,7 @@ SQL_distances = {
     'features': '2000',
     'criteria': 'id_target > 1500 AND id_target <= 2000',
     'manure_threshold': 500,
+    'proximity': 1000,
 }
 
 SQL_target = {
@@ -307,6 +308,7 @@ LULC = OrderedDict({
     'corine_adm':Files(prefix, '', 'corine_12_adm', 'corine_12_adm', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir),
     'corine_crop':Files(prefix, '', 'corine_crop', 'corine_crop', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir),
     'corine_No_crop':Files(prefix, '', 'corine_No_crop', 'corine_No_crop', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir),
+    'corine_reclass':Files(prefix, '', 'corine_reclass', 'corine_reclass', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir),
     'legend':Files(prefix, 'clc_legend.csv', 'legend_12', 'legend_12', folder['LULC'].mapset, folder['LULC'].inDir, folder['LULC'].outDir, 'num,code,label3,color'),
 
 })
