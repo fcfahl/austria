@@ -1,62 +1,72 @@
-11:47:12 WARNING  is when this event was logged.
-11:47:12 INFO     
-        DROP TABLE IF EXISTS lulc_zones;
-CREATE TABLE lulc_zones AS
+19:53:29 WARNING  is when this event was logged.
+19:53:29 INFO     
+        DROP TABLE IF EXISTS optimal_plant_residual_aggr_500kw;
+CREATE TABLE optimal_plant_residual_aggr_500kw AS
         WITH
-            boundary AS (
-                SELECT ST_Union(geom) as geom
-                FROM adm_communes
-            ),
-            urban AS (
-                SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
-                FROM lulc_corine_12_adm
-                WHERE code_12 = '111' OR code_12 = '112'
-            ),
-            industrial AS (
-                SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
-                FROM lulc_corine_12_adm
-                WHERE code_12 = '121' OR code_12 = '122' OR code_12 = '131'
-            ),
-            buffer AS (
-                SELECT ST_Union(ST_Buffer(ST_Union(a.geom, b.geom), 1000)) as geom
-          		FROM urban a, industrial b
-            ),
-    	    buffer_clip AS (
-                SELECT ST_SimplifyVW(ST_Difference(c.geom, ST_Union(a.geom, b.geom)),1) AS geom
-                FROM urban a, industrial b, buffer c
-            ),
-            forest AS (
-                SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.0001)),1) as geom
-                FROM lulc_corine_12_adm
-                WHERE code_12 = '311' OR code_12 = '312' OR code_12 = '313'
-                OR code_12 = '321' OR code_12 = '322' OR code_12 = '511'
-            ),
-	        forest_clip AS (
-                SELECT ST_SimplifyVW(ST_Difference(a.geom, b.geom),1) AS geom
-                FROM forest a, buffer_clip b
-            ),
-            agriculture AS (
-                SELECT ST_SimplifyVW(ST_Union(ST_SnapToGrid(geom,0.01)),1) as geom
-                FROM lulc_corine_12_adm
-                WHERE code_12 = '211' OR code_12 = '231' OR code_12 = '242' OR code_12 = '243'
-            ),
-            agriculture_clip AS (
-                SELECT ST_SimplifyVW(ST_Difference(a.geom, b.geom),1) AS geom
-                FROM agriculture a, buffer_clip b
-            ),
-            merge_all AS (
-                SELECT 2 as rank, 'buffer zone' as zone, geom FROM buffer_clip
-                    UNION ALL
-                SELECT 3 as rank, 'industrial zone' as zone, geom FROM industrial
-                    UNION ALL
-                SELECT 0 as rank, 'urban area' as zone, geom FROM urban
-                    UNION ALL
-                SELECT 1 as rank, 'agriculture area' as zone, geom FROM agriculture_clip
-                    UNION ALL
-                SELECT 0 as rank, 'forest area' as zone, geom FROM forest_clip
-            )
-            SELECT a.rank, a.zone, ST_Intersection (a.geom, b.geom) AS geom
-            FROM merge_all AS a, boundary AS b
-        ;
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure) AS manure_available,
+                SUM (crop_production) AS crop_available
+            FROM optimal_plant_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        )
+        SELECT
+            a.*, 500 AS plant_capacity, b.rank,
+            0.0 AS cost_harvest, 0.0 AS cost_ensiling, 0.0 AS cost_manure, 0.0 AS cost_total, 0 AS only_manure,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
     
-11:47:24 INFO     ALTER TABLE lulc_zones ADD COLUMN  id_zones SERIAL PRIMARY KEY;
+19:53:31 DEBUG    plant capacity: 500 	 iteration: 1 	 rank: 3

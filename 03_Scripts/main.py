@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # ADM_LULC.Step_03_join_Legend (lulc=LULC['corine_adm'].name, legend=LULC['legend'])
     # ADM_LULC.Step_04_extract_crop_Areas ()
     # ADM_LULC.Step_05_rank_LULC_Classes ()
-    ADM_LULC.Step_06_create_LULC_Zones ()
+    # ADM_LULC.Step_06_create_LULC_Zones ()
 
     #==============================================================================
     #           FARMS
@@ -100,9 +100,8 @@ if __name__ == "__main__":
 
     # PLT.Step_01_initiate_Plants()
     # PLT.Step_02_join_Farm_Resources()
-    # PLT.Step_03_aggregate_Methane()
-    # PLT.Step_04_calculate_Costs()
-    # PLT.Step_05_aggregate_Costs()
+    # PLT.Step_03_calculate_Costs()
+    # PLT.Step_04_aggregate_Costs()
     #
     # PLT.Step_06_test_Route_Plants()
 
@@ -110,7 +109,7 @@ if __name__ == "__main__":
     #           OPTMIZATION (location of plants)
     #==============================================================================
 #
-    # OPT.extract_plants_by_capacity ()
+    OPT.extract_plants_by_capacity ()
     # OPT2.extract_plants_all ()
 
 
