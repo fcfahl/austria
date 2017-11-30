@@ -1,4 +1,4 @@
-The codename can be got using the following command:
+AThe codename can be got using the following command:
 
 lsb_release -c
 
@@ -52,4 +52,8 @@ force “git pull” to overwrite local files?
 
 git fetch --all
 git reset --hard origin/master
+
+checkout specific branch
+git fetch --all
+git reset --hard origin/<branc name>
 

@@ -52,12 +52,68 @@ def Step_02_join_Farm_Resources ():
     sql_custom (table=SQL_plants['resources'].name, sql=sql_join)
     drop_table (SQL_plants['initial'].name)
 
+def Step_03_aggregate_Resources ():
+    # ______ select resources until reach the plant capacity
 
-def Step_03_calculate_Costs ():
+    sql_sum = """
+        {create_table} AS
+        WITH
+            aggregation AS
+            (
+                SELECT *
+                FROM (
+                    SELECT *,
+                    -- livestock methane aggregated by distance < 10 km
+                    CASE
+                        WHEN (length <= {distance} AND live_methane is not Null) THEN
+                        SUM (coalesce (live_methane,0)) OVER (PARTITION BY id_target ORDER BY length ASC)
+                        ELSE 0
+                    END AS live_methane_aggr,
+                    -- crop methane aggregated by distance
+                    SUM (crop_methane) OVER (PARTITION BY id_target ORDER BY length ASC) AS crop_methane_aggr
+                    FROM {resources}
+                ) AS capacities
+            ),
+            sum AS
+            (
+                SELECT a.*, a.crop_methane_aggr + a.live_methane_aggr AS methane_total_aggr
+                FROM aggregation AS a
+            ),
+            capacity AS
+            (
+                SELECT *,
+                CASE
+                    WHEN methane_total_aggr <= {capacity1} THEN 100
+                    WHEN methane_total_aggr <= {capacity2} THEN 250
+                    WHEN methane_total_aggr <= {capacity3} THEN 500
+                    WHEN methane_total_aggr <= {capacity4} THEN 750
+                    ELSE Null
+                END AS plant_capacity
+                FROM sum
+            )
+            SELECT * FROM capacity
+            WHERE plant_capacity is not Null
+            ORDER BY id_target, methane_total_aggr , live_methane_aggr, crop_methane_aggr , plant_capacity
+            ;
+    """.format (
+        create_table = create_table(SQL_plants['capacity'].name),
+        resources = SQL_plants['resources'].name,
+        distance = SQL_distances['manure'],
+        capacity1 = SQL_plant_capacity['100'],
+        capacity2 = SQL_plant_capacity['250'],
+        capacity3 = SQL_plant_capacity['500'],
+        capacity4 = SQL_plant_capacity['750'],
+        )
 
-    cost_harvest = "(COALESCE(crop_production,0) * {0})".format(SQL_costs['harvest'])
-    cost_ensiling = "((length / 1000) * COALESCE(crop_production,0) * {0})".format(SQL_costs['ensiling'])
-    cost_manure = "((length / 1000) * COALESCE(manure,0)  * {0}) + ({1} * COALESCE(manure,0))".format(SQL_costs['manure_fixed'], SQL_costs['manure'])
+    sql_custom (table=SQL_plants['capacity'].name, sql=sql_sum)
+
+    add_column (table = SQL_plants['capacity'].name, column = 'id_aggregate SERIAL PRIMARY KEY')
+
+def Step_04_calculate_Costs ():
+
+    cost_harvest = "(crop_production * {0})".format(SQL_costs['harvest'])
+    cost_ensiling = "((length / 1000) * crop_production * {0})".format(SQL_costs['ensiling'])
+    cost_manure = "((length / 1000) * manure * {0})".format(SQL_costs['manure'])
 
     sql_cost = """
         {create_table} AS
@@ -67,19 +123,23 @@ def Step_03_calculate_Costs ():
             SELECT *,
             {harvest} AS cost_harvest,
             {ensiling} AS cost_ensiling,
-            {manure} AS cost_manure
+            CASE
+                WHEN live_methane_aggr > 0 THEN {manure}
+                ELSE 0
+            END AS cost_manure
             FROM {capacity}
         )
         SELECT *,
         CASE
             WHEN cost_manure is not null THEN cost_manure + cost_harvest + cost_ensiling
             ELSE cost_harvest + cost_ensiling
-        END AS cost_total
+        END AS cost_total,
+        COALESCE (live_methane, 0) + crop_methane AS methane_total
         FROM costs
             ;
     """.format (
         create_table = create_table(SQL_plant_costs['cost'].name),
-        capacity = SQL_plants['resources'].name,
+        capacity = SQL_plants['capacity'].name,
         harvest = cost_harvest,
         ensiling = cost_ensiling,
         manure = cost_manure,
@@ -87,15 +147,14 @@ def Step_03_calculate_Costs ():
 
     sql_custom (table=SQL_plant_costs['cost'].name, sql=sql_cost)
 
-def Step_04_aggregate_Costs ():
+def Step_05_aggregate_Costs ():
 
     sql_aggr = """
         {create_table} AS
         WITH
         aggregated AS (
             SELECT id_target,
-            SUM (manure) AS total_manure,
-            SUM (crop_production) AS total_crop,
+            SUM (methane_total) AS methane_total,
             SUM (cost_harvest) AS cost_harvest,
             SUM (cost_ensiling) AS cost_ensiling,
             SUM (cost_manure) AS cost_manure,
@@ -104,10 +163,10 @@ def Step_04_aggregate_Costs ():
             GROUP BY id_target
             ORDER BY id_target
         )
-        SELECT a.id_target, b.rank, a.total_manure, a.total_crop, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total, b.geom
+        SELECT a.id_target, b.rank, a.methane_total, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total, b.geom
         FROM aggregated AS a
         LEFT JOIN {target} AS b ON a.id_target = b.id_target
-        ORDER BY  b.rank DESC, a.total_crop DESC, a.cost_total ASC
+        ORDER BY  b.rank DESC, a.methane_total DESC, a.cost_total ASC
             ;
     """.format (
         create_table = create_table(SQL_plant_costs['cost_aggr'].name),
