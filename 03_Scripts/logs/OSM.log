@@ -1,7 +1,187 @@
-19:53:29 WARNING  is when this event was logged.
-19:53:29 INFO     
-        DROP TABLE IF EXISTS optimal_plant_residual_aggr_500kw;
-CREATE TABLE optimal_plant_residual_aggr_500kw AS
+19:54:46 WARNING  is when this event was logged.
+19:54:46 INFO     DROP TABLE IF EXISTS optimal_resources_allocated_500kw;
+CREATE TABLE optimal_resources_allocated_500kw (
+        id_order SERIAL PRIMARY KEY,
+        id_target integer,
+        id_building integer,
+        plant_capacity integer,
+        length double precision,
+        rank integer,
+        manure_available double precision,
+        manure_required numeric,
+        manure_used double precision,
+        manure_residual double precision,
+        manure_methane_produced double precision,
+        manure_methane_residual double precision,
+        crop_available double precision,
+        crop_additional double precision,
+        crop_required double precision,
+        crop_used double precision,
+        methane_from_manure double precision,
+        methane_from_crop double precision,
+        methane_total_produced double precision,
+        cost_harvest double precision,
+        cost_ensiling double precision,
+        cost_manure double precision,
+        cost_total double precision,
+        only_manure integer,
+        ratio_manure double precision,
+        ratio_crop double precision
+);
+19:54:46 INFO     DROP TABLE IF EXISTS optimal_resources_residual_500kw;
+CREATE TABLE optimal_resources_residual_500kw (
+        id_order SERIAL PRIMARY KEY,
+        id_target integer,
+        id_building integer,
+        plant_capacity integer,
+        length double precision,
+        rank integer,
+        manure_available double precision,
+        manure_required numeric,
+        manure_used double precision,
+        manure_residual double precision,
+        manure_methane_produced double precision,
+        manure_methane_residual double precision,
+        crop_available double precision,
+        crop_additional double precision,
+        crop_required double precision,
+        crop_used double precision,
+        methane_from_manure double precision,
+        methane_from_crop double precision,
+        methane_total_produced double precision,
+        cost_harvest double precision,
+        cost_ensiling double precision,
+        cost_manure double precision,
+        cost_total double precision,
+        only_manure integer,
+        ratio_manure double precision,
+        ratio_crop double precision
+);
+19:54:46 INFO     DROP TABLE IF EXISTS optimal_plant_links_500kw;
+CREATE TABLE optimal_plant_links_500kw (
+        id_order SERIAL PRIMARY KEY,
+        id_target integer,
+        id_building integer,
+        plant_capacity integer,
+        length double precision,
+        rank integer,
+        manure_available double precision,
+        manure_required numeric,
+        manure_used double precision,
+        manure_residual double precision,
+        manure_methane_produced double precision,
+        manure_methane_residual double precision,
+        crop_available double precision,
+        crop_additional double precision,
+        crop_required double precision,
+        crop_used double precision,
+        methane_from_manure double precision,
+        methane_from_crop double precision,
+        methane_total_produced double precision,
+        cost_harvest double precision,
+        cost_ensiling double precision,
+        cost_manure double precision,
+        cost_total double precision,
+        only_manure integer,
+        ratio_manure double precision,
+        ratio_crop double precision
+);
+19:54:46 INFO     DROP TABLE IF EXISTS optimal_resources_residual_aggr_500kw;
+CREATE TABLE optimal_resources_residual_aggr_500kw (
+        id_order SERIAL PRIMARY KEY,
+        id_target integer,
+        id_building integer,
+        plant_capacity integer,
+        length double precision,
+        rank integer,
+        manure_available double precision,
+        manure_required numeric,
+        manure_used double precision,
+        manure_residual double precision,
+        manure_methane_produced double precision,
+        manure_methane_residual double precision,
+        crop_available double precision,
+        crop_additional double precision,
+        crop_required double precision,
+        crop_used double precision,
+        methane_from_manure double precision,
+        methane_from_crop double precision,
+        methane_total_produced double precision,
+        cost_harvest double precision,
+        cost_ensiling double precision,
+        cost_manure double precision,
+        cost_total double precision,
+        only_manure integer,
+        ratio_manure double precision,
+        ratio_crop double precision
+);
+19:54:47 INFO     DROP TABLE IF EXISTS optimal_plant_location_500kw;
+CREATE TABLE optimal_plant_location_500kw (
+        id_order SERIAL PRIMARY KEY,
+        id_target integer,
+        id_building integer,
+        plant_capacity integer,
+        length double precision,
+        rank integer,
+        manure_available double precision,
+        manure_required numeric,
+        manure_used double precision,
+        manure_residual double precision,
+        manure_methane_produced double precision,
+        manure_methane_residual double precision,
+        crop_available double precision,
+        crop_additional double precision,
+        crop_required double precision,
+        crop_used double precision,
+        methane_from_manure double precision,
+        methane_from_crop double precision,
+        methane_total_produced double precision,
+        cost_harvest double precision,
+        cost_ensiling double precision,
+        cost_manure double precision,
+        cost_total double precision,
+        only_manure integer,
+        ratio_manure double precision,
+        ratio_crop double precision
+);
+19:54:47 INFO     SELECT AddGeometryColumn ('public', 'optimal_plant_location_500kw','geom', 3035, 'POINT', 2);
+19:54:47 INFO     SELECT AddGeometryColumn ('public', 'optimal_resources_residual_aggr_500kw','geom', 3035, 'POINT', 2);
+19:54:47 INFO     
+    INSERT INTO optimal_resources_residual_500kw AS b (
+        id_target,
+        id_building,
+        length,
+        rank,
+        manure_available,
+        crop_available,
+        cost_harvest,
+        cost_ensiling,
+        cost_manure,
+        cost_total,
+        only_manure
+    )
+    SELECT
+        a.id_target,
+        a.id_building,
+        a.length,
+        a.rank,
+        a.manure,
+        a.crop_production,
+        a.cost_harvest,
+        a.cost_ensiling,
+        a.cost_manure,
+        a.cost_total,
+        0
+    FROM plants_costs_500kw AS a
+    ;
+    
+19:54:47 INFO     
+        UPDATE optimal_resources_residual_500kw
+        SET manure_available = 0
+        WHERE length > 10000
+        ;
+    
+19:54:47 INFO     
         WITH
         parameters AS (
             SELECT
@@ -11,9 +191,9 @@ CREATE TABLE optimal_plant_residual_aggr_500kw AS
         ),
         available AS (
             SELECT id_target,
-                SUM (manure) AS manure_available,
-                SUM (crop_production) AS crop_available
-            FROM optimal_plant_resources_residual_500kw
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
             GROUP BY id_target
             ORDER BY id_target
         ),
@@ -58,15 +238,3906 @@ CREATE TABLE optimal_plant_residual_aggr_500kw AS
         		crop_used * 125.4 AS methane_from_crop,
         		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
             FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
         )
         SELECT
-            a.*, 500 AS plant_capacity, b.rank,
-            0.0 AS cost_harvest, 0.0 AS cost_ensiling, 0.0 AS cost_manure, 0.0 AS cost_total, 0 AS only_manure,
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
             b.geom
         FROM total_methane AS a
-        LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
         WHERE a.id_target = b.id_target
         ORDER BY rank DESC, id_target ASC
             ;
     
-19:53:31 DEBUG    plant capacity: 500 	 iteration: 1 	 rank: 3
+19:54:48 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:48 INFO     found plant 
+19:54:48 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:48 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:48 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:48 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:48 DEBUG    plant capacity: 500 	 iteration: 1 	 rank: 3
+19:54:48 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:48 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:48 INFO     found plant 
+19:54:48 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:48 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:49 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:49 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:49 DEBUG    plant capacity: 500 	 iteration: 2 	 rank: 3
+19:54:49 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:49 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:49 INFO     found plant 
+19:54:49 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:49 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:49 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:49 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:50 DEBUG    plant capacity: 500 	 iteration: 3 	 rank: 3
+19:54:50 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:50 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:50 INFO     found plant 
+19:54:50 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:50 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:50 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:50 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:50 DEBUG    plant capacity: 500 	 iteration: 4 	 rank: 3
+19:54:50 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:51 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:51 INFO     found plant 
+19:54:51 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:51 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:51 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:51 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:51 DEBUG    plant capacity: 500 	 iteration: 5 	 rank: 3
+19:54:51 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:51 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:51 INFO     found plant 
+19:54:51 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:51 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:52 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:52 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:52 DEBUG    plant capacity: 500 	 iteration: 6 	 rank: 3
+19:54:52 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:52 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:52 INFO     found plant 
+19:54:52 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:52 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:52 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:52 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:53 DEBUG    plant capacity: 500 	 iteration: 7 	 rank: 3
+19:54:53 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:53 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:53 INFO     found plant 
+19:54:53 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:53 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:53 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:53 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:53 DEBUG    plant capacity: 500 	 iteration: 8 	 rank: 3
+19:54:53 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:54 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:54 INFO     found plant 
+19:54:54 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:54 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:54 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:54 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:54 DEBUG    plant capacity: 500 	 iteration: 9 	 rank: 3
+19:54:54 INFO     
+        WITH
+        parameters AS (
+            SELECT
+            3257.32899023 AS manure_required,
+            7600.43431053 AS crop_required,
+            1000000 AS methane_required
+        ),
+        available AS (
+            SELECT id_target,
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        required AS (
+            SELECT a.id_target, a.manure_available, b.manure_required,
+    		    CASE
+        			WHEN a.manure_available > b.manure_required THEN b.manure_required
+        			ELSE a.manure_available
+                END AS manure_used,
+                a.manure_available - b.manure_required AS manure_residual,
+                a.crop_available,
+                b.crop_required,
+                a.crop_available - b.crop_required AS crop_demand
+            FROM available AS a, parameters AS b
+        ),
+        manure_methane AS (
+            SELECT id_target, manure_available, manure_required, manure_used, manure_residual,
+                manure_used * 14.4 AS manure_methane_produced,
+                CASE
+        			WHEN manure_residual < 0 THEN (manure_available * 14.4 - manure_required * 14.4) * -1
+        			ELSE 0
+                END AS manure_methane_residual
+            FROM required
+        ),
+        crop_methane_missing AS (
+            SELECT a.id_target, b.crop_available, b.crop_required,
+        		a.manure_methane_residual * 14.4 AS methane_lacking_from_manure,
+        		a.manure_methane_residual / 125.4 AS crop_additional
+            FROM manure_methane AS a, required AS b
+            WHERE a.id_target = b.id_target
+        ),
+        crop_methane AS (
+            SELECT a.*,
+        		b.crop_available, b.crop_additional, b.crop_required,
+        		b.crop_required + b.crop_additional AS crop_used
+            FROM manure_methane AS a, crop_methane_missing AS B
+            WHERE a.id_target = b.id_target
+        ),
+        total_methane AS (
+            SELECT *,
+        		manure_used * 14.4 AS methane_from_manure,
+        		crop_used * 125.4 AS methane_from_crop,
+        		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
+            FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM optimal_resources_residual_500kw
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN site_clean AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO optimal_resources_residual_aggr_500kw (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
+        )
+        SELECT
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
+            b.geom
+        FROM total_methane AS a
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
+        WHERE a.id_target = b.id_target
+        ORDER BY rank DESC, id_target ASC
+            ;
+    
+19:54:55 INFO     
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+19:54:55 INFO     found plant 
+19:54:55 INFO     
+            INSERT INTO optimal_plant_location_500kw (
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        )
+    		
+		SELECT 
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        
+
+        FROM optimal_resources_residual_aggr_500kw
+        WHERE methane_total_produced * 1.01 >= 1000000 AND cost_total > 0  AND rank = 3
+        AND id_target NOT IN (
+            SELECT DISTINCT id_target FROM optimal_plant_location_500kw  -- avoid getting duplicates
+        )
+        
+        ORDER BY cost_total ASC
+        LIMIT 1
+            ;
+        
+                ;
+        
+19:54:55 INFO     
+        WITH
+        last_record AS (
+            SELECT id_target, manure_used, crop_used
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        manure_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(manure_row_1) as manure_row_1
+            FROM (
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 10000)
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
+        ),
+        crop_columns AS (
+            -- it get the last row of the sequence of farms
+            -- this is necessary to grab the next value of the query, not retrieve without it
+            SELECT id_target, max(crop_row_1) as crop_row_1
+            FROM (
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        crop AS (
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
+                FROM optimal_resources_residual_500kw AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < 50000)
+                ) AS f, crop_columns AS g
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+        ),
+        no_matched_farms AS (
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building NOT IN
+		          (
+                  SELECT DISTINCT b.id_building
+                  FROM manure AS a, crop AS b, last_record AS c
+                  WHERE a.id_target = c.id_target
+                  )
+        ),
+        join_farms AS (
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
+    		UNION ALL
+    		SELECT * FROM  no_matched_farms
+        ),
+
+        cost_total AS (
+            SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
+            FROM optimal_resources_residual_500kw AS a, join_farms AS b
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
+        )
+        INSERT INTO optimal_plant_links_500kw (
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    )
+        SELECT  
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    
+        FROM cost_total
+
+            ;
+    
+19:54:55 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
+        INSERT INTO optimal_resources_allocated_500kw
+        SELECT a.*
+        FROM optimal_resources_residual_500kw AS a, optimal_plant_links_500kw AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
+        ;
+    
+19:54:55 INFO     
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM optimal_plant_location_500kw
+            ORDER BY id_order DESC
+            LIMIT 1
+        ),
+        residuals AS (
+    		SELECT a.*
+    		FROM optimal_resources_residual_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        links AS (
+    		SELECT a.*
+    		FROM optimal_plant_links_500kw AS a, current_plant AS b
+    		WHERE a.id_target = b.id_target
+        ),
+        manure AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.manure_available - b.manure_used AS  manure_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building
+        ),
+        crop AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                a.crop_available - b.crop_used AS  crop_available
+            FROM residuals AS a, links AS b
+            WHERE a.id_building = b.id_building AND a.only_manure = 0
+        ),
+        costs AS (
+            SELECT
+                a.id_target, a.id_building, a.length,
+                (COALESCE(b.crop_available,0) * 5) AS cost_harvest,
+                ((b.length / 1000) * COALESCE(b.crop_available,0) * 1) AS cost_ensiling,
+                ((a.length / 1000) * COALESCE(a.manure_available,0)  * 2) + (0.5 * COALESCE(a.manure_available,0)) AS cost_manure
+            FROM manure AS a, crop AS b
+            WHERE a.id_building = b.id_building
+        ),
+        join_tables AS (
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            FROM costs AS c
+            JOIN crop AS b ON b.id_building = c.id_building
+            JOIN manure AS a ON a.id_building = c.id_building
+        )
+        UPDATE optimal_resources_residual_500kw AS a
+        SET
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
+            cost_harvest = b.cost_harvest,
+            cost_ensiling = b.cost_ensiling,
+            cost_manure = b.cost_manure,
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+        FROM join_tables AS b
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        ;
+    
+19:54:55 DEBUG    plant capacity: 500 	 iteration: 10 	 rank: 3

@@ -4,72 +4,86 @@ from pyModules.postGIS import *
 from pg_queries import *
 
 
-def Step_01_create_Residuals (allocation, residual):
 
-    # _________________________ Residual resources
-    sql_residual = """
-    {create_table} AS
-    SELECT a.id_target, a.id_building, a.length, a.manure, a.crop_production, a.live_methane, a.crop_methane,  a.live_methane + a.crop_methane AS methane_total, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total, 0 AS only_manure
-    FROM {cost} AS a
-    ;
-    """.format (
-        create_table = create_table(residual),
-        cost = SQL_plant_costs['cost'].name,
-    )
-
-    sql_custom (table=residual, sql=sql_residual)
-    add_column (table=residual, column='id_aggregate SERIAL PRIMARY KEY')
-
-    # _________________________ Allocated resources (copy table structure (empty))
-    sql_allocation = """
-        {create_table} AS
-    		SELECT  * FROM {residual} WHERE 0 > 1
-            ;
-    """.format(
-        create_table = create_table(allocation),
-        residual = residual,
-        )
-
-    sql_custom (table=allocation, sql=sql_allocation)
+def Step_01_initialize_Files (allocation, residual, location, links, residual_aggr ):
 
 
+    sql_plants = "{create_table} ({columns});".format(create_table = create_table(allocation), columns=columns_all)
+    sql_custom (table=allocation, sql=sql_plants)
 
-def Step_02_initialize_Plant (location, links, plant_capacity):
+    sql_plants = "{create_table} ({columns});".format(create_table = create_table(residual), columns=columns_all)
+    sql_custom (table=residual, sql=sql_plants)
 
-    # ______________ copy table structure (empty)
-    sql_plants = """
-        {create_table} (
-            id_order SERIAL PRIMARY KEY, id_target int, plant_capacity int, rank int,
-            manure_required double precision, manure_available double precision, manure_allocated double precision,
-            crop_required double precision, crop_available double precision, crop_allocated double precision,
-            total_required double precision,
-            live_methane_used double precision, crop_methane_used double precision, total_methane_used double precision,
-            cost_harvest double precision, cost_ensiling double precision, cost_manure double precision, cost_total double precision, manure_ratio double precision, crop_ratio double precision
-        );
-    """.format(
-        create_table = create_table(location),
-        )
+    sql_links = "{create_table} ({columns});".format(create_table = create_table(links), columns=columns_all)
+    sql_custom (table=links, sql=sql_links)
 
+    sql_links = "{create_table} ({columns});".format(create_table = create_table(residual_aggr), columns=columns_all)
+    sql_custom (table=residual_aggr, sql=sql_links)
+
+    sql_plants = "{create_table} ({columns});".format(create_table = create_table(location), columns=columns_all)
     sql_custom (table=location, sql=sql_plants)
 
     add_geometry (scheme = 'public', table = location, column = 'geom', srid = 3035, type_='POINT', dimension=2)
+    add_geometry (scheme = 'public', table = residual_aggr, column = 'geom', srid = 3035, type_='POINT', dimension=2)
 
-    # ______________ table to hold the links between target and farms
-    sql_links = """
-        {create_table} (
-            id_aggregate int, id_target int, id_building int, plant_capacity int, length double precision,
-            manure_used double precision, crop_used double precision,
-            cost_harvest double precision, cost_ensiling double precision, cost_manure double precision, cost_total double precision, only_manure int
-        );
-    """.format(create_table = create_table(links))
-    sql_custom (table=links, sql=sql_links)
+def Step_02_update_Residues (residual, residual_aggr, links, plant_capacity, plant_costs):
+
+    columns_plants_costs = """
+
+    """
+
+    # _________________________ Residual resources
+    sql_residual = """
+    INSERT INTO {residual} AS b (
+        id_target,
+        id_building,
+        length,
+        rank,
+        manure_available,
+        crop_available,
+        cost_harvest,
+        cost_ensiling,
+        cost_manure,
+        cost_total,
+        only_manure
+    )
+    SELECT
+        a.id_target,
+        a.id_building,
+        a.length,
+        a.rank,
+        a.manure,
+        a.crop_production,
+        a.cost_harvest,
+        a.cost_ensiling,
+        a.cost_manure,
+        a.cost_total,
+        0
+    FROM {plant_costs} AS a
+    ;
+    """.format (
+        residual = residual,
+        plant_costs = plant_costs,
+    )
+
+    sql_custom (table=residual, sql=sql_residual)
+
+    # _________________________ remove manure from distances not allowed
+    sql_update = """
+        UPDATE {residual}
+        SET manure_available = 0
+        WHERE length > {distance_allowed}
+        ;
+    """.format (residual = residual, distance_allowed=SQL_distances['manure'])
+
+    sql_custom (table=residual, sql=sql_update)
+
 
 def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
 
     key = str(plant_capacity)
 
     sql_resources = """
-        {create_table} AS
         WITH
         parameters AS (
             SELECT
@@ -79,8 +93,8 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
         ),
         available AS (
             SELECT id_target,
-                SUM (manure) AS manure_available,
-                SUM (crop_production) AS crop_available
+                SUM (manure_available) AS manure_available,
+                SUM (crop_available) AS crop_available
             FROM {residual}
             GROUP BY id_target
             ORDER BY id_target
@@ -126,18 +140,71 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
         		crop_used * 125.4 AS methane_from_crop,
         		manure_used * 14.4 + crop_used * 125.4 AS methane_total_produced
             FROM crop_methane
+        ),
+        total_cost AS (
+            SELECT id_target,
+    			SUM(cost_harvest) AS cost_harvest,
+                SUM(cost_ensiling) AS cost_ensiling,
+                SUM(cost_manure) AS cost_manure,
+                SUM(cost_total) AS cost_total
+            FROM {residual}
+            GROUP BY id_target
+        ),
+        rank AS (
+            SELECT a.*, b.rank, b.geom
+            FROM total_cost AS a
+            LEFT JOIN {target} AS b ON a.id_target = b.id_target
+        )
+        INSERT INTO {residual_aggr} (
+            id_target,
+            rank,
+            manure_available,
+            manure_required,
+            manure_used,
+            manure_residual,
+            manure_methane_produced,
+            manure_methane_residual,
+            crop_available,
+            crop_additional,
+            crop_required,
+            crop_used,
+            methane_from_manure,
+            methane_from_crop,
+            methane_total_produced,
+            cost_harvest,
+            cost_ensiling,
+            cost_manure,
+            cost_total,
+            geom
         )
         SELECT
-            a.*, {plant_capacity} AS plant_capacity, b.rank,
-            0.0 AS cost_harvest, 0.0 AS cost_ensiling, 0.0 AS cost_manure, 0.0 AS cost_total, 0 AS only_manure,
+            a.id_target,
+            b.rank,
+            a.manure_available,
+            a.manure_required,
+            a.manure_used,
+            a.manure_residual,
+            a.manure_methane_produced,
+            a.manure_methane_residual,
+            a.crop_available,
+            a.crop_additional,
+            a.crop_required,
+            a.crop_used,
+            a.methane_from_manure,
+            a.methane_from_crop,
+            a.methane_total_produced,
+            b.cost_harvest,
+            b.cost_ensiling,
+            b.cost_manure,
+            b.cost_total,
             b.geom
         FROM total_methane AS a
-        LEFT JOIN {target} AS b ON a.id_target = b.id_target
+        LEFT JOIN rank AS b ON a.id_target = b.id_target
         WHERE a.id_target = b.id_target
         ORDER BY rank DESC, id_target ASC
             ;
     """.format (
-        create_table = create_table(residual_aggr),
+        residual_aggr = residual_aggr,
         residual =residual,
         target = SQL_target['site_clean'].name,
         plant_capacity = plant_capacity,
@@ -150,112 +217,6 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
 
     sql_custom (table=residual_aggr, sql=sql_resources)
 
-def Step_04_calculate_Costs (residual, residual_aggr):
-
-    cost_harvest = "(COALESCE(crop_production,0) * {0})".format(SQL_costs['harvest'])
-    cost_ensiling = "((length / 1000) * COALESCE(crop_production,0) * {0})".format(SQL_costs['ensiling'])
-    cost_manure = "((length / 1000) * COALESCE(manure,0)  * {0}) + ({1} * COALESCE(manure,0))".format(SQL_costs['manure_fixed'], SQL_costs['manure'])
-
-    sql_cost = """
-        WITH
-        limits AS
-        (
-            SELECT id_target, manure_used, crop_used
-            FROM {resources}
-        ),
-        manure_columns AS (
-            -- it get the last row of the sequence of farms
-            -- this is necessary to grab the next value of the query, not retrieve without it
-            SELECT manure_row_1
-            FROM (
-                SELECT a.id_target, a.manure, a.length, b.manure_used,
-                SUM (a.manure) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
-                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
-                FROM {residual} AS a, limits AS b
-                WHERE a.id_target = b.id_target and (a.manure > 0 or a.manure is not null)
-                ) AS f
-            WHERE manure_aggregated  <= manure_used
-            ORDER BY id_target, length DESC
-            LIMIT 1
-        ),
-        manure AS (
-            SELECT *
-            FROM (
-                SELECT a.id_aggregate, a.id_target, a.id_building, a.length, a.manure, a.crop_production, a.live_methane, a.crop_methane, a.methane_total, 0 AS only_manure,
-                row_number () OVER (ORDER BY a.length ASC) AS live_row
-                FROM {residual} AS a, last_record AS b
-                WHERE a.id_target = b.id_target
-                ) AS f, live_columns AS g
-            WHERE f.live_row <= g.live_row_1 + 1-- grab the next value of the sequence
-        ),
-        crop_columns AS (
-            -- it get the last row of the sequence of farms
-            -- this is necessary to grab the next value of the query, not retrieve without it
-            SELECT crop_row_1
-            FROM (
-                SELECT a.id_target, a.crop_production, a.length, b.crop_used,
-                SUM (a.crop_production) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
-                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
-                FROM {residual} AS a, limits AS b
-                WHERE a.id_target = b.id_target and (a.crop_production > 0 or a.crop_production is not null)
-                ) AS f
-            WHERE crop_aggregated  <= crop_used
-            ORDER BY id_target, length DESC
-            LIMIT 1
-        )
-        SELECT * FROM crop_columns
-            ;
-    """.format (
-        resources = residual_aggr,
-        residual = residual,
-        harvest = cost_harvest,
-        ensiling = cost_ensiling,
-        manure = cost_manure,
-        )
-
-    sql_custom (table=residual_aggr, sql=sql_cost)
-
-
-
-    # sql_cost = """
-    #     WITH
-    #     costs AS
-    #     (
-    #         SELECT *,
-    #         {harvest} AS cost_harvest,
-    #         {ensiling} AS cost_ensiling,
-    #         {manure} AS cost_manure
-    #         FROM {residual}
-    #     ),
-    #     crop AS (
-    #         SELECT *
-    #         FROM (
-    #             SELECT a.id_aggregate, a.id_target, a.id_building, a.length, a.manure, a.crop_production, a.live_methane, a.crop_methane, a.methane_total, 0 AS only_manure,
-    #             row_number () OVER (ORDER BY a.length ASC) AS crop_row
-    #             FROM {residual} AS a, last_record AS b
-    #             WHERE a.id_target = b.id_target
-    #             ) AS f, crop_columns AS g
-    #         WHERE f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
-    #     )
-    #     UPDATE {resources} AS a
-    #     SELECT *,
-    #         SET cost_harvest = b.live_methane_used,
-    #             cost_ensiling = b.live_methane_used,
-    #             cost_manure = b.live_methane_used,
-    #             cost_total = b.live_methane_used
-    #     FROM costs AS b
-    #     WHERE a.id_target = b.id_target
-    #         ;
-    # """.format (
-    #     resources = residual_aggr,
-    #     residual = residual,
-    #     harvest = cost_harvest,
-    #     ensiling = cost_ensiling,
-    #     manure = cost_manure,
-    #     )
-    #
-    # sql_custom (table=residual_aggr, sql=sql_cost)
-
 def Step_04_select_Plant (links, location, residual_aggr, plant_capacity, rank, minimum_value):
 
     global n_plants, n_rank, select_fist_plant, first_plant, found_plant, proximity_plant
@@ -266,16 +227,43 @@ def Step_04_select_Plant (links, location, residual_aggr, plant_capacity, rank, 
     else:
         first_plant = ""
 
+        columns = """
+                id_target,
+                manure_available,
+                manure_required,
+                manure_used,
+                manure_residual,
+                manure_methane_produced,
+                manure_methane_residual,
+                crop_available,
+                crop_additional,
+                crop_required,
+                crop_used,
+                methane_from_manure,
+                methane_from_crop,
+                methane_total_produced,
+                plant_capacity,
+                rank,
+                cost_harvest,
+                cost_ensiling,
+                cost_manure,
+                cost_total,
+                only_manure,
+                ratio_manure,
+                ratio_crop
+        """
+
     # _________________ check if it is the first running time
     sql_select = """
-		SELECT *
+		SELECT {columns}
+
         FROM {residual_aggr}
-        WHERE methane_demand >= {minimum_value} AND cost_total_aggr > 0  AND rank = {rank}
+        WHERE methane_total_produced * 1.01 >= {minimum_value} AND cost_total > 0  AND rank = {rank}
         AND id_target NOT IN (
             SELECT DISTINCT id_target FROM {location}  -- avoid getting duplicates
         )
         {first_plant}
-        ORDER BY cost_total_aggr ASC
+        ORDER BY cost_total ASC
         LIMIT 1
             ;
         """.format(
@@ -284,6 +272,7 @@ def Step_04_select_Plant (links, location, residual_aggr, plant_capacity, rank, 
             rank = rank,
             first_plant = first_plant,
             location = location,
+            columns = columns,
             )
 
     sql_custom (table="", sql=sql_select)
@@ -297,20 +286,13 @@ def Step_04_select_Plant (links, location, residual_aggr, plant_capacity, rank, 
         found_plant = True
 
         sql_insert = """
-            INSERT INTO {location} (
-                id_target, plant_capacity, rank,
-                manure_required, live_available, live_allocated,
-                crop_required, crop_available, crop_allocated,
-                total_required, methane_available, methane_demand,
-                cost_harvest, cost_ensiling, cost_manure, cost_total,
-                geom
-                )
-
+            INSERT INTO {location} ({columns})
     		{sql_select}
                 ;
         """.format(
             location = location,
             sql_select = sql_select,
+            columns = columns,
             )
 
         sql_custom (table=location, sql=sql_insert)
@@ -324,66 +306,73 @@ def Step_05_select_Farms (links, location, residual, plant_capacity, minimum_val
 
     global found_plant
 
+    columns_links = """
+            id_target, id_building, length,
+            manure_used, crop_used,
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+    """
+
+
     sql_links = """
         WITH
         last_record AS (
-            SELECT id_target, manure_required, live_allocated, crop_required, crop_allocated
+            SELECT id_target, manure_used, crop_used
             FROM {location}
             ORDER BY id_order DESC
             LIMIT 1
         ),
-        live_columns AS (
+        manure_columns AS (
             -- it get the last row of the sequence of farms
             -- this is necessary to grab the next value of the query, not retrieve without it
-            SELECT live_row_1
+            SELECT id_target, max(manure_row_1) as manure_row_1
             FROM (
-                SELECT b.manure_required, b.live_allocated,
-                SUM (a.live_methane) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS live_methane_aggregated,
-                row_number () OVER (ORDER BY a.length ASC) AS live_row_1
+                SELECT a.id_target, a.manure_available, a.length, b.manure_used,
+                SUM (a.manure_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS manure_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row_1
                 FROM {residual} AS a, last_record AS b
-                WHERE a.id_target = b.id_target
+                WHERE a.id_target = b.id_target and (a.length < {manure_distance})
                 ) AS f
-            WHERE live_methane_aggregated  <= (live_allocated)
-            ORDER BY  live_row_1 DESC
-            LIMIT 1
+            WHERE manure_aggregated  <= manure_used
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        manure AS (
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            FROM (
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
+                FROM {residual} AS a, last_record AS b
+                WHERE a.id_target = b.id_target and (a.length < {manure_distance})
+                ) AS f, manure_columns AS g
+            WHERE f.id_target = g.id_target AND f.manure_available > 0 AND f.manure_row <= g.manure_row_1 + 1-- grab the next value of the sequence
         ),
         crop_columns AS (
             -- it get the last row of the sequence of farms
             -- this is necessary to grab the next value of the query, not retrieve without it
-            SELECT crop_row_1
+            SELECT id_target, max(crop_row_1) as crop_row_1
             FROM (
-                SELECT b.crop_required, b.crop_allocated,
-                SUM (a.crop_methane) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_methane_aggregated,
-                row_number () OVER (ORDER BY a.length ASC) AS crop_row_1
+                SELECT a.id_target, a.crop_available, a.length, b.crop_used,
+                SUM (a.crop_available) OVER (PARTITION BY a.id_target ORDER BY a.length ASC) AS crop_aggregated,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row_1
                 FROM {residual} AS a, last_record AS b
-                WHERE a.id_target = b.id_target
-                ) AS f, live_columns AS g
-            WHERE crop_methane_aggregated <= (crop_allocated)
-            ORDER BY  crop_row_1 DESC
-            LIMIT 1
-        ),
-        manure AS (
-            SELECT *
-            FROM (
-                SELECT a.id_aggregate, a.id_target, a.id_building, a.length, a.manure, a.crop_production, a.live_methane, a.crop_methane, a.methane_total, 0 AS only_manure,
-                row_number () OVER (ORDER BY a.length ASC) AS live_row
-                FROM {residual} AS a, last_record AS b
-                WHERE a.id_target = b.id_target
-                ) AS f, live_columns AS g
-            WHERE f.live_row <= g.live_row_1 + 1-- grab the next value of the sequence
+                WHERE a.id_target = b.id_target and (a.length < {crop_distance})
+                ) AS f
+            WHERE crop_aggregated  <= crop_used
+            GROUP BY id_target
+            ORDER BY id_target
         ),
         crop AS (
-            SELECT *
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
             FROM (
-                SELECT a.id_aggregate, a.id_target, a.id_building, a.length, a.manure, a.crop_production, a.live_methane, a.crop_methane, a.methane_total, 0 AS only_manure,
-                row_number () OVER (ORDER BY a.length ASC) AS crop_row
+                SELECT a.*,
+                row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
                 FROM {residual} AS a, last_record AS b
-                WHERE a.id_target = b.id_target
+                WHERE a.id_target = b.id_target and (a.length < {crop_distance})
                 ) AS f, crop_columns AS g
-            WHERE f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
+            WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
         ),
         no_matched_farms AS (
-            SELECT DISTINCT  a.id_aggregate, a.id_target, (a.id_building), a.length, a.manure, a.crop_production, a.live_methane, a.crop_methane, a.live_methane AS methane_total, 1 AS only_manure
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
             FROM manure AS a, crop AS b
             WHERE a.id_building NOT IN
 		          (
@@ -393,109 +382,68 @@ def Step_05_select_Farms (links, location, residual, plant_capacity, minimum_val
                   )
         ),
         join_farms AS (
-	        SELECT
-    		    b.id_aggregate, b.id_target, b.id_building, b.length,
-    		    a.manure AS manure_used, b.crop_production AS crop_used,
-    		    a.live_methane AS live_methane_used, b.crop_methane AS crop_methane_used,
-    		    COALESCE(a.live_methane,0) + COALESCE(b.crop_methane,0) AS methane_used, b.only_manure
-    		FROM crop AS b
-    		LEFT JOIN manure AS a ON a.id_aggregate = b.id_aggregate
+            SELECT
+                b.id_target, b.id_building, b.length, b.rank,
+                a.manure_available AS manure_used, b.crop_available AS crop_used,
+                 b.only_manure
+            FROM crop AS b
+            LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
     		UNION ALL
     		SELECT * FROM  no_matched_farms
         ),
+
         cost_total AS (
             SELECT b.*, a.cost_harvest, a.cost_ensiling, a.cost_manure, a.cost_total
             FROM {residual} AS a, join_farms AS b
-            WHERE a.id_aggregate = b.id_aggregate
+            WHERE  a.id_target = b.id_target and a.id_building = b.id_building
         )
-        INSERT INTO {links} (
-            id_aggregate, id_target, id_building, length,
-            manure_used, crop_used,
-            live_methane_used, crop_methane_used, methane_used, only_manure,
-            cost_harvest, cost_ensiling, cost_manure, cost_total
-            )
-        SELECT *
+        INSERT INTO {links} ({columns_links})
+        SELECT  {columns_links}
         FROM cost_total
 
-        ;
+            ;
     """.format (
         links = links,
         location = location,
         residual = residual,
         plant_capacity = plant_capacity,
-        minimum_value = minimum_value,
-        manure_ratio = SQL_methane_ratio['manure'],
-        crop_ratio = SQL_methane_ratio['crop'],
+        manure_yield = SQL_methane_yield['manure'],
+        crop_yield = SQL_methane_yield['crop'],
+        manure_distance = SQL_distances['manure'],
+        crop_distance = SQL_distances['max_travel'],
+        columns_links = columns_links,
+
         )
 
     if found_plant:
         sql_custom (table=links, sql=sql_links)
 
-def Step_06_update_Plant_Location (location, links):
+def Step_06_update_Residuals (location, allocation, residual, links):
 
     global found_plant
 
-    sql_update = """
-        WITH
-        manure AS (
-            SELECT id_target,
-            SUM (live_methane_used) AS live_methane_used,
-            SUM (methane_used) AS methane_used,
-            SUM (cost_harvest) AS cost_harvest,
-            SUM (cost_ensiling) AS cost_ensiling,
-            SUM (cost_manure) AS cost_manure,
-            SUM (cost_total) AS cost_total
-            FROM {links}
-            GROUP BY id_target
-            ORDER BY id_target
-        ),
-        crop AS (
-            SELECT id_target,
-            SUM (crop_methane_used) AS crop_methane_used
-            FROM {links}
-            WHERE only_manure = 0
-            GROUP BY id_target
-            ORDER BY id_target
-        )
-        UPDATE {location} AS a
-        SET live_methane_used = b.live_methane_used,
-            crop_methane_used = c.crop_methane_used,
-            methane_used = b.methane_used,
-            cost_harvest = b.cost_harvest,
-            cost_ensiling = b.cost_ensiling,
-            cost_manure = b.cost_manure,
-            cost_total = b.cost_total,
-            manure_ratio = ROUND((cast(b.live_methane_used / b.methane_used AS numeric)),2) ,
-            crop_ratio = ROUND((cast(c.crop_methane_used / b.methane_used AS numeric)),2)
-        FROM manure AS b, crop AS c
-        WHERE a.id_target = b.id_target AND a.id_target = c.id_target
-        ;
-    """.format (
-        location = location,
-        links = links,
-        )
-
-    if found_plant:
-        sql_custom (table=location, sql=sql_update)
-
-def Step_07_update_Residuals (location, allocation, residual, links):
-
-    global found_plant
-
-    cost_harvest = "(b.crop_production * {0})".format(SQL_costs['harvest'])
-    cost_ensiling = "((b.length / 1000) * b.crop_production * {0})".format(SQL_costs['ensiling'])
-    cost_manure = "((a.length / 1000) * a.manure * {0})".format(SQL_costs['manure'])
+    cost_harvest = "(COALESCE(b.crop_available,0) * {0})".format(SQL_costs['harvest'])
+    cost_ensiling = "((b.length / 1000) * COALESCE(b.crop_available,0) * {0})".format(SQL_costs['ensiling'])
+    cost_manure = "((a.length / 1000) * COALESCE(a.manure_available,0)  * {0}) + ({1} * COALESCE(a.manure_available,0))".format(SQL_costs['manure_fixed'], SQL_costs['manure'])
 
     # __________________________ update allocation
     sql_allocation = """
+        WITH
+        current_plant AS (
+            SELECT id_target
+            FROM {location}
+            ORDER BY id_order DESC
+            LIMIT 1
+        )
         INSERT INTO {allocation}
         SELECT a.*
-        FROM {residual} AS a, {links} AS b
-        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
+        FROM {residual} AS a, {links} AS b, current_plant AS c
+        WHERE a.id_building = b.id_building AND b.id_target = c.id_target AND a.id_target = c.id_target
         ;
     """.format (
         residual = residual,
         allocation = allocation,
+        location = location,
         links = links,
         )
 
@@ -521,70 +469,57 @@ def Step_07_update_Residuals (location, allocation, residual, links):
         manure AS (
             SELECT
                 a.id_target, a.id_building, a.length,
-                a.manure - b.manure_used AS  manure,
-                a.live_methane - b.live_methane_used AS live_methane
+                a.manure_available - b.manure_used AS  manure_available
             FROM residuals AS a, links AS b
             WHERE a.id_building = b.id_building
         ),
         crop AS (
             SELECT
                 a.id_target, a.id_building, a.length,
-                a.crop_production - b.crop_used AS  crop_production,
-                a.crop_methane - b.crop_methane_used AS  crop_methane
+                a.crop_available - b.crop_used AS  crop_available
             FROM residuals AS a, links AS b
             WHERE a.id_building = b.id_building AND a.only_manure = 0
         ),
         costs AS (
             SELECT
                 a.id_target, a.id_building, a.length,
-                (b.crop_production * 5) AS cost_harvest,
-                ((b.length / 1000) * b.crop_production * 6) AS cost_ensiling,
-                ((a.length / 1000) * a.manure * 0.2) AS cost_manure
+                {cost_harvest} AS cost_harvest,
+                {cost_ensiling} AS cost_ensiling,
+                {cost_manure} AS cost_manure
             FROM manure AS a, crop AS b
             WHERE a.id_building = b.id_building
         ),
         join_tables AS (
-            SELECT  a.id_target, a.id_building, a.manure, a.live_methane, b.crop_production, b.crop_methane, c.cost_harvest, c.cost_ensiling, c.cost_manure
+            SELECT  a.id_target, a.id_building, a.manure_available, b.crop_available, c.cost_harvest, c.cost_ensiling, c.cost_manure
             FROM costs AS c
             JOIN crop AS b ON b.id_building = c.id_building
             JOIN manure AS a ON a.id_building = c.id_building
         )
         UPDATE {residual} AS a
         SET
-            manure = b.manure,
-            crop_production = b.crop_production,
-            live_methane = b.live_methane,
-            crop_methane = b.crop_methane,
-            methane_total = COALESCE(b.live_methane,0) +  COALESCE(b.crop_methane,0),
+            manure_available = b.manure_available,
+            crop_available = b.crop_available,
             cost_harvest = b.cost_harvest,
             cost_ensiling = b.cost_ensiling,
             cost_manure = b.cost_manure,
             cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
         FROM join_tables AS b
-        WHERE a.id_building = b.id_building
+        WHERE a.id_building = b.id_building AND a.id_target = b.id_target
         ;
     """.format (
         residual = residual,
         links = links,
         allocation = allocation,
-        harvest = cost_harvest,
-        ensiling = cost_ensiling,
-        manure = cost_manure,
+        cost_harvest = cost_harvest,
+        cost_ensiling = cost_ensiling,
+        cost_manure = cost_manure,
         location = location,
         )
-
-    # __________________________ remove empty data from residuals
-    sql_remove = """
-        DELETE FROM {residual}
-        WHERE methane_total = 0 or methane_total is null
-        ;
-    """.format (residual = residual)
 
 
     if found_plant:
         sql_custom (table=allocation, sql=sql_allocation)
         sql_custom (table=residual, sql=sql_residual)
-        # sql_custom (table=residual, sql=sql_remove)
 
 
 def Step_08_map_Route_Plants (map_routes, location, links):
@@ -668,13 +603,13 @@ def extract_plants_by_capacity ():
         residual_aggr = "{0}_{1}kw".format(SQL_optmization['residual_aggr'].name, plant_capacity)
         map_routes = "{0}_{1}kw".format(SQL_optmization['map_routes'].name, plant_capacity)
         plant_costs = "{0}_{1}kw".format(SQL_plant_costs['cost'].name, plant_capacity)
+        plant_costs_aggr = "{0}_{1}kw".format(SQL_plant_costs['cost_aggr'].name, plant_capacity)
 
-
-        # Step_01_create_Residuals(allocation, residual)
+        Step_01_initialize_Files(allocation, residual, location, links, residual_aggr )
 
         # pause_script (count, "step 1")
 
-        # Step_02_initialize_Plant(location, links, plant_capacity)
+        Step_02_update_Residues (residual, residual_aggr, links, plant_capacity, plant_costs)
 
         # pause_script(count, "step 2")
 
@@ -684,21 +619,15 @@ def extract_plants_by_capacity ():
             #
             # pause_script(count, "step 3")
             #
-            # Step_04_calculate_Costs(residual, residual_aggr)
-
-            # Step_04_select_Plant(links, location, residual_aggr, plant_capacity, n_rank, minimum_value)
+            Step_04_select_Plant(links, location, residual_aggr, plant_capacity, n_rank, minimum_value)
             #
             # pause_script(count, "step 4")
             #
-            # Step_05_select_Farms(links, location, residual, plant_capacity, minimum_value)
+            Step_05_select_Farms(links, location, residual, plant_capacity, minimum_value)
             #
-            # pause_script(count, "step 5")
+            # pause_script(count, "step 5")            #
             #
-            # Step_06_update_Plant_Location (location, links)
-            #
-            # pause_script(count, "step 6")
-            #
-            # Step_07_update_Residuals(location, allocation, residual, links)
+            Step_06_update_Residuals(location, allocation, residual, links)
             #
             # pause_script(count, "step 7")
 
@@ -707,7 +636,7 @@ def extract_plants_by_capacity ():
 
             debug ("plant capacity: {0} \t iteration: {1} \t rank: {2}".format(plant_capacity, count, n_rank))
 
-            if count >= 1:
+            if count >= 10:
                 print ">>>>>>>>>>>>>>>>>>>>>>>>> EXIT <<<<<<<<<<<<<<<<<<<<<<"
                 exit()
                 break

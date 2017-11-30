@@ -19,6 +19,7 @@ def execute_Query (query, table):
         if query:
             info (query)
             cursor.execute(query)
+            return cursor
     except:
         if query:
             error (query)
@@ -379,3 +380,26 @@ def restore_PostGIS_Tables ():
         info (command)
         subprocess.call(command, shell=True)
         os.chdir(script_Folder)
+
+def clean_selected_tables (status=False):
+
+    # BE CAREFUL
+
+    if status:
+
+        prefixes = ['optimal_', 'tmp_']
+
+        for prefix in prefixes:
+
+            sql_drop = """
+                SELECT table_name
+                FROM INFORMATION_SCHEMA.TABLES
+                WHERE TABLE_NAME LIKE '{prefix}%'
+                ;
+            """.format (prefix = prefix)
+
+            tables =  execute_Query (query=sql_drop, table="").fetchall()
+
+            for record in tables:
+                table = "".join(record)
+                drop_table (table)

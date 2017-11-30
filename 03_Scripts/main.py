@@ -97,11 +97,12 @@ if __name__ == "__main__":
     #==============================================================================
     #           PLANTS
     #==============================================================================
-
+    #
     # PLT.Step_01_initiate_Plants()
     # PLT.Step_02_join_Farm_Resources()
-    # PLT.Step_03_calculate_Costs()
-    # PLT.Step_04_aggregate_Costs()
+    # PLT.Step_03_aggregate_Resources()
+    # PLT.Step_04_calculate_Costs()
+    # PLT.Step_05_aggregate_Costs()
     #
     # PLT.Step_06_test_Route_Plants()
 
@@ -126,5 +127,7 @@ if __name__ == "__main__":
     # restore_PostGIS_Tables()
 
     # size_DB()
+
+    # clean_selected_tables (False)
 
     log_close()

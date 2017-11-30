@@ -246,7 +246,7 @@ SQL_route_distance= {
 SQL_plants= {
 	'initial' : SQL_obj ('plants_initial', '', 'merge of route tables '),
 	'resources' : SQL_obj ('plants_resources', '', 'join of resources '),
-	'capacity' : SQL_obj ('plants_capacity', '', 'capacity calculation '),
+	'resources_aggr' : SQL_obj ('plants_resources_aggregated', '', 'join of resources '),
 }
 
 SQL_plant_costs= {
@@ -259,9 +259,9 @@ SQL_plant_costs= {
 }
 
 SQL_optmization= {
-    'allocation' : SQL_obj ('optimal_plant_resources_allocated', '', 'resources allocated'),
-    'residual' : SQL_obj ('optimal_plant_resources_residual', '', 'residual resources'),
-    'residual_aggr' : SQL_obj ('optimal_plant_residual_aggr', '', 'residual resources'),
+    'allocation' : SQL_obj ('optimal_resources_allocated', '', 'resources allocated'),
+    'residual' : SQL_obj ('optimal_resources_residual', '', 'residual resources'),
+    'residual_aggr' : SQL_obj ('optimal_resources_residual_aggr', '', 'residual resources'),
 	'location' : SQL_obj ('optimal_plant_location', '', 'first plant '),
 	'links' : SQL_obj ('optimal_plant_links', '', 'first plant '),
 	'map_routes' : SQL_obj ('optimal_plant_map', '', 'route and plants in the same layer'),
@@ -314,6 +314,66 @@ SQL_costs = {
     'manure': 0.5,
     'manure_fixed': 2,
 }
+
+columns_all = """
+        id_order SERIAL PRIMARY KEY,
+        id_target integer,
+        id_building integer,
+        plant_capacity integer,
+        length double precision,
+        rank integer,
+        manure_available double precision,
+        manure_required numeric,
+        manure_used double precision,
+        manure_residual double precision,
+        manure_methane_produced double precision,
+        manure_methane_residual double precision,
+        crop_available double precision,
+        crop_additional double precision,
+        crop_required double precision,
+        crop_used double precision,
+        methane_from_manure double precision,
+        methane_from_crop double precision,
+        methane_total_produced double precision,
+        cost_harvest double precision,
+        cost_ensiling double precision,
+        cost_manure double precision,
+        cost_total double precision,
+        only_manure integer,
+        ratio_manure double precision,
+        ratio_crop double precision
+"""
+
+columns_residual = """
+        id_order SERIAL PRIMARY KEY,
+        id_target integer,
+        id_building integer,
+        plant_capacity integer,
+        length double precision,
+        rank integer,
+        manure_available double precision,
+        manure_required numeric,
+        manure_used double precision,
+        manure_residual double precision,
+        manure_methane_produced double precision,
+        manure_methane_residual double precision,
+        crop_available double precision,
+        crop_additional double precision,
+        crop_required double precision,
+        crop_used double precision,
+        methane_from_manure double precision,
+        methane_from_crop double precision,
+        methane_total_produced double precision,
+        cost_harvest double precision,
+        cost_ensiling double precision,
+        cost_manure double precision,
+        cost_total double precision,
+        only_manure integer,
+        ratio_manure double precision,
+        ratio_crop double precision
+"""
+
+
 
 prefix = 'osm'
 Files.class_counter = -99
