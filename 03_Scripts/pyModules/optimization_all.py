@@ -540,7 +540,7 @@ def extract_plants_all ():
         n_plants = 1
         n_rank = 3
 
-        minimum_value = SQL_methane_capacity[str(plant_capacity)]
+        minimum_value = SQL_plant_capacity[str(plant_capacity)]
 
         while n_rank > 0:
 

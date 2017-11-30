@@ -267,52 +267,22 @@ SQL_optmization= {
 	'map_routes' : SQL_obj ('optimal_plant_map', '', 'route and plants in the same layer'),
 }
 
-SQL_methane_yield = {
-    'manure': 14.4,
-    'crop': 125.4,
+SQL_plant_capacity = {
+    '100': 224000,
+    '250': 560000,
+    '500': 1070000,
+    '750': 1560000,
 }
 
-manure_ratio = 0.3
-crop_ratio = 1 - manure_ratio
-demand_ratio = (manure_ratio * SQL_methane_yield['manure'] +  crop_ratio * SQL_methane_yield['crop'])
-
-
-SQL_methane_capacity = {
-    '100': 216216,
-    '250': 526316,
-    '350': 717949,
-    '500': 1000000,
-    '750': 1463415,
-    '1000': 1904762,
+SQL_methane_ratio = {
+    'manure': 0.3,
+    'crop': 0.7,
 }
-
-SQL_manure_demand = {
-    '100': SQL_methane_capacity['100'] * manure_ratio / demand_ratio,
-    '250': SQL_methane_capacity['250'] * manure_ratio / demand_ratio,
-    '350': SQL_methane_capacity['350'] * manure_ratio / demand_ratio,
-    '500': SQL_methane_capacity['500'] * manure_ratio / demand_ratio,
-    '750': SQL_methane_capacity['750'] * manure_ratio / demand_ratio,
-    '1000': SQL_methane_capacity['1000'] * manure_ratio / demand_ratio,
-}
-
-SQL_crop_demand = {
-    '100': SQL_methane_capacity['100'] * crop_ratio / demand_ratio,
-    '250': SQL_methane_capacity['250'] * crop_ratio / demand_ratio,
-    '350': SQL_methane_capacity['350'] * crop_ratio / demand_ratio,
-    '500': SQL_methane_capacity['500'] * crop_ratio / demand_ratio,
-    '750': SQL_methane_capacity['750'] * crop_ratio / demand_ratio,
-    '1000': SQL_methane_capacity['1000'] * crop_ratio / demand_ratio,
-}
-
-
-print SQL_manure_demand['250']
-print SQL_crop_demand['250']
 
 SQL_costs = {
     'harvest': 5,
-    'ensiling': 1,
-    'manure': 0.5,
-    'manure_fixed': 2,
+    'ensiling': 6,
+    'manure': 0.2,
 }
 
 prefix = 'osm'
