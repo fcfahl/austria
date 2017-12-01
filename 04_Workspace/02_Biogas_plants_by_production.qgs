@@ -7,8 +7,11 @@
     <customproperties/>
     <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="Optimization">
       <customproperties/>
-      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="100kw">
+      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="100kw">
         <customproperties/>
+        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="plants_costs_aggregated20171201190116967" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;plants_costs_aggregated&quot; (geom) sql=&quot;rank&quot; = 3" name="plants_costs_aggregated">
+          <customproperties/>
+        </layer-tree-layer>
         <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_100kw20171128170514266" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_100kw&quot; (geom) sql=" name="optimal_plant_location_100kw">
           <customproperties>
             <property key="showFeatureCount" value="1"/>
@@ -35,9 +38,9 @@
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="500kw">
+      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="500kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_500kw20171128170255293" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_500kw&quot; (geom) sql=" name="optimal_plant_location_500kw">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_location_500kw20171128170255293" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_500kw&quot; (geom) sql=" name="optimal_plant_location_500kw">
           <customproperties>
             <property key="showFeatureCount" value="1"/>
           </customproperties>
@@ -174,11 +177,17 @@
       <item>optimal_plant_location_all20171128170707783</item>
       <item>adm_communes20171129102137342</item>
       <item>lulc_corine_12_adm20171129114826902</item>
+      <item>plants_costs_aggregated20171201190116967</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
     <legendgroup open="true" checked="Qt::PartiallyChecked" name="Optimization">
-      <legendgroup open="true" checked="Qt::Unchecked" name="100kw">
+      <legendgroup open="true" checked="Qt::PartiallyChecked" name="100kw">
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="plants_costs_aggregated" showFeatureCount="0">
+          <filegroup open="true" hidden="false">
+            <legendlayerfile isInOverview="0" layerid="plants_costs_aggregated20171201190116967" visible="1"/>
+          </filegroup>
+        </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_100kw" showFeatureCount="1">
           <filegroup open="false" hidden="false">
             <legendlayerfile isInOverview="0" layerid="optimal_plant_location_100kw20171128170514266" visible="0"/>
@@ -212,10 +221,10 @@
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="true" checked="Qt::Unchecked" name="500kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_500kw" showFeatureCount="1">
+      <legendgroup open="true" checked="Qt::PartiallyChecked" name="500kw">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="optimal_plant_location_500kw" showFeatureCount="1">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_500kw20171128170255293" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_500kw20171128170255293" visible="1"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_500kw.farms" showFeatureCount="0">
@@ -2187,6 +2196,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
@@ -6425,11 +6440,13 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;ratio_manure&quot;" sortOrder="0">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;length_manure&quot;" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="id_target"/>
           <column width="-1" hidden="0" type="field" name="zone"/>
@@ -6480,6 +6497,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
@@ -6592,6 +6611,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
@@ -8465,11 +8490,13 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;crop_ratio&quot;" sortOrder="0">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;length_manure&quot;" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="id_target"/>
           <column width="-1" hidden="0" type="field" name="zone"/>
@@ -8520,6 +8547,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
@@ -9608,7 +9637,7 @@ def my_form_open(dialog, layer, feature):
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;id_order&quot;" sortOrder="0">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;manure_used&quot;" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="id_target"/>
           <column width="-1" hidden="0" type="field" name="zone"/>
@@ -9767,6 +9796,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
@@ -10178,6 +10213,8 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -10233,6 +10270,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
@@ -10339,6 +10378,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
@@ -10628,11 +10673,13 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;id_order&quot;" sortOrder="0">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;length_manure&quot;" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="id_target"/>
           <column width="-1" hidden="0" type="field" name="zone"/>
@@ -10683,6 +10730,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
@@ -10789,6 +10838,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="route">
@@ -13090,7 +13145,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="route" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="route" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -13144,6 +13201,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
@@ -13251,6 +13310,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
@@ -15261,7 +15326,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="farms" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="farms" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -15315,6 +15382,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
@@ -15422,6 +15491,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="route">
@@ -16458,7 +16533,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="route" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="route" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -16522,6 +16599,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
@@ -16629,6 +16708,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
@@ -17539,7 +17624,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="farms" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="farms" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -17603,6 +17690,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
@@ -17710,6 +17799,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="route">
@@ -18263,7 +18358,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="route" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="route" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -18327,6 +18424,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
@@ -18434,6 +18533,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
@@ -18924,7 +19029,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="farms" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="farms" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -18971,6 +19078,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
@@ -19078,6 +19187,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="route">
@@ -19516,7 +19631,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="route" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="route" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -19580,6 +19697,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_aggregate", '&lt;NULL>' )</previewExpression>
@@ -19687,6 +19806,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
@@ -20077,7 +20202,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="farms" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="farms" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -20124,6 +20251,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
@@ -20231,6 +20360,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="route">
@@ -21566,7 +21701,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="route" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="route" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -21642,6 +21779,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="route" expression=""/>
       </defaults>
       <previewExpression>COALESCE("id_aggregate", '&lt;NULL>')</previewExpression>
@@ -21749,6 +21888,12 @@ def my_form_open(dialog, layer, feature):
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="ratio_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="farms">
@@ -22919,7 +23064,9 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
-        <alias field="farms" index="26" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
+        <alias field="farms" index="28" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -22966,9 +23113,169 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
         <default field="farms" expression=""/>
       </defaults>
       <previewExpression></previewExpression>
+    </maplayer>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <id>plants_costs_aggregated20171201190116967</id>
+      <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='rosana' sslmode=disable key='tid' srid=3035 type=Point table="public"."plants_costs_aggregated" (geom) sql="rank" = 3</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>plants_costs_aggregated</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>1000</srsid>
+          <srid>3035</srid>
+          <authid>EPSG:3035</authid>
+          <description>ETRS89 / ETRS-LAEA</description>
+          <projectionacronym>laea</projectionacronym>
+          <ellipsoidacronym>GRS80</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">postgres</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="id_target">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="rank">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="total_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="total_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_harvest">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_ensiling">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="cost_total">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="133,46,88,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>id_target</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Label"/>
+        <family fieldname="" name="MS Shell Dlg 2"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform></annotationform>
+      <aliases>
+        <alias field="id_target" index="0" name=""/>
+        <alias field="rank" index="1" name=""/>
+        <alias field="total_manure" index="2" name=""/>
+        <alias field="total_crop" index="3" name=""/>
+        <alias field="cost_harvest" index="4" name=""/>
+        <alias field="cost_ensiling" index="5" name=""/>
+        <alias field="cost_manure" index="6" name=""/>
+        <alias field="cost_total" index="7" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;cost_total&quot;" sortOrder="0">
+        <columns>
+          <column width="-1" hidden="0" type="field" name="id_target"/>
+          <column width="-1" hidden="0" type="field" name="rank"/>
+          <column width="-1" hidden="0" type="field" name="total_manure"/>
+          <column width="-1" hidden="0" type="field" name="total_crop"/>
+          <column width="-1" hidden="0" type="field" name="cost_harvest"/>
+          <column width="-1" hidden="0" type="field" name="cost_ensiling"/>
+          <column width="-1" hidden="0" type="field" name="cost_manure"/>
+          <column width="-1" hidden="0" type="field" name="cost_total"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
+      </attributetableconfig>
+      <editform></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="id_target" expression=""/>
+        <default field="rank" expression=""/>
+        <default field="total_manure" expression=""/>
+        <default field="total_crop" expression=""/>
+        <default field="cost_harvest" expression=""/>
+        <default field="cost_ensiling" expression=""/>
+        <default field="cost_manure" expression=""/>
+        <default field="cost_total" expression=""/>
+      </defaults>
+      <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>roads_main20171116165415827</id>

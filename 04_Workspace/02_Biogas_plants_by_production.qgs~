@@ -35,9 +35,9 @@
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="500kw">
+      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="500kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_location_500kw20171128170255293" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_500kw&quot; (geom) sql=" name="optimal_plant_location_500kw">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_500kw20171128170255293" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_500kw&quot; (geom) sql=" name="optimal_plant_location_500kw">
           <customproperties>
             <property key="showFeatureCount" value="1"/>
           </customproperties>
@@ -63,9 +63,9 @@
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="All">
+      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="All">
         <customproperties/>
-        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_all20171128170707783" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_all&quot; (geom) sql=" name="optimal_plant_location_all">
+        <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_location_all20171128170707783" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_all&quot; (geom) sql=" name="optimal_plant_location_all">
           <customproperties>
             <property key="showFeatureCount" value="1"/>
           </customproperties>
@@ -212,10 +212,10 @@
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="true" checked="Qt::PartiallyChecked" name="500kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="optimal_plant_location_500kw" showFeatureCount="1">
+      <legendgroup open="true" checked="Qt::Unchecked" name="500kw">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_500kw" showFeatureCount="1">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_500kw20171128170255293" visible="1"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_500kw20171128170255293" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_500kw.farms" showFeatureCount="0">
@@ -246,10 +246,10 @@
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="true" checked="Qt::Unchecked" name="All">
-        <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="optimal_plant_location_all" showFeatureCount="1">
+      <legendgroup open="true" checked="Qt::PartiallyChecked" name="All">
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="optimal_plant_location_all" showFeatureCount="1">
           <filegroup open="true" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_all20171128170707783" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_all20171128170707783" visible="1"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_all.farms" showFeatureCount="0">
@@ -8628,6 +8628,12 @@ def my_form_open(dialog, layer, feature):
         <edittype widgetv2type="TextEdit" name="ratio_crop">
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
+        <edittype widgetv2type="TextEdit" name="length_manure">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="length_crop">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
       </edittypes>
       <renderer-v2 attr="id_target" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
         <categories>
@@ -9596,6 +9602,8 @@ def my_form_open(dialog, layer, feature):
         <alias field="only_manure" index="23" name=""/>
         <alias field="ratio_manure" index="24" name=""/>
         <alias field="ratio_crop" index="25" name=""/>
+        <alias field="length_manure" index="26" name=""/>
+        <alias field="length_crop" index="27" name=""/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -9651,6 +9659,8 @@ def my_form_open(dialog, layer, feature):
         <default field="only_manure" expression=""/>
         <default field="ratio_manure" expression=""/>
         <default field="ratio_crop" expression=""/>
+        <default field="length_manure" expression=""/>
+        <default field="length_crop" expression=""/>
       </defaults>
       <previewExpression>COALESCE( "id_target", '&lt;NULL>' )</previewExpression>
     </maplayer>
@@ -21562,7 +21572,36 @@ def my_form_open(dialog, layer, feature):
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
       <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
-        <columns/>
+        <columns>
+          <column width="-1" hidden="0" type="field" name="id_order"/>
+          <column width="-1" hidden="0" type="field" name="id_target"/>
+          <column width="-1" hidden="0" type="field" name="id_building"/>
+          <column width="-1" hidden="0" type="field" name="plant_capacity"/>
+          <column width="-1" hidden="0" type="field" name="length"/>
+          <column width="-1" hidden="0" type="field" name="rank"/>
+          <column width="-1" hidden="0" type="field" name="manure_available"/>
+          <column width="-1" hidden="0" type="field" name="manure_required"/>
+          <column width="-1" hidden="0" type="field" name="manure_used"/>
+          <column width="-1" hidden="0" type="field" name="manure_residual"/>
+          <column width="-1" hidden="0" type="field" name="manure_methane_produced"/>
+          <column width="-1" hidden="0" type="field" name="manure_methane_residual"/>
+          <column width="-1" hidden="0" type="field" name="crop_available"/>
+          <column width="-1" hidden="0" type="field" name="crop_additional"/>
+          <column width="-1" hidden="0" type="field" name="crop_required"/>
+          <column width="-1" hidden="0" type="field" name="crop_used"/>
+          <column width="-1" hidden="0" type="field" name="methane_from_manure"/>
+          <column width="-1" hidden="0" type="field" name="methane_from_crop"/>
+          <column width="-1" hidden="0" type="field" name="methane_total_produced"/>
+          <column width="-1" hidden="0" type="field" name="cost_harvest"/>
+          <column width="-1" hidden="0" type="field" name="cost_ensiling"/>
+          <column width="-1" hidden="0" type="field" name="cost_manure"/>
+          <column width="-1" hidden="0" type="field" name="cost_total"/>
+          <column width="-1" hidden="0" type="field" name="only_manure"/>
+          <column width="-1" hidden="0" type="field" name="ratio_manure"/>
+          <column width="-1" hidden="0" type="field" name="ratio_crop"/>
+          <column width="-1" hidden="0" type="field" name="route"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
       </attributetableconfig>
       <editform>.</editform>
       <editforminit/>
@@ -21605,7 +21644,7 @@ def my_form_open(dialog, layer, feature):
         <default field="ratio_crop" expression=""/>
         <default field="route" expression=""/>
       </defaults>
-      <previewExpression></previewExpression>
+      <previewExpression>COALESCE("id_aggregate", '&lt;NULL>')</previewExpression>
     </maplayer>
     <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>optimal_plant_map_all_route20171127113115633</id>
