@@ -35,9 +35,9 @@
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="500kw">
+      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="500kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_500kw20171128170255293" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_500kw&quot; (geom) sql=" name="optimal_plant_location_500kw">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_location_500kw20171128170255293" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_500kw&quot; (geom) sql=" name="optimal_plant_location_500kw">
           <customproperties>
             <property key="showFeatureCount" value="1"/>
           </customproperties>
@@ -49,9 +49,9 @@
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="750kw">
+      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="750kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_location_750kw20171128164949578" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_750kw&quot; (geom) sql=" name="optimal_plant_location_750kw">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_location_750kw20171128164949578" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_order' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_location_750kw&quot; (geom) sql=" name="optimal_plant_location_750kw">
           <customproperties>
             <property key="showFeatureCount" value="1"/>
           </customproperties>
@@ -59,7 +59,7 @@
         <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_750kw_farms20171127112839730" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;optimal_plant_map_750kw&quot; (farms) sql=" name="optimal_plant_map_750kw.farms">
           <customproperties/>
         </layer-tree-layer>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="optimal_plant_map_750kw_route20171127112907635" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_750kw&quot; (route) sql=" name="optimal_plant_map_750kw.route">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="optimal_plant_map_750kw_route20171127112907635" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiLineString table=&quot;public&quot;.&quot;optimal_plant_map_750kw&quot; (route) sql=" name="optimal_plant_map_750kw.route">
           <customproperties/>
         </layer-tree-layer>
       </layer-tree-group>
@@ -119,10 +119,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>4634430.55559431854635477</xmin>
-      <ymin>2743620.78570527955889702</ymin>
-      <xmax>4708660.30559431854635477</xmax>
-      <ymax>2819987.8107052817940712</ymax>
+      <xmin>4642493.51653917320072651</xmin>
+      <ymin>2742542.30048335669562221</ymin>
+      <xmax>4716723.26653917320072651</xmax>
+      <ymax>2818909.32548335893079638</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>0</projections>
@@ -212,10 +212,10 @@
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="true" checked="Qt::Unchecked" name="500kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_500kw" showFeatureCount="1">
+      <legendgroup open="true" checked="Qt::PartiallyChecked" name="500kw">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="optimal_plant_location_500kw" showFeatureCount="1">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_500kw20171128170255293" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_500kw20171128170255293" visible="1"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_500kw.farms" showFeatureCount="0">
@@ -229,10 +229,10 @@
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="true" checked="Qt::PartiallyChecked" name="750kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="optimal_plant_location_750kw" showFeatureCount="1">
+      <legendgroup open="true" checked="Qt::Unchecked" name="750kw">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_location_750kw" showFeatureCount="1">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_750kw20171128164949578" visible="1"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_location_750kw20171128164949578" visible="0"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_750kw.farms" showFeatureCount="0">
@@ -240,9 +240,9 @@
             <legendlayerfile isInOverview="0" layerid="optimal_plant_map_750kw_farms20171127112839730" visible="0"/>
           </filegroup>
         </legendlayer>
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="optimal_plant_map_750kw.route" showFeatureCount="0">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="optimal_plant_map_750kw.route" showFeatureCount="0">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_750kw_route20171127112907635" visible="1"/>
+            <legendlayerfile isInOverview="0" layerid="optimal_plant_map_750kw_route20171127112907635" visible="0"/>
           </filegroup>
         </legendlayer>
       </legendgroup>
@@ -10622,7 +10622,7 @@ def my_form_open(dialog, layer, feature):
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;cost_total&quot;" sortOrder="0">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;id_order&quot;" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="id_target"/>
           <column width="-1" hidden="0" type="field" name="zone"/>

@@ -97,7 +97,7 @@ def Step_02_update_Residues (residual, residual_aggr, links, plant_capacity, pla
 
     sql_custom (table=residual_aggr, sql=sql_ids)
 
-def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
+def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity, links):
 
     key = str(plant_capacity)
 
@@ -201,6 +201,7 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
     """.format (
         residual_aggr = residual_aggr,
         residual =residual,
+        links = links,
         target = SQL_target['site_clean'].name,
         plant_capacity = plant_capacity,
         manure_demand = SQL_manure_demand[key],
@@ -237,6 +238,8 @@ def Step_04_select_Plant (links, location, residual_aggr, plant_capacity, rank, 
             cost_manure,
             cost_total,
             only_manure,
+            length_manure,
+            length_crop,
             geom
     """
 
@@ -313,7 +316,7 @@ def Step_05_select_Farms (links, location, residual, plant_capacity, minimum_val
     columns_links = """
             id_target, id_building, length,
             manure_used, crop_used,
-            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure
+            cost_harvest, cost_ensiling, cost_manure, cost_total, only_manure, length_manure, length_crop
     """
 
 
@@ -341,7 +344,7 @@ def Step_05_select_Farms (links, location, residual, plant_capacity, minimum_val
             ORDER BY id_target
         ),
         manure AS (
-            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            SELECT f.id_target,  f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure, f.length AS length_manure
             FROM (
                 SELECT a.*,
                 row_number () OVER (ORDER BY a.id_target, a.length ASC) AS manure_row
@@ -366,7 +369,8 @@ def Step_05_select_Farms (links, location, residual, plant_capacity, minimum_val
             ORDER BY id_target
         ),
         crop AS (
-            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure
+            SELECT f.id_target, f.id_building, f.length, f.rank, f.manure_available, f.crop_available, 0 AS only_manure,
+            f.length AS length_crop
             FROM (
                 SELECT a.*,
                 row_number () OVER (ORDER BY a.id_target, a.length ASC) AS crop_row
@@ -376,7 +380,7 @@ def Step_05_select_Farms (links, location, residual, plant_capacity, minimum_val
             WHERE f.id_target = g.id_target AND f.crop_available > 0 AND f.crop_row <= g.crop_row_1 + 1-- grab the next value of the sequence
         ),
         no_matched_farms AS (
-            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure
+            SELECT DISTINCT  a.id_target, (a.id_building), a.length, a.rank, a.manure_available AS manure_used, a.crop_available AS crop_used, 1 AS only_manure, a.length_manure, b.length_crop
             FROM manure AS a, crop AS b
             WHERE a.id_building NOT IN
 		          (
@@ -389,7 +393,7 @@ def Step_05_select_Farms (links, location, residual, plant_capacity, minimum_val
             SELECT
                 b.id_target, b.id_building, b.length, b.rank,
                 a.manure_available AS manure_used, b.crop_available AS crop_used,
-                 b.only_manure
+                 b.only_manure, a.length_manure, b.length_crop
             FROM crop AS b
             LEFT JOIN manure AS a ON a.id_target = b.id_target AND a.id_building = b.id_building
     		UNION ALL
@@ -426,17 +430,18 @@ def Step_06_update_Residuals (location, allocation, residual, links):
 
     global found_plant
 
-    manure='COALESCE(c.manure_used,0)'
-    crop='COALESCE(c.crop_used,0)'
-    distance='c.length / 1000'
+    manure='COALESCE(a.manure_used,0)'
+    crop='COALESCE(b.crop_used,0)'
+    distance1='a.length / 1000'
+    distance2='b.length / 1000'
     harvest=SQL_costs['harvest']
     ensiling=SQL_costs['ensiling']
     km=SQL_costs['manure']
     fixed=SQL_costs['manure_fixed']
 
     cost_harvest = "({crop} * {harvest})".format(crop=crop, harvest=harvest)
-    cost_ensiling = "({crop} * {ensiling} * {distance})".format(crop=crop, ensiling=ensiling, distance=distance)
-    cost_manure = "({manure} * ({fixed} + ({km}  * ({distance}))) )".format(manure=manure, fixed=fixed, km=km, distance=distance)
+    cost_ensiling = "({crop} * {ensiling} * {distance})".format(crop=crop, ensiling=ensiling, distance=distance2)
+    cost_manure = "({manure} * ({fixed} + ({km}  * ({distance}))) )".format(manure=manure, fixed=fixed, km=km, distance=distance1)
 
     # __________________________ update allocation
     sql_allocation = """
@@ -482,24 +487,24 @@ def Step_06_update_Residuals (location, allocation, residual, links):
             SELECT
                 a.id_target, a.id_building, a.length, b.manure_used,
                 a.manure_available - b.manure_used AS  manure_available
-            FROM residuals AS a, links AS b
-            WHERE a.id_building = b.id_building
+            FROM residuals AS a, links AS b, current_plant AS c
+            WHERE a.id_building = b.id_building AND a.id_target = c.id_target
         ),
         crop AS (
             SELECT
                 a.id_target, a.id_building, a.length, b.crop_used,
                 a.crop_available - b.crop_used AS  crop_available
-            FROM residuals AS a, links AS b
-            WHERE a.id_building = b.id_building AND a.only_manure = 0
+            FROM residuals AS a, links AS b, current_plant AS c
+            WHERE a.id_building = b.id_building AND a.id_target = c.id_target AND a.only_manure = 0
         ),
         costs AS (
             SELECT
-                a.id_target, a.id_building, a.length,
+                a.id_target, a.id_building,
                 {cost_harvest} AS cost_harvest,
                 {cost_ensiling} AS cost_ensiling,
                 {cost_manure} AS cost_manure
-            FROM manure AS a, crop AS b, links AS c
-            WHERE a.id_building = b.id_building AND a.id_building = c.id_building
+            FROM manure AS a, crop AS b, current_plant AS c
+            WHERE a.id_building = b.id_building AND a.id_target = c.id_target
         ),
         join_tables AS (
             SELECT  a.id_target, a.id_building, a.manure_available, a.manure_used, b.crop_available, b.crop_used, c.cost_harvest, c.cost_ensiling, c.cost_manure
@@ -535,6 +540,51 @@ def Step_06_update_Residuals (location, allocation, residual, links):
         sql_custom (table=allocation, sql=sql_allocation)
         sql_custom (table=residual, sql=sql_residual)
 
+
+def Step_07_update_Plants (location, links, residual):
+
+    global found_plant
+
+    sql_plants = """
+        WITH
+        length AS (
+            SELECT id_target,
+                AVG (length_manure) AS length_manure,
+                AVG (length_crop) AS length_crop
+            FROM {links}
+            GROUP BY id_target
+            ORDER BY id_target
+        ),
+        aggretate AS (
+            SELECT id_target,
+            SUM (manure_available) AS manure_available,
+            SUM (manure_used) AS manure_used,
+            SUM (crop_available) AS crop_available,
+            SUM (crop_used) AS crop_used
+            FROM {residual}
+            GROUP BY id_target
+            ORDER BY id_target
+        )
+        UPDATE {location} AS a
+        SET
+            manure_available = c.manure_available,
+            manure_used = c.manure_used,
+            crop_available = c.crop_available,
+            crop_used = c.crop_used,
+            length_manure = b.length_manure,
+            length_crop = b.length_crop
+        FROM length AS b, aggretate AS c
+        WHERE a.id_target = b.id_target AND a.id_target = c.id_target
+        ;
+    """.format (
+        location = location,
+        links = links,
+        residual = residual,
+        )
+
+
+    if found_plant:
+        sql_custom (table=location, sql=sql_plants)
 
 def Step_08_map_Route_Plants (map_routes, location, links):
 
@@ -583,6 +633,8 @@ def Step_08_map_Route_Plants (map_routes, location, links):
             only_manure,
             ratio_manure,
             ratio_crop,
+            length_manure,
+            length_crop,
             farms,
             route
     """
@@ -622,7 +674,7 @@ def extract_plants_by_capacity ():
     global n_plants, n_rank, select_fist_plant, first_plant, found_plant, proximity_plant
 
     # capacities = [750, 500, 250, 100]
-    capacities = [500, 1]
+    capacities = [100, 1]
     for plant_capacity in capacities:
 
         if plant_capacity == 1:
@@ -652,15 +704,15 @@ def extract_plants_by_capacity ():
 
         Step_01_initialize_Files(allocation, residual, location, links, residual_aggr )
 
-        # pause_script (count, "after step 1")
+        pause_script (count, "after step 1")
 
         Step_02_update_Residues (residual, residual_aggr, links, plant_capacity, plant_costs)
 
-        # pause_script(count, "after step 2")
+        pause_script(count, "after step 2")
 
         while n_rank > 0:
 
-            Step_03_aggregate_Resources(residual, residual_aggr, plant_capacity)
+            Step_03_aggregate_Resources(residual, residual_aggr, plant_capacity, links)
             #
             pause_script(count, "after step 3")
             #
@@ -674,8 +726,11 @@ def extract_plants_by_capacity ():
             #
             Step_06_update_Residuals(location, allocation, residual, links)
             #
-            # pause_script(count, "after step 6")
+            pause_script(count, "after step 6")
 
+            Step_07_update_Plants (location, links, residual)
+            #
+            pause_script(count, "after step 7")
 
             count += 1
 

@@ -341,7 +341,9 @@ columns_all = """
         cost_total double precision,
         only_manure integer,
         ratio_manure double precision,
-        ratio_crop double precision
+        ratio_crop double precision,
+        length_manure double precision,
+        length_crop double precision        
 """
 
 columns_residual = """
@@ -370,7 +372,9 @@ columns_residual = """
         cost_total double precision,
         only_manure integer,
         ratio_manure double precision,
-        ratio_crop double precision
+        ratio_crop double precision,
+        length_manure double precision,
+        length_crop double precision
 """
 
 
