@@ -58,7 +58,7 @@ def Step_02_join_Farm_Resources ():
 def Step_03_aggregate_Resources ():
 
     # for key in SQL_methane_capacity:
-    for key in ['500', '1']:
+    for key in ['750', '500', '250', '100']:
 
         if key != '1':
 
@@ -152,12 +152,20 @@ def Step_03_aggregate_Resources ():
 
 def Step_04_calculate_Costs ():
 
-    cost_harvest = "(COALESCE(crop_used,0) * {0})".format(SQL_costs['harvest'])
-    cost_ensiling = "((length / 1000) * COALESCE(crop_used,0) * {0})".format(SQL_costs['ensiling'])
-    cost_manure = "((length / 1000) * COALESCE(manure_used,0)  * {0}) + ({1} * COALESCE(manure_used,0))".format(SQL_costs['manure_fixed'], SQL_costs['manure'])
+    manure='COALESCE(manure_used,0)'
+    crop='COALESCE(crop_used,0)'
+    distance='length / 1000'
+    harvest=SQL_costs['harvest']
+    ensiling=SQL_costs['ensiling']
+    km=SQL_costs['manure']
+    fixed=SQL_costs['manure_fixed']
+
+    cost_harvest = "({crop} * {harvest})".format(crop=crop, harvest=harvest)
+    cost_ensiling = "({crop} * {ensiling} * {distance})".format(crop=crop, ensiling=ensiling, distance=distance)
+    cost_manure = "({manure} * ({fixed} + ({km}  * ({distance}))) )".format(manure=manure, fixed=fixed, km=km, distance=distance)
 
     # for key in SQL_methane_capacity:
-    for key in ['500', '1']:
+    for key in ['750', '500', '250', '100']:
 
         if key != '1':
 
@@ -263,7 +271,7 @@ def Step_04_calculate_Costs ():
 def Step_05_aggregate_Costs ():
 
     # for key in SQL_methane_capacity:
-    for key in ['500', '1']:
+    for key in ['750', '500', '250', '100']:
 
         if key != '1':
 

@@ -97,9 +97,17 @@ def Step_02_update_Residues (residual, residual_aggr, links, plant_capacity, pla
 
     sql_custom (table=residual_aggr, sql=sql_ids)
 
-def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
+def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity, links, count):
 
     key = str(plant_capacity)
+
+    if count == 0:
+        link_buildings = "FROM {residual} AS a".format(residual=residual)
+    else:
+        link_buildings = """
+        FROM {residual} AS a, farms AS b
+        WHERE a.id_target = b.id_target AND a.id_building IN (SELECT DISTINCT id_building FROM farms)""".format(residual=residual)
+
 
     sql_resources = """
         WITH
@@ -108,6 +116,11 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
             {manure_demand} AS manure_required,
             {crop_demand} AS crop_required,
             {methane_demand} AS methane_required
+        ),
+        farms AS (
+    		SELECT id_target, id_building
+    		FROM {links}
+    		ORDER BY id_building
         ),
         available AS (
             SELECT id_target,
@@ -160,13 +173,14 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
             FROM crop_methane
         ),
         total_cost AS (
-            SELECT id_target,
-    			SUM(cost_harvest) AS cost_harvest,
-                SUM(cost_ensiling) AS cost_ensiling,
-                SUM(cost_manure) AS cost_manure,
-                SUM(cost_total) AS cost_total
-            FROM {residual}
-            GROUP BY id_target
+            SELECT a.id_target,
+    			SUM(a.cost_harvest) AS cost_harvest,
+                SUM(a.cost_ensiling) AS cost_ensiling,
+                SUM(a.cost_manure) AS cost_manure,
+                SUM(a.cost_total) AS cost_total
+                -- necessary otherwise it will add buidingns not selected for the plant
+            {link_buildings}
+            GROUP BY a.id_target
         ),
         final AS (
             SELECT a.*, c.rank, b.cost_harvest, b.cost_ensiling, b.cost_manure, b.cost_total, c.geom
@@ -201,6 +215,7 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
     """.format (
         residual_aggr = residual_aggr,
         residual =residual,
+        links =links,
         target = SQL_target['site_clean'].name,
         plant_capacity = plant_capacity,
         manure_demand = SQL_manure_demand[key],
@@ -208,6 +223,7 @@ def Step_03_aggregate_Resources (residual, residual_aggr, plant_capacity):
         methane_demand = SQL_methane_capacity[key],
         manure_yield = SQL_methane_yield['manure'],
         crop_yield = SQL_methane_yield['crop'],
+        link_buildings = link_buildings,
         )
 
     sql_custom (table=residual_aggr, sql=sql_resources)
@@ -660,7 +676,7 @@ def extract_plants_by_capacity ():
 
         while n_rank > 0:
 
-            Step_03_aggregate_Resources(residual, residual_aggr, plant_capacity)
+            Step_03_aggregate_Resources(residual, residual_aggr, plant_capacity, links, count)
             #
             pause_script(count, "after step 3")
             #
@@ -681,7 +697,7 @@ def extract_plants_by_capacity ():
 
             debug ("plant capacity: {0} \t iteration: {1} \t rank: {2}".format(plant_capacity, count, n_rank))
 
-            if count >= 300:
+            if count >= 3:
                 print ">>>>>>>>>>>>>>>>>>>>>>>>> EXIT <<<<<<<<<<<<<<<<<<<<<<"
                 exit()
                 break
