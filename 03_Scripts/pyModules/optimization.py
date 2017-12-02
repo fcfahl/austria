@@ -640,7 +640,7 @@ def Step_08_map_Route_Plants (map_routes, location, links):
     """
 
 
-    for distance in ['500', '750', '1500', '2000']:
+    for distance in ['500', '750', '1000', '1250', '1500']:
 
         sql_merge= """
             INSERT INTO {map_routes} ({columns}
@@ -673,8 +673,8 @@ def extract_plants_by_capacity ():
 
     global n_plants, n_rank, select_fist_plant, first_plant, found_plant, proximity_plant
 
-    # capacities = [750, 500, 250, 100]
-    capacities = [100, 1]
+    capacities = [750, 500, 250, 100]
+    # capacities = [100, 1]
     for plant_capacity in capacities:
 
         if plant_capacity == 1:

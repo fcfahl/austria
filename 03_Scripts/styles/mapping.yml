@@ -7,54 +7,6 @@ tags:
   exclude: [geological, shop, emergency, leisure]
 
 tables:
-  buildings:
-    type: polygon
-    mapping:
-      building: [__any__]
-    fields:
-    - {name: osm_id, type: id}
-    - {name: geom, type: geometry}
-    - {name: tags, type: hstore_tags}
-    - {name: value, type: mapping_value}
-    - {name: key, type: mapping_key}
-    - {key: name, name: name, type: string}
-  power:
-    type: linestring
-    mapping:
-      power: [__any__]
-    fields:
-    - {name: osm_id, type: id}
-    - {name: geom, type: geometry}
-    - {name: tags, type: hstore_tags}
-    - {name: value, type: mapping_value}
-    - {name: key, type: mapping_key}
-    - {key: name, name: name, type: string}
-  lines:
-    type: linestring
-    mapping:
-      landuse: [__any__]
-      boundary: [__any__]
-    fields:
-    - {name: osm_id, type: id}
-    - {name: geom, type: geometry}
-    - {name: tags, type: hstore_tags}
-    - {name: value, type: mapping_value}
-    - {name: key, type: mapping_key}
-    - {key: name, name: name, type: string}
-    - {key: landuse, name: landuse, type: string}
-  points:
-    type: point
-    mapping:
-      landuse: [__any__]
-      place: [__any__]
-    fields:
-    - {name: osm_id, type: id}
-    - {name: geom, type: geometry}
-    - {name: tags, type: hstore_tags}
-    - {name: value, type: mapping_value}
-    - {name: key, type: mapping_key}
-    - {key: name, name: name, type: string}
-    - {key: landuse, name: landuse, type: string}
   roads:
     type: linestring
     mapping:
@@ -71,10 +23,10 @@ tables:
     - {key: junction, name: junction, type: string}
     - {key: surface, name: surface, type: string}
     - {key: maxspeed, name: maxspeed, type: string}
-  landuse:
+  buildings:
     type: polygon
     mapping:
-      landuse: [__any__]
+      building: [__any__]
     fields:
     - {name: osm_id, type: id}
     - {name: geom, type: geometry}
@@ -82,18 +34,3 @@ tables:
     - {name: value, type: mapping_value}
     - {name: key, type: mapping_key}
     - {key: name, name: name, type: string}
-    - {key: landuse, name: landuse, type: string}
-    - {name: area, type: webmerc_area}
-  areas:
-    type: polygon
-    mapping:
-      boundary: [administrative]
-    fields:
-    - {name: osm_id, type: id}
-    - {name: geom, type: geometry}
-    - {name: tags, type: hstore_tags}
-    - {name: value, type: mapping_value}
-    - {name: key, type: mapping_key}
-    - {key: name, name: name, type: string}
-    - {name: area, type: webmerc_area}
-    - {key: admin_level, name: admin_level, type: integer}

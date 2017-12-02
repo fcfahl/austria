@@ -637,7 +637,7 @@ def Step_08_map_Route_Plants (map_routes, location, links):
     """
 
 
-    for distance in ['500', '750', '1500', '2000']:
+    for distance in ['500', '750', '1000', '1250', '1500']:
 
         sql_merge= """
             INSERT INTO {map_routes} ({columns}

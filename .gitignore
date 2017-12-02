@@ -17,17 +17,18 @@
 **/01_Input/**
 **/02_Output/**
 **/03_Scripts/cache/**
+**/05_Report/**
 **/TMP
 **/TMP/**
 
 
 # python files
 **/03_Scripts/*.pyc
+**/03_Scripts/pyModules/*.pyc
 *.pyc
+*.log
 
 
 *.svgz
 *.odg
 *.png
-
-

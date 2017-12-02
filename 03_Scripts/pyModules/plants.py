@@ -17,7 +17,7 @@ def Step_01_initiate_Plants ():
 
     sql_custom (table = "", sql=sql_results)
 
-    routes = ['250', '500', '750', '1500', '2000']
+    routes = ['250', '500', '750', '1000', '1250', '1500']
 
     for key in routes:
 

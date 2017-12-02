@@ -30,8 +30,6 @@ if __name__ == "__main__":
 
     # create_DB ()
     connect_PostGIS ()
-
-
     # create_sequence (sequence='serial')
 
     #==============================================================================
@@ -81,7 +79,7 @@ if __name__ == "__main__":
     # TRG.Step_01_create_Farm_Roads ()
     # TRG.Step_02_create_Target_Points ()
     # TRG.Step_03_clean_Target_Points ()
-    #
+
 
     #==============================================================================
     #           TOPOLOGY
@@ -91,8 +89,7 @@ if __name__ == "__main__":
     # TOPO.Step_02_segmentize_OSM_Roads()
     # TOPO.Step_03_create_Road_Topology()
     # TOPO.Step_04_update_Topology()
-    # TOPO.Step_05_create_PG_Functions()
-    # TOPO.Step_06_extract_Routes()
+    # TOPO.Step_05_extract_Routes_()
 
     #==============================================================================
     #           PLANTS
@@ -110,8 +107,8 @@ if __name__ == "__main__":
     #           OPTMIZATION (location of plants)
     #==============================================================================
 #
-    # OPT.extract_plants_by_capacity ()
-    OPT2.extract_plants_all ()
+    OPT.extract_plants_by_capacity ()
+    # OPT2.extract_plants_all ()
 
 
 

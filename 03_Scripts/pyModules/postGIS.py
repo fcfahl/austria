@@ -102,7 +102,7 @@ def reproject_OSM (tables):
             reproj = db_PostGIS['proj'])
 
         fix_Geometry = "ALTER TABLE {name} ALTER COLUMN geom " \
-            "TYPE geometry ({geometry}, {osm_proj}) "\
+            "SET DATA TYPE geometry ({geometry}) "\
             "USING ST_Multi(geom); {reproject}".format(
             name = name,
             geometry = geometry,
@@ -119,14 +119,14 @@ def reproject_OSM (tables):
             error = True
         #
         if error:
-        #     # try:
-            print "geometry ok"
-            execute_Query (reproject, name)
-            # except:
-            #     print "\n#######################################################"
-            #     print "\t\tunable to reproject the table \t->\t {table}\nusing:\n{query}".format(
-            #             table=name, query=query)
-            #     print "#######################################################\n"
+            try:
+                print "geometry ok"
+                execute_Query (reproject, name)
+            except:
+                print "\n#######################################################"
+                print "\t\tunable to reproject the table \t->\t {table}\nusing:\n{query}".format(
+                        table=name, query=query)
+                print "#######################################################\n"
 
 def fix_Geometry (table, geometry):
 

@@ -163,12 +163,12 @@ db_PostGIS = {
 }
 
 OSM_tables = {
-    'lines':'linestring',
-    'points':'point',
-    'areas':'MultiPolygon',
-    'landuse':'MultiPolygon',
+    # 'lines':'linestring',
+    # 'points':'point',
+    # 'areas':'MultiPolygon',
+    # 'landuse':'MultiPolygon',
     'buildings':'MultiPolygon',
-    'power':'linestring',
+    # 'power':'linestring',
     'roads':'linestring',
 }
 
@@ -236,11 +236,12 @@ SQL_route= {
 }
 
 SQL_route_distance= {
-	'250' : SQL_obj ('route_distance_50km_250__', '', 'id target <= 250'),
-	'500' : SQL_obj ('route_distance_50km_500__', '', 'id target > 250 and <= 500'),
-	'750' : SQL_obj ('route_distance_50km_750__', '', 'id target > 500 and <= 750'),
-	'1500' : SQL_obj ('route_distance_50km_1500__', '', 'id target > 750 and <= 1500'),
-	'2000' : SQL_obj ('route_distance_50km_2000__', '', 'id target > 1500'),
+	'250' : SQL_obj ('route_distance_50km_250__', '', 'id_target <= 250'),
+	'500' : SQL_obj ('route_distance_50km_500__', '', 'id_target > 250 and id_target <= 500'),
+	'750' : SQL_obj ('route_distance_50km_750__', '', 'id_target > 500 and id_target <= 750'),
+	'1000' : SQL_obj ('route_distance_50km_1000__', '', 'id_target > 750 and id_target <= 1000'),
+	'1250' : SQL_obj ('route_distance_50km_1500__', '', 'id_target > 1000 and id_target <= 1500'),
+	'1500' : SQL_obj ('route_distance_50km_1500__', '', 'id_target > 1500'),
 }
 
 SQL_plants= {
@@ -343,7 +344,7 @@ columns_all = """
         ratio_manure double precision,
         ratio_crop double precision,
         length_manure double precision,
-        length_crop double precision        
+        length_crop double precision
 """
 
 columns_residual = """
