@@ -30,7 +30,8 @@ if __name__ == "__main__":
 
     # create_DB ()
     connect_PostGIS ()
-    # create_sequence (sequence='serial')
+    create_sequence (sequence='serial')
+    create_sequence (sequence='plants')
 
     #==============================================================================
     #           OSM Import
@@ -89,7 +90,7 @@ if __name__ == "__main__":
     # TOPO.Step_02_segmentize_OSM_Roads()
     # TOPO.Step_03_create_Road_Topology()
     # TOPO.Step_04_update_Topology()
-    # TOPO.Step_05_extract_Routes_()
+    # TOPO.Step_05_extract_Routes_(check=FALSE)
 
     #==============================================================================
     #           PLANTS

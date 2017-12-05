@@ -1,0 +1,122 @@
+tables:
+
+  opt_plants:
+    geom: POINT
+    pk: id_plant
+    fk: ''
+    fields:
+    - {name: id_plant, type: integer not null}
+    - {name: id_target, type: integer}
+    - {name: id_link, type: integer}
+    - {name: plant_capacity, type: double precision}
+    - {name: rank, type: integer}
+    - {name: length_manure_avg, type: double precision}
+    - {name: length_crop_avg, type: double precision}
+    - {name: manure_required, type: double precision}
+    - {name: manure_available, type: double precision}
+    - {name: manure_used, type: double precision}
+    - {name: manure_residual, type: double precision} # tota available - required
+    - {name: crop_required, type: double precision}
+    - {name: crop_available, type: double precision}
+    - {name: crop_used, type: double precision}
+    - {name: crop_additional, type: double precision}
+    - {name: crop_residual, type: double precision}
+    - {name: methane_required, type: double precision}
+    - {name: methane_from_manure, type: double precision}
+    - {name: methane_from_crop, type: double precision}
+    - {name: methane_total_produced, type: double precision}
+    - {name: cost_harvest, type: double precision}
+    - {name: cost_ensiling, type: double precision}
+    - {name: cost_manure, type: double precision}
+    - {name: cost_total, type: double precision}
+    - {name: ratio_manure, type: double precision}
+    - {name: ratio_crop, type: double precision}
+
+  opt_farm_links:
+    geom: ''
+    pk: id_link
+    fk:
+    - {key: id_plant, ref: opt_plants}
+    fields:
+    - {name: id_link, type: integer not null}
+    - {name: id_plant, type: integer}
+    - {name: id_target, type: integer}
+    - {name: id_building, type: integer}
+    - {name: plant_capacity, type: double precision}
+    - {name: length, type: double precision}
+    - {name: length_manure, type: double precision}
+    - {name: length_crop, type: double precision}
+    - {name: manure_used, type: double precision}
+    - {name: crop_used, type: double precision}
+    - {name: cost_harvest, type: double precision}
+    - {name: cost_ensiling, type: double precision}
+    - {name: cost_manure, type: double precision}
+    - {name: cost_total, type: double precision}
+    - {name: manure_only, type: integer}
+
+
+  opt_residual:
+    geom: ''
+    pk: id_residual
+    fk:
+    - {key: id_plant, ref: opt_plants}
+    fields:
+    - {name: id_residual, type: integer not null}
+    - {name: id_plant, type: integer}
+    - {name: id_target, type: integer}
+    - {name: id_building, type: integer}
+    - {name: farm_used, type: integer} # 0 for not used, 1 for both crop and manure, 2 for manure only, 3 for crop only
+    - {name: rank, type: integer}
+    - {name: plant_capacity, type: double precision}
+    - {name: length, type: double precision}
+    - {name: length_manure, type: double precision}
+    - {name: length_crop, type: double precision}
+    - {name: manure_available, type: double precision}
+    - {name: manure_required, type: double precision}
+    - {name: manure_used, type: double precision}
+    - {name: manure_residual, type: double precision}
+    - {name: crop_required, type: double precision}
+    - {name: crop_available, type: double precision}
+    - {name: crop_used, type: double precision}
+    - {name: crop_additional, type: double precision}
+    - {name: crop_residual, type: double precision}
+    - {name: methane_from_manure, type: double precision}
+    - {name: methane_from_crop, type: double precision}
+    - {name: methane_total_produced, type: double precision}
+    - {name: cost_harvest, type: double precision}
+    - {name: cost_ensiling, type: double precision}
+    - {name: cost_manure, type: double precision}
+    - {name: cost_total, type: double precision}
+
+  opt_allocation:
+    geom: ''
+    pk: id_residual
+    fk:
+    - {key: id_plant, ref: opt_plants}
+    fields:
+    - {name: id_residual, type: integer not null}
+    - {name: id_plant, type: integer}
+    - {name: id_target, type: integer}
+    - {name: id_building, type: integer}
+    - {name: farm_used, type: integer} # 0 for not used, 1 for both crop and manure, 2 for manure only, 3 for crop only
+    - {name: rank, type: integer}
+    - {name: plant_capacity, type: double precision}
+    - {name: length, type: double precision}
+    - {name: length_manure, type: double precision}
+    - {name: length_crop, type: double precision}
+    - {name: manure_available, type: double precision}
+    - {name: manure_required, type: double precision}
+    - {name: manure_used, type: double precision}
+    - {name: manure_residual, type: double precision}
+    - {name: crop_required, type: double precision}
+    - {name: crop_available, type: double precision}
+    - {name: crop_used, type: double precision}
+    - {name: crop_additional, type: double precision}
+    - {name: crop_residual, type: double precision}
+    - {name: methane_from_manure, type: double precision}
+    - {name: methane_from_crop, type: double precision}
+    - {name: methane_total_produced, type: double precision}
+    - {name: cost_harvest, type: double precision}
+    - {name: cost_ensiling, type: double precision}
+    - {name: cost_manure, type: double precision}
+    - {name: cost_total, type: double precision}

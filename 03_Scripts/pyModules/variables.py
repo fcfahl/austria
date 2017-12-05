@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, sys, time
+import os, sys, time, yaml
 from pathlib import Path
 from collections import OrderedDict
 
@@ -139,6 +139,40 @@ class SQL_obj:
 		self.name = name
 		self.from_ = from_
 		self.description = description
+
+class Struct:
+    def __init__(self, **entries):
+        self.__dict__.update(entries)
+
+class Dict2DB():
+
+    def __init__(self, dict, table):
+
+        fields = dict.tables[table]['fields']
+        fk = dict.tables[table]['fk']
+
+        self.name = table
+        self.geom = dict.tables[table]['geom']
+        self.pk = dict.tables[table]['pk']
+        self.fk = dict.tables[table]['fk']
+        self.fk_keys = ', '.join( x['key'] for x in fk)
+        self.fk_refs = ', '.join( x['ref'] for x in fk)
+        self.field_names = ', '.join( x['name'] for x in fields)
+        self.field_types = ', '.join( x['type'] for x in fields)
+        self.field_columns = ', '.join( x['name'] + ' ' + x['type'] for x in fields)
+
+
+optimization = yml_folder + '/optimization.yml'
+with open(optimization, 'r') as f:
+    yml_map = yaml.load(f)
+
+
+optimal_dic = Struct(**yml_map)
+
+opt_plants = Dict2DB(dict=optimal_dic, table='opt_plants')
+opt_residual = Dict2DB(dict=optimal_dic, table='opt_residual')
+opt_allocation = Dict2DB(dict=optimal_dic, table='opt_allocation')
+
 
 
 folder = {
@@ -306,14 +340,14 @@ SQL_crop_demand = {
 }
 
 
-print SQL_manure_demand['250']
-print SQL_crop_demand['250']
+print SQL_manure_demand['750']
+print SQL_crop_demand['750']
 
 SQL_costs = {
-    'harvest': 5 ,
-    'ensiling': 1 ,
-    'manure': 0.5 ,
-    'manure_fixed': 2 ,
+    'harvest': 5,
+    'ensiling': 1,
+    'manure': 0.5,
+    'manure_fixed': 2,
 }
 
 columns_all = """

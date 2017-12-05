@@ -296,124 +296,126 @@ def create_Routing_Functions (route_name, route_target_name, route):
     sql_create_PLPGSQL_function(name=function_array, columns=columns_array, return_=return_array, declare=declare_array, sql=sql_array)
     sql_create_PLPGSQL_function(name=function_route, columns=columns_route, return_=return_route, declare=declare_route, sql=sql_route)
 
-def Step_05_extract_Routes ():
+def Step_05_extract_Routes (check=False):
 
-    start = get_time()
+    if check:
 
-    for route in SQL_route_distance:
+        start = get_time()
 
-        # ________________________ Tables
-        points_table = SQL_topology['targets'].name
-        noded_table = SQL_topology['noded'].name
-        nodes_vertices = SQL_topology['noded_ver'].name
-        route_table = SQL_route['route'].name
-        route_targets = SQL_route['targets'].name
-        route_nodes = "{0}_{1}__".format(SQL_route['nodes'].name, route)
+        for route in SQL_route_distance:
 
-        route_table_name = "{0}_{1}m_{2}__".format(route_table, SQL_distances['max_travel'], route).replace('000m', 'km')
-        route_target_name = "route_targets_{0}__".format(route)
+            # ________________________ Tables
+            points_table = SQL_topology['targets'].name
+            noded_table = SQL_topology['noded'].name
+            nodes_vertices = SQL_topology['noded_ver'].name
+            route_table = SQL_route['route'].name
+            route_targets = SQL_route['targets'].name
+            route_nodes = "{0}_{1}__".format(SQL_route['nodes'].name, route)
 
-        print route_table_name
+            route_table_name = "{0}_{1}m_{2}__".format(route_table, SQL_distances['max_travel'], route).replace('000m', 'km')
+            route_target_name = "route_targets_{0}__".format(route)
 
-        # ________________________ Step 00 Create function
-        create_Routing_Functions (route_table_name, route_target_name, route)
+            print route_table_name
 
-        # ________________________ Step 01 Create route table (structure only)
-        sql_step1= "{create} (id_target int, id_building int, length double precision );".format (
-            create = create_table(route_table_name)  )
+            # ________________________ Step 00 Create function
+            create_Routing_Functions (route_table_name, route_target_name, route)
 
-        sql_custom (table = "", sql=sql_step1)
-        add_geometry (scheme = 'public', table = route_table_name, column = 'geom', srid = 3035, type_='multilinestring', dimension=2)
+            # ________________________ Step 01 Create route table (structure only)
+            sql_step1= "{create} (id_target int, id_building int, length double precision );".format (
+                create = create_table(route_table_name)  )
 
-        # ________________________ Step 02 Create target points
-        sql_create_table (
-            table = route_target_name,
-            select = 'id_target, geom',
-            from_ = points_table,
-            where =  SQL_route_distance[route].description
-        )
+            sql_custom (table = "", sql=sql_step1)
+            add_geometry (scheme = 'public', table = route_table_name, column = 'geom', srid = 3035, type_='multilinestring', dimension=2)
 
-        # ________________________ Step 03 Create node points
-        sql_step3= "{create} (target_ int, farm_ int, node_target_ int, node_farm_ int );".format (
-            create = create_table(route_nodes)  )
-        sql_custom (table = "", sql=sql_step3)
+            # ________________________ Step 02 Create target points
+            sql_create_table (
+                table = route_target_name,
+                select = 'id_target, geom',
+                from_ = points_table,
+                where =  SQL_route_distance[route].description
+            )
 
-
-        # ________________________ Step 04 Loop all the target points
-        declarations = """
-        	i integer;
-        	distance int := {distance};
-        	n_targets int[];
-        	id_target_ int;
-        	node_target_ int;
-        	id_building_ int[];
-        	node_building_ int[];
-        	n_farms int;
-        	results RECORD;
-        	geom_ geometry;
-        """.format(distance = SQL_distances['max_travel'])
-
-        print declarations
-
-        sql_route= """
-        DO
-        $$
-        DECLARE
-            {declarations}
-        BEGIN
-        	-- Get number of target points
-        	n_targets := (SELECT array_agg(id_target) FROM {targets});
-
-        	-- Perform the Loop
-        	FOR i IN 1 .. array_upper(n_targets, 1)
-        	LOOP
-
-        		id_target_ := n_targets[i];
-
-        		-- Get the id nodes (from roads) of the target and farm locations within a given distance
-        		INSERT INTO "{nodes}" (target_, farm_, node_target_, node_farm_)
-        			SELECT id_target3 AS target_, id_building3 AS farm_,
-        				node_target3 AS node_target_, node_building3 AS node_farm_
-        			FROM jrc_03_get_node_arrays (id_target_, distance);
-
-        		-- Assign the ids to variables
-        	 	node_target_ := (SELECT a.node_target_ FROM {nodes} AS a WHERE target_ = id_target_ LIMIT 1);
-        		id_building_ := (SELECT array_agg(farm_) FROM {nodes} WHERE target_ = id_target_);
-        		node_building_ := (SELECT array_agg(node_farm_) FROM {nodes} WHERE target_ = id_target_);
-
-        		n_farms := (SELECT COUNT (*) FROM {nodes}  WHERE target_ = id_target_);
-
-        		RAISE NOTICE 'target id  = % ', id_target_;
-        		RAISE NOTICE 'target node  = % ', node_target_;
-        		RAISE NOTICE 'number of farms = % ', n_farms;
-        		RAISE NOTICE '____________________________';
-        		RAISE NOTICE 'farm id  % ', id_building_;
-        		RAISE NOTICE '____________________________';
-        		RAISE NOTICE 'farm node = % ', node_building_;
-        		RAISE NOTICE '____________________________';
-        		RAISE NOTICE '';
-
-        		-- Do the routing between the target (point) and the farms (array)
-
-        		INSERT INTO "{route}" (id_target, id_building, length, geom)
-        		SELECT id_target4, id_building4, length4, geom FROM jrc_04_routes (id_target_, id_building_, node_target_, node_building_);
-
-        	END LOOP;
-        END
-        $$;
+            # ________________________ Step 03 Create node points
+            sql_step3= "{create} (target_ int, farm_ int, node_target_ int, node_farm_ int );".format (
+                create = create_table(route_nodes)  )
+            sql_custom (table = "", sql=sql_step3)
 
 
-        """.format(
-            declarations=declarations,
-            targets=route_target_name,
-            nodes=route_nodes,
-            route=route_table_name
-        )
+            # ________________________ Step 04 Loop all the target points
+            declarations = """
+            	i integer;
+            	distance int := {distance};
+            	n_targets int[];
+            	id_target_ int;
+            	node_target_ int;
+            	id_building_ int[];
+            	node_building_ int[];
+            	n_farms int;
+            	results RECORD;
+            	geom_ geometry;
+            """.format(distance = SQL_distances['max_travel'])
 
-        sql_custom (table = route_table_name,  sql=sql_route)
+            print declarations
 
-        end = get_time()
-        debug ("Total time step 6 = {0}".format(get_total_time(start,end)))
+            sql_route= """
+            DO
+            $$
+            DECLARE
+                {declarations}
+            BEGIN
+            	-- Get number of target points
+            	n_targets := (SELECT array_agg(id_target) FROM {targets});
+
+            	-- Perform the Loop
+            	FOR i IN 1 .. array_upper(n_targets, 1)
+            	LOOP
+
+            		id_target_ := n_targets[i];
+
+            		-- Get the id nodes (from roads) of the target and farm locations within a given distance
+            		INSERT INTO "{nodes}" (target_, farm_, node_target_, node_farm_)
+            			SELECT id_target3 AS target_, id_building3 AS farm_,
+            				node_target3 AS node_target_, node_building3 AS node_farm_
+            			FROM jrc_03_get_node_arrays (id_target_, distance);
+
+            		-- Assign the ids to variables
+            	 	node_target_ := (SELECT a.node_target_ FROM {nodes} AS a WHERE target_ = id_target_ LIMIT 1);
+            		id_building_ := (SELECT array_agg(farm_) FROM {nodes} WHERE target_ = id_target_);
+            		node_building_ := (SELECT array_agg(node_farm_) FROM {nodes} WHERE target_ = id_target_);
+
+            		n_farms := (SELECT COUNT (*) FROM {nodes}  WHERE target_ = id_target_);
+
+            		RAISE NOTICE 'target id  = % ', id_target_;
+            		RAISE NOTICE 'target node  = % ', node_target_;
+            		RAISE NOTICE 'number of farms = % ', n_farms;
+            		RAISE NOTICE '____________________________';
+            		RAISE NOTICE 'farm id  % ', id_building_;
+            		RAISE NOTICE '____________________________';
+            		RAISE NOTICE 'farm node = % ', node_building_;
+            		RAISE NOTICE '____________________________';
+            		RAISE NOTICE '';
+
+            		-- Do the routing between the target (point) and the farms (array)
+
+            		INSERT INTO "{route}" (id_target, id_building, length, geom)
+            		SELECT id_target4, id_building4, length4, geom FROM jrc_04_routes (id_target_, id_building_, node_target_, node_building_);
+
+            	END LOOP;
+            END
+            $$;
+
+
+            """.format(
+                declarations=declarations,
+                targets=route_target_name,
+                nodes=route_nodes,
+                route=route_table_name
+            )
+
+            sql_custom (table = route_table_name,  sql=sql_route)
+
+            end = get_time()
+            debug ("Total time step 6 = {0}".format(get_total_time(start,end)))
 
 def Step_06_extract_Routes_DEPRECATED ():
 

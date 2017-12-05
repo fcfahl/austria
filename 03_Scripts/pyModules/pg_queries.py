@@ -25,7 +25,7 @@ def execute_Query (query, table):
             pass
 
 def create_table (table):
-    return "DROP TABLE IF EXISTS {0};\nCREATE TABLE {0}".format (table)
+    return "DROP TABLE IF EXISTS {0} CASCADE;\nCREATE TABLE {0}".format (table)
 
 def create_view (table):
     return "DROP VIEW IF EXISTS {0};\nCREATE VIEW {0}".format (table)
@@ -52,7 +52,7 @@ def restart_sequence (sequence):
     execute_Query (sql, "")
 
 def drop_table (table):
-    sql = "DROP TABLE IF EXISTS {0};".format (table)
+    sql = "DROP TABLE IF EXISTS {0} CASCADE;".format (table)
     execute_Query (sql, "")
 
 def rename_table (old_table, new_table):
@@ -65,6 +65,10 @@ def drop_key (table):
 
 def add_Pkey (table, pkey):
     sql = "ALTER TABLE {0} ADD PRIMARY KEY ({1});".format (table, pkey)
+    execute_Query (sql, "")
+
+def add_Fkey (table, fkeys, references, columns):
+    sql = "ALTER TABLE {0} ADD FOREIGN KEY ({1}) REFERENCES {2} ({3});".format (table, fkeys, references, columns)
     execute_Query (sql, "")
 
 def add_column (table, column):
