@@ -130,7 +130,7 @@ def Step_04_calculate_Manure (plant_capacity):
             SELECT f.id_target, max(manure_row_1) as manure_row_1
             FROM (
                 SELECT s.id_target, s.manure_available, s.length,
-                SUM (s.manure_available) OVER (PARTITION BY s.id_target ORDER BY s.length ASC) AS manure_aggregated,
+                SUM (COALESCE(s.manure_available,0)) OVER (PARTITION BY s.id_target ORDER BY s.length ASC) AS manure_aggregated,
                 row_number () OVER (ORDER BY s.id_target, s.length ASC) AS manure_row_1
                 FROM farm_selection AS s
                 WHERE s.length < {manure_distance}
@@ -149,7 +149,7 @@ def Step_04_calculate_Manure (plant_capacity):
                 FROM farm_selection AS s
                 WHERE s.length < {manure_distance}
                 ) AS f, manure_columns AS m
-            WHERE f.id_target = m.id_target AND f.manure_available > 0 AND f.manure_row <= m.manure_row_1 + 1-- grab the next value of the sequence
+            WHERE f.id_target = m.id_target AND f.manure_row <= m.manure_row_1 + 1-- grab the next value of the sequence
         ),
         manure_used AS (
             SELECT id_target, id_building, length_manure, farm_used,
@@ -175,6 +175,7 @@ def Step_04_calculate_Manure (plant_capacity):
     if found_plant:
         sql_custom (table=opt_residual.name, sql=sql_manure)
 
+
 def Step_05_calculate_Manure_Methane (plant_capacity):
 
     global selected_plant, found_plant
@@ -199,9 +200,9 @@ def Step_05_calculate_Manure_Methane (plant_capacity):
         ),
         manure_available AS (
             SELECT id_target,
-                SUM (manure_available) AS manure_available,
-                SUM (crop_available) AS crop_available,
-                SUM (manure_used) AS manure_used
+                SUM (COALESCE(manure_available,0)) AS manure_available,
+                SUM (COALESCE(crop_available,0)) AS crop_available,
+                SUM (COALESCE(manure_used,0)) AS manure_used
             FROM farm_selection
             GROUP BY id_target
             ORDER BY id_target
@@ -310,7 +311,7 @@ def Step_06_calculate_Crop (plant_capacity):
                 FROM farm_selection AS s
                 WHERE s.length < {crop_distance}
                 ) AS f, crop_columns AS m
-            WHERE f.id_target = m.id_target AND f.crop_available > 0 AND f.crop_row <= m.crop_row_1 + 1-- grab the next value of the sequence
+            WHERE f.id_target = m.id_target AND f.crop_row <= m.crop_row_1 + 1-- grab the next value of the sequence
         ),
         crop_used AS (
             SELECT id_target, id_building, length_crop, farm_used,
@@ -449,8 +450,7 @@ def Step_08_transfer_Allocation ():
         DELETE FROM {residual}
         WHERE farm_used = 1
         OR (
-            farm_used = 3
-            AND COALESCE(manure_available,0) = 0
+            COALESCE(manure_available,0) = 0
             AND COALESCE(crop_available,0) = 0
         )       ;
         """.format (
@@ -470,8 +470,8 @@ def Step_09_update_Residues ():
         methane AS (
             SELECT
                 id_target, id_building, manure_available, crop_available,
-                manure_available * {manure_yield} AS methane_from_manure,
-                crop_available * {crop_yield} AS methane_from_crop
+                COALESCE(manure_available,0) * {manure_yield} AS methane_from_manure,
+                COALESCE(crop_available,0) * {crop_yield} AS methane_from_crop
             FROM {residual}
         )
         UPDATE {residual} AS r
@@ -540,7 +540,7 @@ def Step_10_calculate_Plant_Costs ():
     if found_plant:
         sql_custom (table=opt_plants.name, sql=sql_cost)
 
-def Step_11_select_Next_Plant (minimum_value):
+def Step_11_select_Next_Plant (minimum_value, plant_capacity):
 
     global found_plant, selected_plant, n_rank
 
@@ -562,6 +562,9 @@ def Step_11_select_Next_Plant (minimum_value):
         costs AS (
             SELECT
                 id_target,
+                SUM(COALESCE(manure_available,0)) AS manure_available,
+                SUM(COALESCE(crop_available,0)) AS crop_available,
+                SUM(COALESCE(crop_additional,0)) AS crop_additional,
                 SUM({cost_harvest}) AS cost_harvest,
                 SUM({cost_ensiling})AS cost_ensiling,
                 SUM({cost_manure}) AS cost_manure,
@@ -572,8 +575,9 @@ def Step_11_select_Next_Plant (minimum_value):
             GROUP BY id_target
             ORDER BY cost_total ASC
         )
-        SELECT id_target, methane_total_produced  FROM costs
+        SELECT id_target, methane_total_produced, manure_available, crop_available  FROM costs
         WHERE methane_total_produced >= {minimum_value}
+        AND crop_available + crop_additional >= {crop_demand}
         AND id_target NOT IN  (
           SELECT DISTINCT id_target FROM {plants}
         )
@@ -586,6 +590,7 @@ def Step_11_select_Next_Plant (minimum_value):
         cost_manure = cost_manure,
         n_rank = n_rank,
         minimum_value = minimum_value,
+        crop_demand = SQL_crop_demand[plant_capacity],
         )
 
 
@@ -594,26 +599,43 @@ def Step_11_select_Next_Plant (minimum_value):
     n_plants = db_PostGIS['cursor'].rowcount
 
 
+
     if n_plants == 0 :
 
         error ("no more plants for the rank {0}".format(n_rank))
         n_rank -= 1
         found_plant = False
 
-
     else:
 
         result = db_PostGIS['cursor'].fetchone()
         id_target = int(result[0])
         methane = int(result[1])
+        manure_available = int(result[2])
+        crop_available = int(result[3])
 
-        if result >= minimum_value:
+        # if id_target == 146:
+        #     exit()
+
+
+        if methane >= minimum_value:
+
+            message = """\n
+                methane demand:     {0}
+                methane produced:   {1}
+                manure_available:   {2}
+                crop_available:     {3}
+
+                """.format(minimum_value, methane, manure_available, crop_available)
+
+            error (message)
 
             found_plant = True
 
             selected_plant = id_target
 
             debug ("found plant: id_target = {0}".format(selected_plant))
+
 
         else:
             error ("no more plants for the rank {0}".format(n_rank))
@@ -622,7 +644,7 @@ def Step_11_select_Next_Plant (minimum_value):
 
 
 
-def Step_08_map_Route_Plants (map_routes, location):
+def Step_12_map_Route_Plants (map_routes, location):
 
     sql_plants = """
         {create_table} AS
@@ -694,8 +716,8 @@ def extract_plants_by_capacity ():
 
     global n_plants, n_rank, select_fist_plant, selected_plant, found_plant, proximity_plant
 
-    # capacities = [750, 500, 250, 100]
-    capacities = [100, 1]
+    capacities = [750, 500, 250, 100]
+    # capacities = [100, 1]
     for plant_capacity in capacities:
 
         if plant_capacity == 1:
@@ -704,7 +726,7 @@ def extract_plants_by_capacity ():
         select_fist_plant = False
         proximity_plant = True  # select plants based on distance: SQL_distances['proximity']
         found_plant = True
-        selected_plant = 113
+        selected_plant = 167
         count = 0
         n_plants = 1
         n_rank = 3
@@ -739,7 +761,7 @@ def extract_plants_by_capacity ():
         pause_script(count, pause_, "after step 3")
 
 
-        while found_plant:
+        while n_rank > 0:
 
             Step_04_calculate_Manure (str(plant_capacity))
 
@@ -769,7 +791,7 @@ def extract_plants_by_capacity ():
 
             pause_script(count, pause_, "after step 10")
 
-            Step_11_select_Next_Plant (minimum_value)
+            Step_11_select_Next_Plant (minimum_value, str(plant_capacity))
 
             pause_script(count, pause_,  "after step 11")
 
@@ -778,9 +800,9 @@ def extract_plants_by_capacity ():
             debug ("plant capacity: {0} \t iteration: {1} \n\t rank: {2} \t current plant: {3}".format(plant_capacity, count, n_rank, selected_plant))
 
 
-            if count >= 100:
+            if count >= 150:
                 print ">>>>>>>>>>>>>>>>>>>>>>>>> EXIT <<<<<<<<<<<<<<<<<<<<<<"
                 # exit()
                 break
 
-        Step_08_map_Route_Plants(map_routes, plants)
+        Step_12_map_Route_Plants(map_routes, plants)
