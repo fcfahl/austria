@@ -108,8 +108,8 @@ if __name__ == "__main__":
     #           OPTMIZATION (location of plants)
     #==============================================================================
 #
-    OPT.extract_plants_by_capacity ()
-    # OPT2.extract_plants_all ()
+    # OPT.extract_plants_by_capacity ()
+    OPT2.extract_plants_all ()
 
 
 

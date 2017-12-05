@@ -7,7 +7,6 @@ tables:
     fields:
     - {name: id_plant, type: integer not null}
     - {name: id_target, type: integer}
-    - {name: id_link, type: integer}
     - {name: plant_capacity, type: double precision}
     - {name: rank, type: integer}
     - {name: length_manure_avg, type: double precision}
@@ -31,29 +30,6 @@ tables:
     - {name: cost_total, type: double precision}
     - {name: ratio_manure, type: double precision}
     - {name: ratio_crop, type: double precision}
-
-  opt_farm_links:
-    geom: ''
-    pk: id_link
-    fk:
-    - {key: id_plant, ref: opt_plants}
-    fields:
-    - {name: id_link, type: integer not null}
-    - {name: id_plant, type: integer}
-    - {name: id_target, type: integer}
-    - {name: id_building, type: integer}
-    - {name: plant_capacity, type: double precision}
-    - {name: length, type: double precision}
-    - {name: length_manure, type: double precision}
-    - {name: length_crop, type: double precision}
-    - {name: manure_used, type: double precision}
-    - {name: crop_used, type: double precision}
-    - {name: cost_harvest, type: double precision}
-    - {name: cost_ensiling, type: double precision}
-    - {name: cost_manure, type: double precision}
-    - {name: cost_total, type: double precision}
-    - {name: manure_only, type: integer}
-
 
   opt_residual:
     geom: ''

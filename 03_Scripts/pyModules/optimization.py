@@ -716,21 +716,19 @@ def extract_plants_by_capacity ():
 
     global n_plants, n_rank, select_fist_plant, selected_plant, found_plant, proximity_plant
 
-    capacities = [750, 500, 250, 100]
-    # capacities = [100, 1]
+    # capacities = [750, 500, 250, 100]
+    capacities = [750, 1]
     for plant_capacity in capacities:
 
         if plant_capacity == 1:
             exit()
 #
         select_fist_plant = False
-        proximity_plant = True  # select plants based on distance: SQL_distances['proximity']
         found_plant = True
         selected_plant = 167
         count = 0
         n_plants = 1
         n_rank = 3
-        rank_changed = True
 
         pause_ = False
 
@@ -748,6 +746,9 @@ def extract_plants_by_capacity ():
 
         plant_costs = "{0}_{1}kw".format(SQL_plant_costs['cost'].name, plant_capacity)
         plant_costs_aggr = "{0}_{1}kw".format(SQL_plant_costs['cost_aggr'].name, plant_capacity)
+
+
+        #____________________________
 
         Step_01_initialize_Files(plants)
 
