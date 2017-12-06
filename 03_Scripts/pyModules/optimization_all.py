@@ -1,7 +1,7 @@
 from variables import *
 from pyModules.postGIS import *
 from pg_queries import *
-
+from postGIS import export_CSV
 
 def Step_01_initialize_Files (plants):
 
@@ -366,6 +366,7 @@ def Step_07_calculate_Crop_Methane (plant_capacity):
         crop_available AS (
             SELECT id_target,
                 SUM (crop_available) AS crop_available,
+                SUM (manure_used) AS manure_used,
                 SUM (crop_used) AS crop_used
             FROM farm_selection
             GROUP BY id_target
@@ -373,16 +374,16 @@ def Step_07_calculate_Crop_Methane (plant_capacity):
         ),
         crop_methane AS (
             SELECT
-                p.id_plant, a.id_target, a.crop_available, a.crop_used,
+                p.id_plant, a.id_target, a.crop_available, a.crop_used, a.manure_used,
                 p.crop_required, p.methane_required, p.methane_from_manure,
-                a.crop_available - p.crop_required AS crop_residual,
                 crop_used * {crop_yield} AS methane_from_crop
             FROM crop_available AS a, parameters AS p
         ),
         total_methane AS (
             SELECT
-                id_plant, id_target, crop_used, methane_from_manure, methane_from_crop,
-                COALESCE(methane_from_manure,0) + COALESCE(methane_from_crop,0)  AS methane_total_produced, methane_required
+                id_plant, id_target, crop_used, methane_from_manure, methane_from_crop, methane_required,
+                COALESCE(methane_from_manure,0) + COALESCE(methane_from_crop,0)  AS methane_total_produced,
+                COALESCE(manure_used,0) + COALESCE(crop_used,0)  AS resources_total
             FROM crop_methane
         ),
         lengths AS (
@@ -470,12 +471,14 @@ def Step_09_update_Residues ():
             SELECT
                 id_target, id_building, manure_available, crop_available,
                 COALESCE(manure_available,0) * {manure_yield} AS methane_from_manure,
-                COALESCE(crop_available,0) * {crop_yield} AS methane_from_crop
+                COALESCE(crop_available,0) * {crop_yield} AS methane_from_crop,
+                COALESCE(manure_used,0) + COALESCE(crop_used,0)  AS resources_total
             FROM {residual}
         )
         UPDATE {residual} AS r
         SET methane_from_manure = t.methane_from_manure,
             methane_from_crop = t.methane_from_crop,
+            resources_total = t.resources_total,
             methane_total_produced = COALESCE(t.methane_from_manure,0) + COALESCE(t.methane_from_crop,0)
         FROM methane AS t
         WHERE r.id_target = t.id_target AND r.id_building = t.id_building
@@ -514,7 +517,9 @@ def Step_10_calculate_Plant_Costs ():
                 r.id_target,
                 SUM({cost_harvest}) AS cost_harvest,
                 SUM({cost_ensiling})AS cost_ensiling,
-                SUM({cost_manure}) AS cost_manure
+                SUM({cost_manure}) AS cost_manure,
+                SUM(COALESCE(r.manure_used,0)) AS manure_used,
+                SUM(COALESCE(r.crop_used,0)) AS crop_used
             FROM {allocation} AS r
             GROUP BY r.id_target
         )
@@ -523,7 +528,8 @@ def Step_10_calculate_Plant_Costs ():
             cost_harvest = b.cost_harvest,
             cost_ensiling = b.cost_ensiling,
             cost_manure = b.cost_manure,
-            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0)
+            cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0),
+            resources_total = COALESCE(b.manure_used,0) + COALESCE(b.crop_used,0)
         FROM costs AS b
         WHERE a.id_target = b.id_target
         ;
@@ -541,7 +547,7 @@ def Step_10_calculate_Plant_Costs ():
 
 def Step_11_select_Next_Plant (minimum_value, plant_capacity):
 
-    global found_plant, selected_plant, n_rank
+    global found_plant, selected_plant, n_rank, target_exclusion
 
     manure='COALESCE(manure_available,0)'
     crop='COALESCE(crop_available,0)'
@@ -580,6 +586,7 @@ def Step_11_select_Next_Plant (minimum_value, plant_capacity):
         AND id_target NOT IN  (
           SELECT DISTINCT id_target FROM {plants}
         )
+        {target_exclusion}
         ;
     """.format (
         plants = opt_plants.name,
@@ -590,6 +597,7 @@ def Step_11_select_Next_Plant (minimum_value, plant_capacity):
         n_rank = n_rank,
         minimum_value = minimum_value,
         crop_demand = SQL_crop_demand[plant_capacity],
+        target_exclusion = target_exclusion,
         )
 
 
@@ -711,7 +719,7 @@ def pause_script (pause_, step ):
 
 def extract_plants_all ():
 
-    global n_plants, n_rank, select_fist_plant, first_plant, found_plant
+    global n_plants, n_rank, select_fist_plant, first_plant, found_plant, target_exclusion
 
     capacities = [500, 250, 100]
 
@@ -720,6 +728,10 @@ def extract_plants_all ():
     first_capacity = capacities [0]
     found_plant = True
     n_rank = 3
+
+    exclusion = [1444, 1445, 1446]
+    target_exclusion = "AND NOT ({0})".format(' or '.join( "id_target =" + str(x) for x in exclusion))
+
 
     pause_ = False
 
@@ -796,3 +808,15 @@ def extract_plants_all ():
                 break
 
     Step_12_map_Route_Plants(map_routes, plants)
+
+
+def export_Tables_CSV ():
+
+
+    outDir = folder['FARM'].outDir
+
+    plants = "{0}_all".format(opt_plants.name)
+
+    columns = opt_plants.field_names
+
+    export_CSV (outDir, plants, columns)

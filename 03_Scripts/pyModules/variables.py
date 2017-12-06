@@ -274,7 +274,7 @@ SQL_route_distance= {
 	'500' : SQL_obj ('route_distance_50km_500__', '', 'id_target > 250 and id_target <= 500'),
 	'750' : SQL_obj ('route_distance_50km_750__', '', 'id_target > 500 and id_target <= 750'),
 	'1000' : SQL_obj ('route_distance_50km_1000__', '', 'id_target > 750 and id_target <= 1000'),
-	'1250' : SQL_obj ('route_distance_50km_1500__', '', 'id_target > 1000 and id_target <= 1500'),
+	'1250' : SQL_obj ('route_distance_50km_1250__', '', 'id_target > 1000 and id_target <= 1500'),
 	'1500' : SQL_obj ('route_distance_50km_1500__', '', 'id_target > 1500'),
 }
 

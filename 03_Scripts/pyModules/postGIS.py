@@ -210,6 +210,28 @@ def export_SHP (osm,  proj, tables):
 
         subprocess.call(command, shell=True)
 
+def export_CSV (path, table, columns='*'):
+
+    print "\n__________________ Exporting CSV ______________________\n"
+
+    outFile = "{path}{table}.csv".format(
+        path=path,
+        table=table,
+    )
+
+    command = "psql -d {db} -U {user} -w -t -A -F',' --no-align -c \
+        'COPY (SELECT {columns} FROM public.{table} ORDER BY id_plant) To STDOUT WITh CSV HEADER' > {outFile}".format(
+        host=db_PostGIS['host'],
+        port=db_PostGIS['port'],
+        db=db_PostGIS['dbname'],
+        user=db_PostGIS['user'],
+        pwd=db_PostGIS['pwd'],
+        table=table,
+        columns=columns,
+        outFile=outFile)
+
+    subprocess.call(command, shell=True)
+
 def import_SHP (shapefile, table):
 
     print "\n__________________ Importing Shapefiles ______________________\n"
@@ -317,9 +339,9 @@ def export_PostGIS (db, outFile):
 
 def export_PostGIS_Tables ():
 
-    prefixes = ['adm_', 'lulc_']
+    # prefixes = ['adm_', 'lulc_']
     # prefixes = ['farm_', 'adm_', 'lulc_', 'osm_', 'plants_', 'site_', 'topo_', 'roads_', 'route_node_', 'route_targets_']
-    # prefixes = ['route_distance_50km_250_', 'route_distance_50km_500_', 'route_distance_50km_750_', 'route_distance_50km_1500_', 'route_distance_50km_2000_']
+    prefixes = ['route_distance_50km_250_', 'route_distance_50km_500_', 'route_distance_50km_750_', 'route_distance_50km_1000_', 'route_distance_50km_1250_', 'route_distance_50km_1500_']
 
 
     for prefix in prefixes:
@@ -340,10 +362,17 @@ def export_PostGIS_Tables ():
                 out_File=out_File)
 
         else:
-            command = ""
+            command = "pg_dump -F c --dbname=postgresql://{user}:{pwd}@{host}:{port}/{db} --table \"^{prefix}*\" --file={out_File}".format(
+                host=db_PostGIS['host'],
+                port=db_PostGIS['port'],
+                db=db_PostGIS['dbname'],
+                user=db_PostGIS['user'],
+                pwd=db_PostGIS['pwd'],
+                prefix=prefix,
+                out_File=out_File)
 
         info (command)
-    #
+
         subprocess.call(command, shell=True)
 
         os.chdir(script_Folder)

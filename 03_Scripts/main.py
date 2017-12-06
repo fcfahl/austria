@@ -109,8 +109,10 @@ if __name__ == "__main__":
     #==============================================================================
 #
     # OPT.extract_plants_by_capacity ()
-    OPT2.extract_plants_all ()
+    # OPT.export_Tables_CSV ()
 
+    OPT2.extract_plants_all ()
+    OPT2.export_Tables_CSV ()
 
 
     #==============================================================================

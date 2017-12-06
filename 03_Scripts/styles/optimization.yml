@@ -19,7 +19,7 @@ tables:
     - {name: crop_available, type: double precision}
     - {name: crop_used, type: double precision}
     - {name: crop_additional, type: double precision}
-    - {name: crop_residual, type: double precision}
+    - {name: resources_total, type: double precision}
     - {name: methane_required, type: double precision}
     - {name: methane_from_manure, type: double precision}
     - {name: methane_from_crop, type: double precision}
@@ -55,7 +55,7 @@ tables:
     - {name: crop_available, type: double precision}
     - {name: crop_used, type: double precision}
     - {name: crop_additional, type: double precision}
-    - {name: crop_residual, type: double precision}
+    - {name: resources_total, type: double precision}
     - {name: methane_from_manure, type: double precision}
     - {name: methane_from_crop, type: double precision}
     - {name: methane_total_produced, type: double precision}
@@ -88,7 +88,7 @@ tables:
     - {name: crop_available, type: double precision}
     - {name: crop_used, type: double precision}
     - {name: crop_additional, type: double precision}
-    - {name: crop_residual, type: double precision}
+    - {name: resources_total, type: double precision}
     - {name: methane_from_manure, type: double precision}
     - {name: methane_from_crop, type: double precision}
     - {name: methane_total_produced, type: double precision}
