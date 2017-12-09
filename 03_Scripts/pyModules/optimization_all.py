@@ -69,6 +69,7 @@ def Step_03_initialize_Residues(plant_costs, plant_capacity):
         farm_used,
         length,
         rank,
+        plant_capacity,
         manure_available,
         crop_available,
         methane_from_manure,
@@ -82,6 +83,7 @@ def Step_03_initialize_Residues(plant_costs, plant_capacity):
         0,
         a.length,
         a.rank,
+        0,
         CASE
             WHEN a.length > {distance_manure} THEN 0
             ELSE a.manure
@@ -173,7 +175,6 @@ def Step_04_calculate_Manure (plant_capacity):
 
     if found_plant:
         sql_custom (table=opt_residual.name, sql=sql_manure)
-
 
 def Step_05_calculate_Manure_Methane (plant_capacity):
 
@@ -322,7 +323,8 @@ def Step_06_calculate_Crop (plant_capacity):
             crop_available = 0,
             crop_used = CASE WHEN r.id_target = c.id_target THEN u.crop_used ELSE 0 END,
             length_crop = CASE WHEN r.id_target = c.id_target THEN u.length_crop ELSE 0 END,
-            farm_used = u.farm_used
+            farm_used = u.farm_used,
+            plant_capacity = {plant_capacity}
         FROM crop_used AS u, current_plant AS c
         WHERE r.id_building = u.id_building
         ;
@@ -333,6 +335,7 @@ def Step_06_calculate_Crop (plant_capacity):
         crop_demand = SQL_crop_demand[plant_capacity],
         methane_demand = SQL_methane_capacity[plant_capacity],
         crop_distance = SQL_distances['max_travel'],
+        plant_capacity = plant_capacity,
         )
 
     if found_plant:

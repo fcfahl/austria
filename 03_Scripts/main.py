@@ -30,8 +30,8 @@ if __name__ == "__main__":
 
     # create_DB ()
     connect_PostGIS ()
-    create_sequence (sequence='serial')
-    create_sequence (sequence='plants')
+    # create_sequence (sequence='serial')
+    # create_sequence (sequence='plants')
 
     #==============================================================================
     #           OSM Import
@@ -108,11 +108,11 @@ if __name__ == "__main__":
     #           OPTMIZATION (location of plants)
     #==============================================================================
 #
-    # OPT.extract_plants_by_capacity ()
-    # OPT.export_Tables_CSV ()
+    OPT.extract_plants_by_capacity ()
+    OPT.export_Tables_CSV ()
 
-    OPT2.extract_plants_all ()
-    OPT2.export_Tables_CSV ()
+    # OPT2.extract_plants_all ()
+    # OPT2.export_Tables_CSV ()
 
 
     #==============================================================================
