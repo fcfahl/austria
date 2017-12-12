@@ -5,9 +5,54 @@
   <evaluateDefaultValues active="0"/>
   <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
     <customproperties/>
-    <layer-tree-group expanded="0" checked="Qt::Unchecked" name="Optimization">
+    <layer-tree-group expanded="0" checked="Qt::Unchecked" name="ADM">
       <customproperties/>
-      <layer-tree-group expanded="0" checked="Qt::Unchecked" name="100kw">
+      <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="cities_EPSG303520171207230723398" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/02_ADM/cities_EPSG3035.shp" name="City">
+        <customproperties/>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="AOI_copy20171208121915660" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/02_ADM/AOI_border_EPSG3035.shp" name="AOI_inverted">
+        <customproperties/>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="roads_main20171116165415827" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_road' srid=3035 type=LineString table=&quot;public&quot;.&quot;roads_main&quot; (geom) sql=" name="Main roads">
+        <customproperties>
+          <property key="expandedLegendNodes"/>
+        </customproperties>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="adm_communes20171129102137342" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipal boundaries">
+        <customproperties>
+          <property key="expandedLegendNodes"/>
+        </customproperties>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="Dissolved20171208082027753" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/02_ADM/AOI_border_EPSG3035.shp" name="AOI">
+        <customproperties/>
+      </layer-tree-layer>
+    </layer-tree-group>
+    <layer-tree-group expanded="0" checked="Qt::Unchecked" name="Location">
+      <customproperties/>
+      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="farm_buildings_biomass20171208081716133" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_building' srid=3035 type=Point table=&quot;public&quot;.&quot;farm_buildings_biomass&quot; (geom) sql=&quot;id_manure&quot; > 0" name="Livestock farms">
+        <customproperties>
+          <property key="overview" value="1"/>
+          <property key="showFeatureCount" value="1"/>
+        </customproperties>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="Building_location_copy20171209182441449" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_building' srid=3035 type=Point table=&quot;public&quot;.&quot;farm_buildings_biomass&quot; (geom) sql=&quot;id_crop&quot; > 0" name="Crop farms">
+        <customproperties/>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="farm_buildings_biomass20171209183616233" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_building' srid=3035 type=Point table=&quot;public&quot;.&quot;farm_buildings_biomass&quot; (geom) sql=" name="farms_all">
+        <customproperties/>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="site_clean20171123085349351" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_target' srid=3035 type=Point table=&quot;public&quot;.&quot;site_clean&quot; (geom) sql=" name="Target sites">
+        <customproperties>
+          <property key="expandedLegendNodes"/>
+        </customproperties>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="Target_sites_copy20171211104229587" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_target' srid=3035 type=Point table=&quot;public&quot;.&quot;site_clean&quot; (geom) sql=" name="Target sites legend">
+        <customproperties/>
+      </layer-tree-layer>
+    </layer-tree-group>
+    <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="Optimization">
+      <customproperties/>
+      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="100kw">
         <customproperties/>
         <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="opt_plants_100kw20171205162322056" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;opt_plants_100kw&quot; (geom) sql=" name="opt_plants_100kw">
           <customproperties>
@@ -26,9 +71,9 @@
           </customproperties>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="0" checked="Qt::Unchecked" name="250kw">
+      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="250kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="opt_plants_250kw20171205162331423" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;opt_plants_250kw&quot; (geom) sql=" name="opt_plants_250kw">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="opt_plants_250kw20171205162331423" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;opt_plants_250kw&quot; (geom) sql=" name="opt_plants_250kw">
           <customproperties>
             <property key="expandedLegendNodes"/>
             <property key="showFeatureCount" value="1"/>
@@ -45,9 +90,9 @@
           </customproperties>
         </layer-tree-layer>
       </layer-tree-group>
-      <layer-tree-group expanded="0" checked="Qt::Unchecked" name="500kw">
+      <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="500kw">
         <customproperties/>
-        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="opt_plants_500kw20171205162333568" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;opt_plants_500kw&quot; (geom) sql=" name="opt_plants_500kw">
+        <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="opt_plants_500kw20171205162333568" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;opt_plants_500kw&quot; (geom) sql=" name="opt_plants_500kw">
           <customproperties>
             <property key="expandedLegendNodes"/>
             <property key="showFeatureCount" value="1"/>
@@ -121,9 +166,9 @@
         </layer-tree-layer>
       </layer-tree-group>
     </layer-tree-group>
-    <layer-tree-group expanded="0" checked="Qt::Unchecked" name="All">
+    <layer-tree-group expanded="1" checked="Qt::Unchecked" name="All">
       <customproperties/>
-      <layer-tree-group expanded="0" checked="Qt::Unchecked" name="Biogas Plant">
+      <layer-tree-group expanded="1" checked="Qt::Unchecked" name="Biogas Plant">
         <customproperties/>
         <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="opt_plants_all20171206105000157" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=Point table=&quot;public&quot;.&quot;opt_plants_all&quot; (geom) sql=" name="Potential location">
           <customproperties>
@@ -143,35 +188,20 @@
         </customproperties>
       </layer-tree-layer>
     </layer-tree-group>
-    <layer-tree-group expanded="0" checked="Qt::Unchecked" name="Land Cover">
+    <layer-tree-group expanded="0" checked="Qt::PartiallyChecked" name="Land Cover">
       <customproperties/>
-      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="lulc_zones20171116165020771" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_zones' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;lulc_zones&quot; (geom) sql=" name="Priority zones">
+      <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="lulc_corine_12_adm20171129114826902" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;lulc_corine_12_adm&quot; (geom) sql=" name="lulc_corine_12_adm">
+        <customproperties>
+          <property key="expandedLegendNodes"/>
+        </customproperties>
+      </layer-tree-layer>
+      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="lulc_zones20171116165020771" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_zones' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;lulc_zones&quot; (geom) sql=" name="Priority zones">
         <customproperties>
           <property key="expandedLegendNodes"/>
         </customproperties>
       </layer-tree-layer>
     </layer-tree-group>
-    <layer-tree-group expanded="1" checked="Qt::Unchecked" name="Location">
-      <customproperties/>
-      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="farm_buildings_biomass20171208081716133" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_building' srid=3035 type=Point table=&quot;public&quot;.&quot;farm_buildings_biomass&quot; (geom) sql=&quot;id_manure&quot; > 0" name="Livestock farms">
-        <customproperties>
-          <property key="overview" value="1"/>
-          <property key="showFeatureCount" value="1"/>
-        </customproperties>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="Building_location_copy20171209182441449" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_building' srid=3035 type=Point table=&quot;public&quot;.&quot;farm_buildings_biomass&quot; (geom) sql=&quot;id_crop&quot; > 0" name="Crop farms">
-        <customproperties/>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="farm_buildings_biomass20171209183616233" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_building' srid=3035 type=Point table=&quot;public&quot;.&quot;farm_buildings_biomass&quot; (geom) sql=" name="farms_all">
-        <customproperties/>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="site_clean20171123085349351" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_target' srid=3035 type=Point table=&quot;public&quot;.&quot;site_clean&quot; (geom) sql=" name="Target sites">
-        <customproperties>
-          <property key="expandedLegendNodes"/>
-        </customproperties>
-      </layer-tree-layer>
-    </layer-tree-group>
-    <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="Aggregattion">
+    <layer-tree-group expanded="0" checked="Qt::Unchecked" name="Aggregattion">
       <customproperties/>
       <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Unchecked" id="adm_communes_copy20171208114953633" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Energy Crops (kt / year)">
         <customproperties/>
@@ -179,46 +209,16 @@
       <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="Crop_copy20171208124319985" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Livestock manure (kt / year)">
         <customproperties/>
       </layer-tree-layer>
-      <layer-tree-layer expanded="1" providerKey="delimitedtext" checked="Qt::Checked" id="biogas_potential_pivot20171208115748741" source="file:///home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/04_FARM/biogas_potential_pivot.csv?type=csv&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=yes" name="biogas_potential_pivot">
+      <layer-tree-layer expanded="1" providerKey="delimitedtext" checked="Qt::Unchecked" id="biogas_potential_pivot20171208115748741" source="file:///home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/04_FARM/biogas_potential_pivot.csv?type=csv&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=yes" name="biogas_potential_pivot">
         <customproperties/>
       </layer-tree-layer>
     </layer-tree-group>
-    <layer-tree-group expanded="0" checked="Qt::Unchecked" name="LULC">
-      <customproperties/>
-      <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="lulc_corine_12_adm20171129114826902" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;lulc_corine_12_adm&quot; (geom) sql=" name="lulc_corine_12_adm">
-        <customproperties>
-          <property key="expandedLegendNodes"/>
-        </customproperties>
-      </layer-tree-layer>
-    </layer-tree-group>
-    <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="Base">
-      <customproperties/>
-      <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="cities_EPSG303520171207230723398" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/02_ADM/cities_EPSG3035.shp" name="cities_EPSG3035">
-        <customproperties/>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="adm_communes20171129102137342" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipalities">
-        <customproperties>
-          <property key="expandedLegendNodes"/>
-        </customproperties>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Unchecked" id="Dissolved20171208082027753" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/02_ADM/AOI_border_EPSG3035.shp" name="AOI">
-        <customproperties/>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="AOI_copy20171208121915660" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/02_ADM/AOI_border_EPSG3035.shp" name="AOI_inverted">
-        <customproperties/>
-      </layer-tree-layer>
-      <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Unchecked" id="roads_main20171116165415827" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_road' srid=3035 type=LineString table=&quot;public&quot;.&quot;roads_main&quot; (geom) sql=" name="Main roads">
-        <customproperties>
-          <property key="expandedLegendNodes"/>
-        </customproperties>
-      </layer-tree-layer>
-    </layer-tree-group>
-    <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="DEM">
+    <layer-tree-group expanded="1" checked="Qt::Unchecked" name="DEM">
       <customproperties/>
       <layer-tree-layer expanded="0" providerKey="gdal" checked="Qt::Unchecked" id="dhm_lamb_10m_FINAL_EPSG303520171208122112555" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/05_DEM/dhm_lamb_10m_FINAL_EPSG3035.tif" name="Elevation (m)">
         <customproperties/>
       </layer-tree-layer>
-      <layer-tree-layer expanded="1" providerKey="gdal" checked="Qt::Checked" id="DEM_Shadows_EPSG303520171120112810998" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/05_DEM/DEM_Shadows_EPSG3035.tif" name="DEM_Shadows_EPSG3035">
+      <layer-tree-layer expanded="1" providerKey="gdal" checked="Qt::Unchecked" id="DEM_Shadows_EPSG303520171120112810998" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/05_DEM/DEM_Shadows_EPSG3035.tif" name="DEM_Shadows_EPSG3035">
         <customproperties>
           <property key="expandedLegendNodes"/>
         </customproperties>
@@ -229,10 +229,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>4659213.95450641773641109</xmin>
-      <ymin>2763375.59805099526420236</ymin>
-      <xmax>4681558.3571422453969717</xmax>
-      <ymax>2793259.71488444367423654</ymax>
+      <xmin>4651794.94486435782164335</xmin>
+      <ymin>2744847.59040172956883907</ymin>
+      <xmax>4696483.75013598334044218</xmax>
+      <ymax>2804615.82406864129006863</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>0</projections>
@@ -296,11 +296,66 @@
       <item>Crop_copy20171208124319985</item>
       <item>Building_location_copy20171209182441449</item>
       <item>farm_buildings_biomass20171209183616233</item>
+      <item>Target_sites_copy20171211104229587</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
-    <legendgroup open="false" checked="Qt::Unchecked" name="Optimization">
-      <legendgroup open="false" checked="Qt::Unchecked" name="100kw">
+    <legendgroup open="false" checked="Qt::Unchecked" name="ADM">
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="City" showFeatureCount="0">
+        <filegroup open="true" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="cities_EPSG303520171207230723398" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="AOI_inverted" showFeatureCount="0">
+        <filegroup open="true" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="AOI_copy20171208121915660" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="Main roads" showFeatureCount="0">
+        <filegroup open="false" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="roads_main20171116165415827" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="Municipal boundaries" showFeatureCount="0">
+        <filegroup open="false" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="adm_communes20171129102137342" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="AOI" showFeatureCount="0">
+        <filegroup open="true" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="Dissolved20171208082027753" visible="0"/>
+        </filegroup>
+      </legendlayer>
+    </legendgroup>
+    <legendgroup open="false" checked="Qt::Unchecked" name="Location">
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Livestock farms" showFeatureCount="1">
+        <filegroup open="true" hidden="false">
+          <legendlayerfile isInOverview="1" layerid="farm_buildings_biomass20171208081716133" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Crop farms" showFeatureCount="0">
+        <filegroup open="true" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="Building_location_copy20171209182441449" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="farms_all" showFeatureCount="0">
+        <filegroup open="true" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="farm_buildings_biomass20171209183616233" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="Target sites" showFeatureCount="0">
+        <filegroup open="false" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="site_clean20171123085349351" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Target sites legend" showFeatureCount="0">
+        <filegroup open="true" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="Target_sites_copy20171211104229587" visible="0"/>
+        </filegroup>
+      </legendlayer>
+    </legendgroup>
+    <legendgroup open="true" checked="Qt::PartiallyChecked" name="Optimization">
+      <legendgroup open="true" checked="Qt::Unchecked" name="100kw">
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="opt_plants_100kw" showFeatureCount="1">
           <filegroup open="false" hidden="false">
             <legendlayerfile isInOverview="0" layerid="opt_plants_100kw20171205162322056" visible="0"/>
@@ -317,10 +372,10 @@
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="false" checked="Qt::Unchecked" name="250kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="opt_plants_250kw" showFeatureCount="1">
+      <legendgroup open="true" checked="Qt::PartiallyChecked" name="250kw">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="opt_plants_250kw" showFeatureCount="1">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="opt_plants_250kw20171205162331423" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="opt_plants_250kw20171205162331423" visible="1"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="opt_allocation_250kw.farms" showFeatureCount="0">
@@ -334,10 +389,10 @@
           </filegroup>
         </legendlayer>
       </legendgroup>
-      <legendgroup open="false" checked="Qt::Unchecked" name="500kw">
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="opt_plants_500kw" showFeatureCount="1">
+      <legendgroup open="true" checked="Qt::PartiallyChecked" name="500kw">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="opt_plants_500kw" showFeatureCount="1">
           <filegroup open="false" hidden="false">
-            <legendlayerfile isInOverview="0" layerid="opt_plants_500kw20171205162333568" visible="0"/>
+            <legendlayerfile isInOverview="0" layerid="opt_plants_500kw20171205162333568" visible="1"/>
           </filegroup>
         </legendlayer>
         <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="opt_allocation_500kw.farms" showFeatureCount="0">
@@ -402,8 +457,8 @@
         </legendlayer>
       </legendgroup>
     </legendgroup>
-    <legendgroup open="false" checked="Qt::Unchecked" name="All">
-      <legendgroup open="false" checked="Qt::Unchecked" name="Biogas Plant">
+    <legendgroup open="true" checked="Qt::Unchecked" name="All">
+      <legendgroup open="true" checked="Qt::Unchecked" name="Biogas Plant">
         <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Potential location" showFeatureCount="1">
           <filegroup open="true" hidden="false">
             <legendlayerfile isInOverview="0" layerid="opt_plants_all20171206105000157" visible="0"/>
@@ -421,36 +476,19 @@
         </filegroup>
       </legendlayer>
     </legendgroup>
-    <legendgroup open="false" checked="Qt::Unchecked" name="Land Cover">
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Priority zones" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="lulc_zones20171116165020771" visible="0"/>
-        </filegroup>
-      </legendlayer>
-    </legendgroup>
-    <legendgroup open="true" checked="Qt::Unchecked" name="Location">
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Livestock farms" showFeatureCount="1">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="1" layerid="farm_buildings_biomass20171208081716133" visible="0"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Crop farms" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="Building_location_copy20171209182441449" visible="0"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="farms_all" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="farm_buildings_biomass20171209183616233" visible="0"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="Target sites" showFeatureCount="0">
+    <legendgroup open="false" checked="Qt::PartiallyChecked" name="Land Cover">
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="lulc_corine_12_adm" showFeatureCount="0">
         <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="site_clean20171123085349351" visible="0"/>
+          <legendlayerfile isInOverview="0" layerid="lulc_corine_12_adm20171129114826902" visible="0"/>
+        </filegroup>
+      </legendlayer>
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Priority zones" showFeatureCount="0">
+        <filegroup open="true" hidden="false">
+          <legendlayerfile isInOverview="0" layerid="lulc_zones20171116165020771" visible="1"/>
         </filegroup>
       </legendlayer>
     </legendgroup>
-    <legendgroup open="true" checked="Qt::PartiallyChecked" name="Aggregattion">
+    <legendgroup open="false" checked="Qt::Unchecked" name="Aggregattion">
       <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Energy Crops (kt / year)" showFeatureCount="0">
         <filegroup open="true" hidden="false">
           <legendlayerfile isInOverview="0" layerid="adm_communes_copy20171208114953633" visible="0"/>
@@ -461,55 +499,21 @@
           <legendlayerfile isInOverview="0" layerid="Crop_copy20171208124319985" visible="0"/>
         </filegroup>
       </legendlayer>
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="biogas_potential_pivot" showFeatureCount="0">
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="biogas_potential_pivot" showFeatureCount="0">
         <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="biogas_potential_pivot20171208115748741" visible="1"/>
+          <legendlayerfile isInOverview="0" layerid="biogas_potential_pivot20171208115748741" visible="0"/>
         </filegroup>
       </legendlayer>
     </legendgroup>
-    <legendgroup open="false" checked="Qt::Unchecked" name="LULC">
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="lulc_corine_12_adm" showFeatureCount="0">
-        <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="lulc_corine_12_adm20171129114826902" visible="0"/>
-        </filegroup>
-      </legendlayer>
-    </legendgroup>
-    <legendgroup open="true" checked="Qt::PartiallyChecked" name="Base">
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="cities_EPSG3035" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="cities_EPSG303520171207230723398" visible="1"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="Municipalities" showFeatureCount="0">
-        <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="adm_communes20171129102137342" visible="1"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="AOI" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="Dissolved20171208082027753" visible="0"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="AOI_inverted" showFeatureCount="0">
-        <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="AOI_copy20171208121915660" visible="1"/>
-        </filegroup>
-      </legendlayer>
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="Main roads" showFeatureCount="0">
-        <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="roads_main20171116165415827" visible="0"/>
-        </filegroup>
-      </legendlayer>
-    </legendgroup>
-    <legendgroup open="true" checked="Qt::PartiallyChecked" name="DEM">
+    <legendgroup open="true" checked="Qt::Unchecked" name="DEM">
       <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="Elevation (m)" showFeatureCount="0">
         <filegroup open="false" hidden="false">
           <legendlayerfile isInOverview="0" layerid="dhm_lamb_10m_FINAL_EPSG303520171208122112555" visible="0"/>
         </filegroup>
       </legendlayer>
-      <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="DEM_Shadows_EPSG3035" showFeatureCount="0">
+      <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="DEM_Shadows_EPSG3035" showFeatureCount="0">
         <filegroup open="true" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="DEM_Shadows_EPSG303520171120112810998" visible="1"/>
+          <legendlayerfile isInOverview="0" layerid="DEM_Shadows_EPSG303520171120112810998" visible="0"/>
         </filegroup>
       </legendlayer>
     </legendgroup>
@@ -531,7 +535,36 @@
           <prop k="style" v="solid"/>
         </layer>
       </symbol>
-      <SnapLine y1="0" x1="222.001" y2="135" x2="222.001"/>
+      <ComposerArrow arrowHeadFillColor="0,0,0,255" arrowHeadOutlineColor="0,0,0,255" startMarkerFile="" boundsBehaviourVersion="24" arrowHeadWidth="0" endMarkerFile="" outlineWidth="0.2" markerMode="1">
+        <lineStyle>
+          <symbol alpha="1" clip_to_extent="1" type="line" name="">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="line_color" v="0,0,0,255"/>
+              <prop k="line_style" v="solid"/>
+              <prop k="line_width" v="0.2"/>
+              <prop k="line_width_unit" v="MM"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+            </layer>
+          </symbol>
+        </lineStyle>
+        <StartPoint x="102.358" y="0.141421"/>
+        <StopPoint x="102.359" y="134.859"/>
+        <ComposerItem pagey="-3.56237e-07" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="102.217" y="-3.56237e-07" visibility="1" zValue="5" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="0.283843" outlineWidth="0.3" excludeFromExports="0" uuid="{9712ad62-2cda-4a88-8d31-2be33829e80b}" height="135" itemRotation="0" frame="false" pagex="102.217">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerArrow>
       <ComposerLegend symbolWidth="2" title="" rasterBorderWidth="0" titleAlignment="1" map="0" wmsLegendWidth="50" rasterBorderColor="0,0,0,255" wrapChar="|" fontColor="#000000" legendFilterByAtlas="0" columnCount="1" wmsLegendHeight="25" columnSpace="2" symbolHeight="2" equalColumnWidth="0" resizeToContents="1" splitLayer="0" boxSpace="1" rasterBorder="1">
         <styles>
           <style name="title">
@@ -559,7 +592,7 @@
             </customproperties>
           </layer-tree-layer>
         </layer-tree-group>
-        <ComposerItem pagey="75.0233" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="1.07528" y="75.0233" visibility="1" zValue="4" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="59.6" outlineWidth="0.3" excludeFromExports="0" uuid="{9dbcb76e-a2cf-49aa-8744-b2900c5ea1c8}" height="58.1" itemRotation="0" frame="false" pagex="1.07528">
+        <ComposerItem pagey="75.0233" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="1.07528" y="75.0233" visibility="1" zValue="4" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="59.3" outlineWidth="0.3" excludeFromExports="0" uuid="{9dbcb76e-a2cf-49aa-8744-b2900c5ea1c8}" height="58.1" itemRotation="0" frame="false" pagex="1.07528">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -590,19 +623,21 @@
               <property key="legend/title-style" value="hidden"/>
             </customproperties>
           </layer-tree-layer>
+          <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="Target_sites_copy20171211104229587" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_target' srid=3035 type=Point table=&quot;public&quot;.&quot;site_clean&quot; (geom) sql=" name="Target sites legend">
+            <customproperties>
+              <property key="legend/title-label" value="Target sites"/>
+            </customproperties>
+          </layer-tree-layer>
         </layer-tree-group>
-        <ComposerItem pagey="84.3015" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="106.136" y="84.3015" visibility="1" zValue="3" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="45.775" outlineWidth="0.3" excludeFromExports="0" uuid="{4a2e7c52-3a8b-420e-a7de-ffd32a264e4c}" height="34.4" itemRotation="0" frame="false" pagex="106.136">
+        <ComposerItem pagey="84.3015" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="106.136" y="84.3015" visibility="1" zValue="3" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="45.5" outlineWidth="0.3" excludeFromExports="0" uuid="{4a2e7c52-3a8b-420e-a7de-ffd32a264e4c}" height="40.4" itemRotation="0" frame="false" pagex="106.136">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
         </ComposerItem>
       </ComposerLegend>
-      <ComposerMap followPreset="false" mapRotation="0" keepLayerSet="true" followPresetName="" id="1" previewMode="Cache" drawCanvasItems="true">
+      <ComposerMap followPreset="true" mapRotation="0" keepLayerSet="false" followPresetName="Zones" id="1" previewMode="Cache" drawCanvasItems="true">
         <Extent ymin="2742786.11646048631519079" xmin="4651774.03610141668468714" ymax="2803536.11652245046570897" xmax="4696774.03614731598645449"/>
-        <LayerSet>
-          <Layer provider="postgres" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipalities">adm_communes20171129102137342</Layer>
-          <Layer provider="postgres" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_zones' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;lulc_zones&quot; (geom) sql=" name="Priority zones">lulc_zones20171116165020771</Layer>
-        </LayerSet>
+        <LayerSet/>
         <Grid/>
         <ComposerMapGrid rightAnnotationDirection="0" gridFramePenColor="0,0,0,255" show="0" bottomAnnotationPosition="1" annotationPrecision="3" showAnnotation="0" topFrameDivisions="0" uuid="{7b515210-9f40-4be8-a07c-590874061c3e}" leftAnnotationDirection="0" topAnnotationPosition="1" rightAnnotationDisplay="0" offsetX="0" offsetY="0" rightFrameDivisions="0" gridStyle="0" annotationFontColor="0,0,0,255" intervalX="0" gridFrameSideFlags="15" intervalY="0" bottomAnnotationDirection="0" leftAnnotationDisplay="0" leftFrameDivisions="0" frameFillColor1="255,255,255,255" annotationExpression="" frameFillColor2="0,0,0,255" crossLength="3" gridFramePenThickness="0.5" bottomAnnotationDisplay="0" unit="0" topAnnotationDisplay="0" leftAnnotationPosition="1" blendMode="0" gridFrameStyle="0" rightAnnotationPosition="1" gridFrameWidth="2" name="Grid 1" annotationFormat="0" bottomFrameDivisions="0" topAnnotationDirection="0" frameAnnotationDistance="1">
           <lineStyle>
@@ -653,18 +688,15 @@
           <annotationFontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
         </ComposerMapGrid>
         <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
-        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="5.70533" positionMode="0" positionLock="false" x="105" y="0" visibility="1" zValue="2" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="100" outlineWidth="0.3" excludeFromExports="0" uuid="{d9e2715b-e6f0-450e-a770-a0cf57428223}" height="135" itemRotation="0" frame="false" pagex="105">
+        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="5.86834" positionMode="0" positionLock="false" x="105" y="0" visibility="1" zValue="2" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="100" outlineWidth="0.3" excludeFromExports="0" uuid="{d9e2715b-e6f0-450e-a770-a0cf57428223}" height="135" itemRotation="0" frame="false" pagex="105">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
         </ComposerItem>
       </ComposerMap>
-      <ComposerMap followPreset="false" mapRotation="0" keepLayerSet="true" followPresetName="" id="0" previewMode="Cache" drawCanvasItems="true">
+      <ComposerMap followPreset="true" mapRotation="0" keepLayerSet="false" followPresetName="LULC" id="0" previewMode="Cache" drawCanvasItems="true">
         <Extent ymin="2742837.24269816232845187" xmin="4651927.41481444332748652" ymax="2803587.24276012647897005" xmax="4696927.41486034262925386"/>
-        <LayerSet>
-          <Layer provider="postgres" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipalities">adm_communes20171129102137342</Layer>
-          <Layer provider="postgres" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='tid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;lulc_corine_12_adm&quot; (geom) sql=" name="lulc_corine_12_adm">lulc_corine_12_adm20171129114826902</Layer>
-        </LayerSet>
+        <LayerSet/>
         <Grid/>
         <ComposerMapGrid rightAnnotationDirection="0" gridFramePenColor="0,0,0,255" show="0" bottomAnnotationPosition="1" annotationPrecision="3" showAnnotation="0" topFrameDivisions="0" uuid="{7b515210-9f40-4be8-a07c-590874061c3e}" leftAnnotationDirection="0" topAnnotationPosition="1" rightAnnotationDisplay="0" offsetX="0" offsetY="0" rightFrameDivisions="0" gridStyle="0" annotationFontColor="0,0,0,255" intervalX="0" gridFrameSideFlags="15" intervalY="0" bottomAnnotationDirection="0" leftAnnotationDisplay="0" leftFrameDivisions="0" frameFillColor1="255,255,255,255" annotationExpression="" frameFillColor2="0,0,0,255" crossLength="3" gridFramePenThickness="0.5" bottomAnnotationDisplay="0" unit="0" topAnnotationDisplay="0" leftAnnotationPosition="1" blendMode="0" gridFrameStyle="0" rightAnnotationPosition="1" gridFrameWidth="2" name="Grid 1" annotationFormat="0" bottomFrameDivisions="0" topAnnotationDirection="0" frameAnnotationDistance="1">
           <lineStyle>
@@ -715,7 +747,7 @@
           <annotationFontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
         </ComposerMapGrid>
         <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
-        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="5.70533" positionMode="0" positionLock="false" x="0" y="0" visibility="1" zValue="1" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="100" outlineWidth="0.3" excludeFromExports="0" uuid="{76565e3c-8272-4899-bfcd-293c6dc606ff}" height="135" itemRotation="0" frame="false" pagex="0">
+        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="5.86834" positionMode="0" positionLock="false" x="0" y="0" visibility="1" zValue="1" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="100" outlineWidth="0.3" excludeFromExports="0" uuid="{76565e3c-8272-4899-bfcd-293c6dc606ff}" height="135" itemRotation="0" frame="false" pagex="0">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -1345,7 +1377,7 @@
         <fillColor2 alpha="255" red="255" blue="255" green="255"/>
         <strokeColor alpha="255" red="0" blue="0" green="0"/>
         <textColor alpha="255" red="0" blue="0" green="0"/>
-        <ComposerItem pagey="131.367" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="7.61956" y="131.367" visibility="1" zValue="4" background="false" transparency="0" frameJoinStyle="miter" blendMode="6" width="32.3" outlineWidth="0.3" excludeFromExports="0" uuid="{3bb21422-cab9-4bc2-b573-b8add6ef9df5}" height="8.7011" itemRotation="0" frame="false" pagex="7.61956">
+        <ComposerItem pagey="131.367" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="7.61956" y="131.367" visibility="1" zValue="3" background="false" transparency="0" frameJoinStyle="miter" blendMode="6" width="32.3" outlineWidth="0.3" excludeFromExports="0" uuid="{3bb21422-cab9-4bc2-b573-b8add6ef9df5}" height="8.7011" itemRotation="0" frame="false" pagex="7.61956">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -1380,7 +1412,7 @@
             <customproperties/>
           </layer-tree-layer>
         </layer-tree-group>
-        <ComposerItem pagey="95.1103" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="8.55813" y="95.1103" visibility="1" zValue="3" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="27.4097" outlineWidth="0.1" excludeFromExports="0" uuid="{bb923b0d-40e9-4c7f-aa05-1bd7cabbdf35}" height="29.4381" itemRotation="0" frame="false" pagex="8.55813">
+        <ComposerItem pagey="95.1103" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="8.55813" y="95.1103" visibility="1" zValue="2" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="27.4097" outlineWidth="0.1" excludeFromExports="0" uuid="{bb923b0d-40e9-4c7f-aa05-1bd7cabbdf35}" height="29.4381" itemRotation="0" frame="false" pagex="8.55813">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -1632,11 +1664,11 @@
           <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="farm_buildings_biomass20171208081716133" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_building' srid=3035 type=Point table=&quot;public&quot;.&quot;farm_buildings_biomass&quot; (geom) sql=&quot;id_manure&quot; > 0" name="Livestock farms">
             <customproperties/>
           </layer-tree-layer>
-          <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="adm_communes20171129102137342" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipalities">
+          <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="adm_communes20171129102137342" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipal boundaries">
             <customproperties/>
           </layer-tree-layer>
         </layer-tree-group>
-        <ComposerItem pagey="50.7298" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="60.9887" y="50.7298" visibility="1" zValue="11" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="33.7793" outlineWidth="0.1" excludeFromExports="0" uuid="{5b34d248-60e4-4914-a5d4-e03d0254250b}" height="29.2702" itemRotation="0" frame="false" pagex="60.9887">
+        <ComposerItem pagey="50.7298" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="60.9887" y="50.7298" visibility="1" zValue="6" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="33.7793" outlineWidth="0.1" excludeFromExports="0" uuid="{5b34d248-60e4-4914-a5d4-e03d0254250b}" height="29.2702" itemRotation="0" frame="false" pagex="60.9887">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -1648,7 +1680,7 @@
         <fillColor2 alpha="255" red="255" blue="255" green="255"/>
         <strokeColor alpha="255" red="0" blue="0" green="0"/>
         <textColor alpha="255" red="0" blue="0" green="0"/>
-        <ComposerItem pagey="74.4154" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="102.527" y="74.4154" visibility="1" zValue="6" background="false" transparency="0" frameJoinStyle="miter" blendMode="6" width="17.4728" outlineWidth="0.3" excludeFromExports="0" uuid="{d807ceae-6daf-4ead-ae31-65c8a05f7ce4}" height="5.58462" itemRotation="0" frame="false" pagex="102.527">
+        <ComposerItem pagey="74.4154" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="102.527" y="74.4154" visibility="1" zValue="5" background="false" transparency="0" frameJoinStyle="miter" blendMode="6" width="17.4728" outlineWidth="0.3" excludeFromExports="0" uuid="{d807ceae-6daf-4ead-ae31-65c8a05f7ce4}" height="5.58462" itemRotation="0" frame="false" pagex="102.527">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -1682,11 +1714,11 @@
               <property key="legend/title-style" value="hidden"/>
             </customproperties>
           </layer-tree-layer>
-          <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="adm_communes20171129102137342" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipalities">
+          <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="adm_communes20171129102137342" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipal boundaries">
             <customproperties/>
           </layer-tree-layer>
         </layer-tree-group>
-        <ComposerItem pagey="50.7298" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="-6.05399e-16" y="50.7298" visibility="1" zValue="5" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="27.6274" outlineWidth="0.1" excludeFromExports="0" uuid="{74157bc4-0814-4f16-b7f3-7788c7edb5dc}" height="29.2702" itemRotation="0" frame="false" pagex="-6.05399e-16">
+        <ComposerItem pagey="50.7298" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="-6.05399e-16" y="50.7298" visibility="1" zValue="4" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="27.6274" outlineWidth="0.1" excludeFromExports="0" uuid="{74157bc4-0814-4f16-b7f3-7788c7edb5dc}" height="29.2702" itemRotation="0" frame="false" pagex="-6.05399e-16">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -1745,7 +1777,7 @@
           <annotationFontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
         </ComposerMapGrid>
         <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
-        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="9.10294" positionMode="0" positionLock="false" x="60" y="0" visibility="1" zValue="3" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="60" outlineWidth="0.1" excludeFromExports="0" uuid="{c97693fc-c57c-496e-a172-d47c59fd87b8}" height="80" itemRotation="0" frame="false" pagex="60">
+        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="9.75" positionMode="0" positionLock="false" x="60" y="0" visibility="1" zValue="3" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="60" outlineWidth="0.1" excludeFromExports="0" uuid="{c97693fc-c57c-496e-a172-d47c59fd87b8}" height="80" itemRotation="0" frame="false" pagex="60">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -1834,7 +1866,7 @@
           <annotationFontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
         </ComposerMapGrid>
         <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
-        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="9.10294" positionMode="0" positionLock="false" x="0" y="0" visibility="1" zValue="1" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="60" outlineWidth="0.1" excludeFromExports="0" uuid="{0d42cdf8-2931-4be1-800a-a3b7a58e6e2a}" height="80" itemRotation="0" frame="false" pagex="0">
+        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="9.75" positionMode="0" positionLock="false" x="0" y="0" visibility="1" zValue="1" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="60" outlineWidth="0.1" excludeFromExports="0" uuid="{0d42cdf8-2931-4be1-800a-a3b7a58e6e2a}" height="80" itemRotation="0" frame="false" pagex="0">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -1849,8 +1881,8 @@
       </customproperties>
     </Composition>
   </Composer>
-  <Composer title="adm_dem" visible="1">
-    <Composition resizeToContentsMarginLeft="0" snapping="0" showPages="1" guidesVisible="1" resizeToContentsMarginTop="0" worldFileMap="" alignmentSnap="1" printResolution="300" paperWidth="120" gridVisible="0" snapGridOffsetX="0" smartGuides="1" snapGridOffsetY="0" resizeToContentsMarginRight="0" snapTolerancePixels="5" printAsRaster="0" generateWorldFile="0" paperHeight="80" numPages="1" snapGridResolution="10" resizeToContentsMarginBottom="0">
+  <Composer title="adm_dem" visible="0">
+    <Composition resizeToContentsMarginLeft="0" snapping="0" showPages="1" guidesVisible="1" resizeToContentsMarginTop="0" worldFileMap="" alignmentSnap="1" printResolution="300" paperWidth="180" gridVisible="0" snapGridOffsetX="0" smartGuides="1" snapGridOffsetY="0" resizeToContentsMarginRight="0" snapTolerancePixels="5" printAsRaster="0" generateWorldFile="0" paperHeight="120" numPages="1" snapGridResolution="10" resizeToContentsMarginBottom="0">
       <symbol alpha="1" clip_to_extent="1" type="fill" name="">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -1866,8 +1898,8 @@
           <prop k="style" v="solid"/>
         </layer>
       </symbol>
-      <SnapLine y1="0" x1="402.058" y2="80" x2="402.058"/>
-      <ComposerLegend symbolWidth="2" title="" rasterBorderWidth="0" titleAlignment="1" map="0" wmsLegendWidth="50" rasterBorderColor="0,0,0,255" wrapChar="|" fontColor="#000000" legendFilterByAtlas="0" columnCount="1" wmsLegendHeight="25" columnSpace="2" symbolHeight="2" equalColumnWidth="0" resizeToContents="0" splitLayer="0" boxSpace="1" rasterBorder="0">
+      <SnapLine y1="0" x1="402.058" y2="120" x2="402.058"/>
+      <ComposerLegend symbolWidth="4" title="" rasterBorderWidth="0" titleAlignment="1" map="0" wmsLegendWidth="50" rasterBorderColor="0,0,0,255" wrapChar="|" fontColor="#000000" legendFilterByAtlas="0" columnCount="1" wmsLegendHeight="25" columnSpace="2" symbolHeight="3" equalColumnWidth="0" resizeToContents="0" splitLayer="0" boxSpace="1" rasterBorder="1">
         <styles>
           <style name="title">
             <styleFont description="MS Shell Dlg 2,16,-1,5,50,0,0,0,0,0" style=""/>
@@ -1876,13 +1908,13 @@
             <styleFont description="Cantarell,10,-1,5,50,0,0,0,0,0" style="Regular"/>
           </style>
           <style name="subgroup">
-            <styleFont description="Cantarell,7,-1,5,50,0,0,0,0,0" style="Regular"/>
+            <styleFont description="Cantarell,9,-1,5,50,0,0,0,0,0" style="Regular"/>
           </style>
-          <style marginTop="0.5" name="symbol">
+          <style marginTop="1" name="symbol">
             <styleFont description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
           </style>
-          <style marginTop="0.5" marginLeft="1" name="symbolLabel">
-            <styleFont description="Cantarell,5,-1,5,50,0,0,0,0,0" style="Regular"/>
+          <style marginTop="1" marginLeft="1" name="symbolLabel">
+            <styleFont description="Cantarell,7,-1,5,50,0,0,0,0,0" style="Regular"/>
           </style>
         </styles>
         <layer-tree-group expanded="1" checked="Qt::Checked" name="">
@@ -1890,55 +1922,58 @@
           <layer-tree-layer expanded="1" providerKey="gdal" checked="Qt::Checked" id="dhm_lamb_10m_FINAL_EPSG303520171208122112555" source="/home/fcf/GIS/05_PostGIS_projects/03_Amstetten_Biogas/01_Input/05_DEM/dhm_lamb_10m_FINAL_EPSG3035.tif" name="Elevation (m)">
             <customproperties/>
           </layer-tree-layer>
+          <layer-tree-layer expanded="1" providerKey="postgres" checked="Qt::Checked" id="roads_main20171116165415827" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='id_road' srid=3035 type=LineString table=&quot;public&quot;.&quot;roads_main&quot; (geom) sql=" name="Main roads">
+            <customproperties/>
+          </layer-tree-layer>
         </layer-tree-group>
-        <ComposerItem pagey="50.7298" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="60.9887" y="50.7298" visibility="1" zValue="11" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="33.7793" outlineWidth="0.1" excludeFromExports="0" uuid="{4814f741-5919-4c21-ad3d-b907c545626e}" height="29.2702" itemRotation="0" frame="false" pagex="60.9887">
+        <ComposerItem pagey="82.2168" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="95.5381" y="82.2168" visibility="1" zValue="5" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="33.625" outlineWidth="0.1" excludeFromExports="0" uuid="{4814f741-5919-4c21-ad3d-b907c545626e}" height="33.7463" itemRotation="0" frame="false" pagex="95.5381">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
         </ComposerItem>
       </ComposerLegend>
-      <ComposerScaleBar lineCapStyle="square" style="Single Box" numMapUnitsPerScaleBarUnit="1000" segmentSizeMode="0" alignment="0" numSegments="2" segmentMillimeters="6.43639" lineJoinStyle="miter" minBarWidth="50" numUnitsPerSegment="5000" units="1" labelBarSpace="2" outlineWidth="0.1" numSegmentsLeft="0" maxBarWidth="150" height="0.8" boxContentSpace="0" mapId="0" unitLabel="km">
+      <ComposerScaleBar lineCapStyle="square" style="Single Box" numMapUnitsPerScaleBarUnit="1000" segmentSizeMode="0" alignment="0" numSegments="2" segmentMillimeters="9.65458" lineJoinStyle="miter" minBarWidth="50" numUnitsPerSegment="5000" units="1" labelBarSpace="2" outlineWidth="0.1" numSegmentsLeft="0" maxBarWidth="150" height="0.8" boxContentSpace="0" mapId="0" unitLabel="km">
         <scaleBarFont description="Cantarell,5,-1,5,50,0,0,0,0,0" style="Regular"/>
         <fillColor alpha="255" red="0" blue="0" green="0"/>
         <fillColor2 alpha="255" red="255" blue="255" green="255"/>
         <strokeColor alpha="255" red="0" blue="0" green="0"/>
         <textColor alpha="255" red="0" blue="0" green="0"/>
-        <ComposerItem pagey="74.4154" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="102.527" y="74.4154" visibility="1" zValue="6" background="false" transparency="0" frameJoinStyle="miter" blendMode="6" width="17.4728" outlineWidth="0.3" excludeFromExports="0" uuid="{cbf08a82-6fe3-4227-b9ad-3266b64fc2b8}" height="5.58462" itemRotation="0" frame="false" pagex="102.527">
+        <ComposerItem pagey="114.415" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="153.93" y="114.415" visibility="1" zValue="4" background="false" transparency="0" frameJoinStyle="miter" blendMode="6" width="23.9092" outlineWidth="0.3" excludeFromExports="0" uuid="{cbf08a82-6fe3-4227-b9ad-3266b64fc2b8}" height="5.58462" itemRotation="0" frame="false" pagex="153.93">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
         </ComposerItem>
       </ComposerScaleBar>
-      <ComposerLegend symbolWidth="2" title="" rasterBorderWidth="0" titleAlignment="1" map="0" wmsLegendWidth="50" rasterBorderColor="0,0,0,255" wrapChar="|" fontColor="#000000" legendFilterByAtlas="0" columnCount="1" wmsLegendHeight="25" columnSpace="2" symbolHeight="2" equalColumnWidth="0" resizeToContents="0" splitLayer="0" boxSpace="1" rasterBorder="0">
-        <styles>
-          <style name="title">
-            <styleFont description="MS Shell Dlg 2,16,-1,5,50,0,0,0,0,0" style=""/>
-          </style>
-          <style name="group">
-            <styleFont description="Cantarell,10,-1,5,50,0,0,0,0,0" style="Regular"/>
-          </style>
-          <style name="subgroup">
-            <styleFont description="Cantarell,7,-1,5,50,0,0,0,0,0" style="Regular"/>
-          </style>
-          <style marginTop="0.5" name="symbol">
-            <styleFont description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
-          </style>
-          <style marginTop="0.5" marginLeft="1" name="symbolLabel">
-            <styleFont description="Cantarell,5,-1,5,50,0,0,0,0,0" style="Regular"/>
-          </style>
-        </styles>
-        <layer-tree-group expanded="1" checked="Qt::Checked" name="">
-          <customproperties/>
-          <layer-tree-layer expanded="0" providerKey="postgres" checked="Qt::Checked" id="adm_communes20171129102137342" source="dbname='amstetten_biogas' host=localhost port=5432 user='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table=&quot;public&quot;.&quot;adm_communes&quot; (geom) sql=" name="Municipalities">
-            <customproperties/>
-          </layer-tree-layer>
-        </layer-tree-group>
-        <ComposerItem pagey="50.7298" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="-6.05399e-16" y="50.7298" visibility="1" zValue="5" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="27.6274" outlineWidth="0.1" excludeFromExports="0" uuid="{61668252-b5ef-4c3e-9e0e-e86023b19c8e}" height="29.2702" itemRotation="0" frame="false" pagex="-6.05399e-16">
+      <ComposerArrow arrowHeadFillColor="0,0,0,255" arrowHeadOutlineColor="0,0,0,255" startMarkerFile="" boundsBehaviourVersion="24" arrowHeadWidth="0" endMarkerFile="" outlineWidth="0.2" markerMode="1">
+        <lineStyle>
+          <symbol alpha="1" clip_to_extent="1" type="line" name="">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="line_color" v="0,0,0,255"/>
+              <prop k="line_style" v="solid"/>
+              <prop k="line_width" v="0.2"/>
+              <prop k="line_width_unit" v="MM"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+            </layer>
+          </symbol>
+        </lineStyle>
+        <StartPoint x="90.1414" y="0.141421"/>
+        <StopPoint x="90.1416" y="119.859"/>
+        <ComposerItem pagey="-3.56237e-07" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="90" y="-3.56237e-07" visibility="1" zValue="3" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="0.283043" outlineWidth="0.3" excludeFromExports="0" uuid="{969ba768-e309-4f07-9388-91771c936d84}" height="120" itemRotation="0" frame="false" pagex="90">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
         </ComposerItem>
-      </ComposerLegend>
+      </ComposerArrow>
       <ComposerMap followPreset="true" mapRotation="0" keepLayerSet="false" followPresetName="DEM" id="1" previewMode="Cache" drawCanvasItems="true">
         <Extent ymin="2743159.9890887588262558" xmin="4651008.10621408466249704" ymax="2805306.65581881487742066" xmax="4697618.10626162681728601"/>
         <LayerSet/>
@@ -1992,43 +2027,13 @@
           <annotationFontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
         </ComposerMapGrid>
         <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
-        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="15.1181" positionMode="0" positionLock="false" x="60" y="0" visibility="1" zValue="3" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="60" outlineWidth="0.1" excludeFromExports="0" uuid="{ce2d0205-8452-4351-a55c-0a0e0c843c18}" height="80" itemRotation="0" frame="false" pagex="60">
+        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="6.47887" positionMode="0" positionLock="false" x="90" y="0" visibility="1" zValue="2" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="90" outlineWidth="0.1" excludeFromExports="0" uuid="{ce2d0205-8452-4351-a55c-0a0e0c843c18}" height="120" itemRotation="0" frame="false" pagex="90">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
         </ComposerItem>
       </ComposerMap>
-      <ComposerArrow arrowHeadFillColor="0,0,0,255" arrowHeadOutlineColor="0,0,0,255" startMarkerFile="" boundsBehaviourVersion="24" arrowHeadWidth="0" endMarkerFile="" outlineWidth="0.2" markerMode="1">
-        <lineStyle>
-          <symbol alpha="1" clip_to_extent="1" type="line" name="">
-            <layer pass="0" class="SimpleLine" locked="0">
-              <prop k="capstyle" v="square"/>
-              <prop k="customdash" v="5;2"/>
-              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="customdash_unit" v="MM"/>
-              <prop k="draw_inside_polygon" v="0"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="0,0,0,255"/>
-              <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.2"/>
-              <prop k="line_width_unit" v="MM"/>
-              <prop k="offset" v="0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="use_custom_dash" v="0"/>
-              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-            </layer>
-          </symbol>
-        </lineStyle>
-        <StartPoint x="59.8584" y="0.141421"/>
-        <StopPoint x="59.8586" y="79.8586"/>
-        <ComposerItem pagey="-3.56237e-07" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="59.717" y="-3.56237e-07" visibility="1" zValue="2" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="0.283043" outlineWidth="0.3" excludeFromExports="0" uuid="{969ba768-e309-4f07-9388-91771c936d84}" height="80" itemRotation="0" frame="false" pagex="59.717">
-          <FrameColor alpha="255" red="0" blue="0" green="0"/>
-          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
-          <customproperties/>
-        </ComposerItem>
-      </ComposerArrow>
-      <ComposerMap followPreset="false" mapRotation="0" keepLayerSet="false" followPresetName="ADM" id="0" previewMode="Cache" drawCanvasItems="true">
+      <ComposerMap followPreset="true" mapRotation="0" keepLayerSet="false" followPresetName="ADM" id="0" previewMode="Cache" drawCanvasItems="true">
         <Extent ymin="2743159.9890887588262558" xmin="4651008.10621408466249704" ymax="2805306.65581881487742066" xmax="4697618.10626162681728601"/>
         <LayerSet/>
         <Grid/>
@@ -2081,7 +2086,7 @@
           <annotationFontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
         </ComposerMapGrid>
         <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
-        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="15.1181" positionMode="0" positionLock="false" x="0" y="0" visibility="1" zValue="1" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="60" outlineWidth="0.1" excludeFromExports="0" uuid="{915b1eb0-c919-478b-9664-22e7a27b6d98}" height="80" itemRotation="0" frame="false" pagex="0">
+        <ComposerItem pagey="0" page="1" id="" lastValidViewScaleFactor="6.47887" positionMode="0" positionLock="false" x="0" y="0" visibility="1" zValue="1" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="90" outlineWidth="0.1" excludeFromExports="0" uuid="{915b1eb0-c919-478b-9664-22e7a27b6d98}" height="120" itemRotation="0" frame="false" pagex="0">
           <FrameColor alpha="255" red="0" blue="0" green="0"/>
           <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
           <customproperties/>
@@ -2970,8 +2975,104 @@ def my_form_open(dialog, layer, feature):
       <vectorjoins/>
       <layerDependencies/>
       <expressionfields/>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
+      <map-layer-style-manager current="LULC">
+        <map-layer-style name="">
+          <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+            <edittypes>
+              <edittype widgetv2type="TextEdit" name="gid">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="name">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="mun_id">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+            </edittypes>
+            <renderer-v2 forceraster="0" preprocessing="0" type="invertedPolygonRenderer" enableorderby="0">
+              <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+                <symbols>
+                  <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
+                    <layer pass="0" class="SimpleFill" locked="0">
+                      <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+                      <prop k="color" v="255,255,255,255"/>
+                      <prop k="joinstyle" v="bevel"/>
+                      <prop k="offset" v="0,0"/>
+                      <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+                      <prop k="offset_unit" v="MM"/>
+                      <prop k="outline_color" v="0,0,0,255"/>
+                      <prop k="outline_style" v="solid"/>
+                      <prop k="outline_width" v="0.66"/>
+                      <prop k="outline_width_unit" v="MM"/>
+                      <prop k="style" v="solid"/>
+                    </layer>
+                  </symbol>
+                </symbols>
+                <rotation/>
+                <sizescale scalemethod="diameter"/>
+              </renderer-v2>
+            </renderer-v2>
+            <labeling type="simple"/>
+            <customproperties/>
+            <blendMode>0</blendMode>
+            <featureBlendMode>0</featureBlendMode>
+            <layerTransparency>0</layerTransparency>
+            <displayfield>name</displayfield>
+            <label>0</label>
+            <labelattributes>
+              <label fieldname="" text="Label"/>
+              <family fieldname="" name="Ubuntu"/>
+              <size fieldname="" units="pt" value="12"/>
+              <bold fieldname="" on="0"/>
+              <italic fieldname="" on="0"/>
+              <underline fieldname="" on="0"/>
+              <strikeout fieldname="" on="0"/>
+              <color fieldname="" red="0" blue="0" green="0"/>
+              <x fieldname=""/>
+              <y fieldname=""/>
+              <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+              <angle fieldname="" value="0" auto="0"/>
+              <alignment fieldname="" value="center"/>
+              <buffercolor fieldname="" red="255" blue="255" green="255"/>
+              <buffersize fieldname="" units="pt" value="1"/>
+              <bufferenabled fieldname="" on=""/>
+              <multilineenabled fieldname="" on=""/>
+              <selectedonly on=""/>
+            </labelattributes>
+            <annotationform>.</annotationform>
+            <aliases>
+              <alias field="gid" index="0" name=""/>
+              <alias field="name" index="1" name=""/>
+              <alias field="mun_id" index="2" name=""/>
+            </aliases>
+            <excludeAttributesWMS/>
+            <excludeAttributesWFS/>
+            <attributeactions default="-1"/>
+            <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+              <columns/>
+            </attributetableconfig>
+            <editform>.</editform>
+            <editforminit/>
+            <editforminitcodesource>0</editforminitcodesource>
+            <editforminitfilepath>.</editforminitfilepath>
+            <editforminitcode><![CDATA[]]></editforminitcode>
+            <featformsuppress>0</featformsuppress>
+            <editorlayout>generatedlayout</editorlayout>
+            <widgets/>
+            <conditionalstyles>
+              <rowstyles/>
+              <fieldstyles/>
+            </conditionalstyles>
+            <defaults>
+              <default field="gid" expression=""/>
+              <default field="name" expression=""/>
+              <default field="mun_id" expression=""/>
+            </defaults>
+            <previewExpression/>
+            <layerGeometryType>2</layerGeometryType>
+          </qgis>
+        </map-layer-style>
+        <map-layer-style name="LULC"/>
       </map-layer-style-manager>
       <edittypes>
         <edittype widgetv2type="TextEdit" name="gid">
@@ -4225,19 +4326,13 @@ def my_form_open(dialog, layer, feature):
       </defaults>
       <previewExpression>COALESCE("id_aggregate", '&lt;NULL>')</previewExpression>
     </maplayer>
-    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-      <extent>
-        <xmin>4652809.37756044045090675</xmin>
-        <ymin>2746270.64358427980914712</ymin>
-        <xmax>4695370.14448580984026194</xmax>
-        <ymax>2803192.77088609011843801</ymax>
-      </extent>
-      <id>adm_communes20171129102137342</id>
-      <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table="public"."adm_communes" (geom) sql=</datasource>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <id>Target_sites_copy20171211104229587</id>
+      <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='id_target' srid=3035 type=Point table="public"."site_clean" (geom) sql=</datasource>
       <keywordList>
         <value></value>
       </keywordList>
-      <layername>Municipalities</layername>
+      <layername>Target sites legend</layername>
       <srs>
         <spatialrefsys>
           <proj4>+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
@@ -4254,7 +4349,141 @@ def my_form_open(dialog, layer, feature):
       <vectorjoins/>
       <layerDependencies/>
       <expressionfields/>
-      <map-layer-style-manager current="adm">
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="rank">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="zone">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="id_mun">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="id_target">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="0,0,0,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="1"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>id_mun</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Label"/>
+        <family fieldname="" name="Ubuntu"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform>.</annotationform>
+      <aliases>
+        <alias field="rank" index="0" name=""/>
+        <alias field="zone" index="1" name=""/>
+        <alias field="id_mun" index="2" name=""/>
+        <alias field="id_target" index="3" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+        <columns/>
+      </attributetableconfig>
+      <editform>.</editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath>.</editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="rank" expression=""/>
+        <default field="zone" expression=""/>
+        <default field="id_mun" expression=""/>
+        <default field="id_target" expression=""/>
+      </defaults>
+      <previewExpression></previewExpression>
+    </maplayer>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <extent>
+        <xmin>4652809.37756044045090675</xmin>
+        <ymin>2746270.64358427980914712</ymin>
+        <xmax>4695370.14448580984026194</xmax>
+        <ymax>2803192.77088609011843801</ymax>
+      </extent>
+      <id>adm_communes20171129102137342</id>
+      <datasource>dbname='amstetten_biogas' host=localhost port=5432 user='postgres' password='postgres' sslmode=disable key='gid' srid=3035 type=MultiPolygon table="public"."adm_communes" (geom) sql=</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>Municipal boundaries</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>1000</srsid>
+          <srid>3035</srid>
+          <authid>EPSG:3035</authid>
+          <description>ETRS89 / ETRS-LAEA</description>
+          <projectionacronym>laea</projectionacronym>
+          <ellipsoidacronym>GRS80</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">postgres</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="LULC">
         <map-layer-style name="">
           <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
             <edittypes>
@@ -4448,7 +4677,106 @@ def my_form_open(dialog, layer, feature):
             <layerGeometryType>2</layerGeometryType>
           </qgis>
         </map-layer-style>
-        <map-layer-style name="adm"/>
+        <map-layer-style name="LULC"/>
+        <map-layer-style name="adm">
+          <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+            <edittypes>
+              <edittype widgetv2type="TextEdit" name="gid">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="name">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="mun_id">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+            </edittypes>
+            <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+              <symbols>
+                <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
+                  <layer pass="0" class="SimpleFill" locked="0">
+                    <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="color" v="202,191,179,255"/>
+                    <prop k="joinstyle" v="bevel"/>
+                    <prop k="offset" v="0,0"/>
+                    <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="offset_unit" v="MM"/>
+                    <prop k="outline_color" v="255,255,255,255"/>
+                    <prop k="outline_style" v="solid"/>
+                    <prop k="outline_width" v="0.2"/>
+                    <prop k="outline_width_unit" v="MM"/>
+                    <prop k="style" v="solid"/>
+                  </layer>
+                </symbol>
+              </symbols>
+              <rotation/>
+              <sizescale scalemethod="diameter"/>
+            </renderer-v2>
+            <labeling type="simple"/>
+            <customproperties/>
+            <blendMode>6</blendMode>
+            <featureBlendMode>0</featureBlendMode>
+            <layerTransparency>0</layerTransparency>
+            <displayfield>name</displayfield>
+            <label>0</label>
+            <labelattributes>
+              <label fieldname="" text="Label"/>
+              <family fieldname="" name="MS Shell Dlg 2"/>
+              <size fieldname="" units="pt" value="12"/>
+              <bold fieldname="" on="0"/>
+              <italic fieldname="" on="0"/>
+              <underline fieldname="" on="0"/>
+              <strikeout fieldname="" on="0"/>
+              <color fieldname="" red="0" blue="0" green="0"/>
+              <x fieldname=""/>
+              <y fieldname=""/>
+              <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+              <angle fieldname="" value="0" auto="0"/>
+              <alignment fieldname="" value="center"/>
+              <buffercolor fieldname="" red="255" blue="255" green="255"/>
+              <buffersize fieldname="" units="pt" value="1"/>
+              <bufferenabled fieldname="" on=""/>
+              <multilineenabled fieldname="" on=""/>
+              <selectedonly on=""/>
+            </labelattributes>
+            <annotationform>.</annotationform>
+            <aliases>
+              <alias field="gid" index="0" name=""/>
+              <alias field="name" index="1" name=""/>
+              <alias field="mun_id" index="2" name=""/>
+            </aliases>
+            <excludeAttributesWMS/>
+            <excludeAttributesWFS/>
+            <attributeactions default="-1"/>
+            <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+              <columns>
+                <column width="-1" hidden="0" type="field" name="gid"/>
+                <column width="166" hidden="0" type="field" name="name"/>
+                <column width="-1" hidden="0" type="field" name="mun_id"/>
+                <column width="-1" hidden="1" type="actions"/>
+              </columns>
+            </attributetableconfig>
+            <editform>.</editform>
+            <editforminit/>
+            <editforminitcodesource>0</editforminitcodesource>
+            <editforminitfilepath>.</editforminitfilepath>
+            <editforminitcode><![CDATA[]]></editforminitcode>
+            <featformsuppress>0</featformsuppress>
+            <editorlayout>generatedlayout</editorlayout>
+            <widgets/>
+            <conditionalstyles>
+              <rowstyles/>
+              <fieldstyles/>
+            </conditionalstyles>
+            <defaults>
+              <default field="gid" expression=""/>
+              <default field="name" expression=""/>
+              <default field="mun_id" expression=""/>
+            </defaults>
+            <previewExpression>COALESCE( "name", '&lt;NULL>' )</previewExpression>
+            <layerGeometryType>2</layerGeometryType>
+          </qgis>
+        </map-layer-style>
         <map-layer-style name="aggr">
           <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
             <edittypes>
@@ -4677,14 +5005,14 @@ def my_form_open(dialog, layer, feature):
           <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
             <layer pass="0" class="SimpleFill" locked="0">
               <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="color" v="169,154,138,255"/>
+              <prop k="color" v="169,154,138,0"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
               <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="255,255,255,255"/>
+              <prop k="outline_color" v="0,0,0,255"/>
               <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.2"/>
+              <prop k="outline_width" v="0"/>
               <prop k="outline_width_unit" v="MM"/>
               <prop k="style" v="solid"/>
             </layer>
@@ -4695,7 +5023,7 @@ def my_form_open(dialog, layer, feature):
       </renderer-v2>
       <labeling type="simple"/>
       <customproperties/>
-      <blendMode>6</blendMode>
+      <blendMode>0</blendMode>
       <featureBlendMode>0</featureBlendMode>
       <layerTransparency>0</layerTransparency>
       <displayfield>name</displayfield>
@@ -5831,7 +6159,7 @@ def my_form_open(dialog, layer, feature):
       <keywordList>
         <value></value>
       </keywordList>
-      <layername>cities_EPSG3035</layername>
+      <layername>City</layername>
       <srs>
         <spatialrefsys>
           <proj4>+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
@@ -5848,8 +6176,297 @@ def my_form_open(dialog, layer, feature):
       <vectorjoins/>
       <layerDependencies/>
       <expressionfields/>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
+      <map-layer-style-manager current="adm">
+        <map-layer-style name="">
+          <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+            <edittypes>
+              <edittype widgetv2type="TextEdit" name="country">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="district">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="city">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="addrtype">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="addrlocat">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="quadrant">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="offset">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+            </edittypes>
+            <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+              <symbols>
+                <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
+                  <layer pass="0" class="SimpleMarker" locked="0">
+                    <prop k="angle" v="0"/>
+                    <prop k="color" v="255,255,255,255"/>
+                    <prop k="horizontal_anchor_point" v="1"/>
+                    <prop k="joinstyle" v="bevel"/>
+                    <prop k="name" v="circle"/>
+                    <prop k="offset" v="0,0"/>
+                    <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="offset_unit" v="MM"/>
+                    <prop k="outline_color" v="0,0,0,255"/>
+                    <prop k="outline_style" v="solid"/>
+                    <prop k="outline_width" v="0"/>
+                    <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="outline_width_unit" v="MM"/>
+                    <prop k="scale_method" v="area"/>
+                    <prop k="size" v="0.8"/>
+                    <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="size_unit" v="MM"/>
+                    <prop k="vertical_anchor_point" v="1"/>
+                  </layer>
+                  <layer pass="0" class="SimpleMarker" locked="0">
+                    <prop k="angle" v="0"/>
+                    <prop k="color" v="0,0,0,255"/>
+                    <prop k="horizontal_anchor_point" v="1"/>
+                    <prop k="joinstyle" v="bevel"/>
+                    <prop k="name" v="circle"/>
+                    <prop k="offset" v="0,0"/>
+                    <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="offset_unit" v="MM"/>
+                    <prop k="outline_color" v="0,0,0,255"/>
+                    <prop k="outline_style" v="solid"/>
+                    <prop k="outline_width" v="0"/>
+                    <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="outline_width_unit" v="MM"/>
+                    <prop k="scale_method" v="area"/>
+                    <prop k="size" v="0.166667"/>
+                    <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="size_unit" v="MM"/>
+                    <prop k="vertical_anchor_point" v="1"/>
+                  </layer>
+                </symbol>
+              </symbols>
+              <rotation/>
+              <sizescale scalemethod="diameter"/>
+            </renderer-v2>
+            <labeling type="simple"/>
+            <customproperties>
+              <property key="labeling" value="pal"/>
+              <property key="labeling/addDirectionSymbol" value="false"/>
+              <property key="labeling/angleOffset" value="0"/>
+              <property key="labeling/blendMode" value="0"/>
+              <property key="labeling/bufferBlendMode" value="0"/>
+              <property key="labeling/bufferColorA" value="255"/>
+              <property key="labeling/bufferColorB" value="255"/>
+              <property key="labeling/bufferColorG" value="255"/>
+              <property key="labeling/bufferColorR" value="255"/>
+              <property key="labeling/bufferDraw" value="true"/>
+              <property key="labeling/bufferJoinStyle" value="128"/>
+              <property key="labeling/bufferNoFill" value="false"/>
+              <property key="labeling/bufferSize" value="0.15"/>
+              <property key="labeling/bufferSizeInMapUnits" value="false"/>
+              <property key="labeling/bufferSizeMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/bufferTransp" value="0"/>
+              <property key="labeling/centroidInside" value="false"/>
+              <property key="labeling/centroidWhole" value="false"/>
+              <property key="labeling/dataDefined/OffsetQuad" value="1~~0~~~~quadrant"/>
+              <property key="labeling/dataDefined/OffsetXY" value="1~~0~~~~offset"/>
+              <property key="labeling/decimals" value="3"/>
+              <property key="labeling/displayAll" value="false"/>
+              <property key="labeling/dist" value="0"/>
+              <property key="labeling/distInMapUnits" value="false"/>
+              <property key="labeling/distMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/drawLabels" value="true"/>
+              <property key="labeling/enabled" value="true"/>
+              <property key="labeling/fieldName" value="city"/>
+              <property key="labeling/fitInPolygonOnly" value="false"/>
+              <property key="labeling/fontCapitals" value="0"/>
+              <property key="labeling/fontFamily" value="Ubuntu"/>
+              <property key="labeling/fontItalic" value="false"/>
+              <property key="labeling/fontLetterSpacing" value="0"/>
+              <property key="labeling/fontLimitPixelSize" value="false"/>
+              <property key="labeling/fontMaxPixelSize" value="10000"/>
+              <property key="labeling/fontMinPixelSize" value="3"/>
+              <property key="labeling/fontSize" value="4"/>
+              <property key="labeling/fontSizeInMapUnits" value="false"/>
+              <property key="labeling/fontSizeMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/fontStrikeout" value="false"/>
+              <property key="labeling/fontUnderline" value="false"/>
+              <property key="labeling/fontWeight" value="75"/>
+              <property key="labeling/fontWordSpacing" value="0"/>
+              <property key="labeling/formatNumbers" value="false"/>
+              <property key="labeling/isExpression" value="false"/>
+              <property key="labeling/labelOffsetInMapUnits" value="false"/>
+              <property key="labeling/labelOffsetMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/labelPerPart" value="false"/>
+              <property key="labeling/leftDirectionSymbol" value="&lt;"/>
+              <property key="labeling/limitNumLabels" value="false"/>
+              <property key="labeling/maxCurvedCharAngleIn" value="25"/>
+              <property key="labeling/maxCurvedCharAngleOut" value="-25"/>
+              <property key="labeling/maxNumLabels" value="2000"/>
+              <property key="labeling/mergeLines" value="false"/>
+              <property key="labeling/minFeatureSize" value="0"/>
+              <property key="labeling/multilineAlign" value="3"/>
+              <property key="labeling/multilineHeight" value="1"/>
+              <property key="labeling/namedStyle" value="Bold"/>
+              <property key="labeling/obstacle" value="true"/>
+              <property key="labeling/obstacleFactor" value="1.32"/>
+              <property key="labeling/obstacleType" value="0"/>
+              <property key="labeling/offsetType" value="0"/>
+              <property key="labeling/placeDirectionSymbol" value="0"/>
+              <property key="labeling/placement" value="1"/>
+              <property key="labeling/placementFlags" value="10"/>
+              <property key="labeling/plussign" value="false"/>
+              <property key="labeling/predefinedPositionOrder" value="TR,TL,BR,BL,R,L,TSR,BSR"/>
+              <property key="labeling/preserveRotation" value="true"/>
+              <property key="labeling/previewBkgrdColor" value="#ffffff"/>
+              <property key="labeling/priority" value="5"/>
+              <property key="labeling/quadOffset" value="5"/>
+              <property key="labeling/repeatDistance" value="0"/>
+              <property key="labeling/repeatDistanceMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/repeatDistanceUnit" value="1"/>
+              <property key="labeling/reverseDirectionSymbol" value="false"/>
+              <property key="labeling/rightDirectionSymbol" value=">"/>
+              <property key="labeling/scaleMax" value="10000000"/>
+              <property key="labeling/scaleMin" value="1"/>
+              <property key="labeling/scaleVisibility" value="false"/>
+              <property key="labeling/shadowBlendMode" value="6"/>
+              <property key="labeling/shadowColorB" value="0"/>
+              <property key="labeling/shadowColorG" value="0"/>
+              <property key="labeling/shadowColorR" value="0"/>
+              <property key="labeling/shadowDraw" value="false"/>
+              <property key="labeling/shadowOffsetAngle" value="135"/>
+              <property key="labeling/shadowOffsetDist" value="1"/>
+              <property key="labeling/shadowOffsetGlobal" value="true"/>
+              <property key="labeling/shadowOffsetMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/shadowOffsetUnits" value="1"/>
+              <property key="labeling/shadowRadius" value="1.5"/>
+              <property key="labeling/shadowRadiusAlphaOnly" value="false"/>
+              <property key="labeling/shadowRadiusMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/shadowRadiusUnits" value="1"/>
+              <property key="labeling/shadowScale" value="100"/>
+              <property key="labeling/shadowTransparency" value="30"/>
+              <property key="labeling/shadowUnder" value="0"/>
+              <property key="labeling/shapeBlendMode" value="0"/>
+              <property key="labeling/shapeBorderColorA" value="255"/>
+              <property key="labeling/shapeBorderColorB" value="128"/>
+              <property key="labeling/shapeBorderColorG" value="128"/>
+              <property key="labeling/shapeBorderColorR" value="128"/>
+              <property key="labeling/shapeBorderWidth" value="0"/>
+              <property key="labeling/shapeBorderWidthMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/shapeBorderWidthUnits" value="1"/>
+              <property key="labeling/shapeDraw" value="false"/>
+              <property key="labeling/shapeFillColorA" value="255"/>
+              <property key="labeling/shapeFillColorB" value="255"/>
+              <property key="labeling/shapeFillColorG" value="255"/>
+              <property key="labeling/shapeFillColorR" value="255"/>
+              <property key="labeling/shapeJoinStyle" value="64"/>
+              <property key="labeling/shapeOffsetMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/shapeOffsetUnits" value="1"/>
+              <property key="labeling/shapeOffsetX" value="0"/>
+              <property key="labeling/shapeOffsetY" value="0"/>
+              <property key="labeling/shapeRadiiMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/shapeRadiiUnits" value="1"/>
+              <property key="labeling/shapeRadiiX" value="0"/>
+              <property key="labeling/shapeRadiiY" value="0"/>
+              <property key="labeling/shapeRotation" value="0"/>
+              <property key="labeling/shapeRotationType" value="0"/>
+              <property key="labeling/shapeSVGFile" value=""/>
+              <property key="labeling/shapeSizeMapUnitScale" value="0,0,0,0,0,0"/>
+              <property key="labeling/shapeSizeType" value="0"/>
+              <property key="labeling/shapeSizeUnits" value="1"/>
+              <property key="labeling/shapeSizeX" value="0"/>
+              <property key="labeling/shapeSizeY" value="0"/>
+              <property key="labeling/shapeTransparency" value="0"/>
+              <property key="labeling/shapeType" value="0"/>
+              <property key="labeling/substitutions" value="&lt;substitutions/>"/>
+              <property key="labeling/textColorA" value="255"/>
+              <property key="labeling/textColorB" value="0"/>
+              <property key="labeling/textColorG" value="0"/>
+              <property key="labeling/textColorR" value="0"/>
+              <property key="labeling/textTransp" value="0"/>
+              <property key="labeling/upsidedownLabels" value="0"/>
+              <property key="labeling/useSubstitutions" value="false"/>
+              <property key="labeling/wrapChar" value=""/>
+              <property key="labeling/xOffset" value="1"/>
+              <property key="labeling/yOffset" value="0"/>
+              <property key="labeling/zIndex" value="0"/>
+            </customproperties>
+            <blendMode>0</blendMode>
+            <featureBlendMode>0</featureBlendMode>
+            <layerTransparency>0</layerTransparency>
+            <displayfield>country</displayfield>
+            <label>0</label>
+            <labelattributes>
+              <label fieldname="" text="Label"/>
+              <family fieldname="" name="Ubuntu"/>
+              <size fieldname="" units="pt" value="12"/>
+              <bold fieldname="" on="0"/>
+              <italic fieldname="" on="0"/>
+              <underline fieldname="" on="0"/>
+              <strikeout fieldname="" on="0"/>
+              <color fieldname="" red="0" blue="0" green="0"/>
+              <x fieldname=""/>
+              <y fieldname=""/>
+              <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+              <angle fieldname="" value="0" auto="0"/>
+              <alignment fieldname="" value="center"/>
+              <buffercolor fieldname="" red="255" blue="255" green="255"/>
+              <buffersize fieldname="" units="pt" value="1"/>
+              <bufferenabled fieldname="" on=""/>
+              <multilineenabled fieldname="" on=""/>
+              <selectedonly on=""/>
+            </labelattributes>
+            <annotationform>.</annotationform>
+            <aliases>
+              <alias field="country" index="0" name=""/>
+              <alias field="district" index="1" name=""/>
+              <alias field="city" index="2" name=""/>
+              <alias field="addrtype" index="3" name=""/>
+              <alias field="addrlocat" index="4" name=""/>
+              <alias field="quadrant" index="5" name=""/>
+              <alias field="offset" index="6" name=""/>
+            </aliases>
+            <excludeAttributesWMS/>
+            <excludeAttributesWFS/>
+            <attributeactions default="-1"/>
+            <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+              <columns>
+                <column width="-1" hidden="0" type="field" name="country"/>
+                <column width="-1" hidden="0" type="field" name="district"/>
+                <column width="-1" hidden="0" type="field" name="city"/>
+                <column width="-1" hidden="0" type="field" name="addrtype"/>
+                <column width="-1" hidden="0" type="field" name="addrlocat"/>
+                <column width="-1" hidden="1" type="actions"/>
+              </columns>
+            </attributetableconfig>
+            <editform>.</editform>
+            <editforminit/>
+            <editforminitcodesource>0</editforminitcodesource>
+            <editforminitfilepath>.</editforminitfilepath>
+            <editforminitcode><![CDATA[]]></editforminitcode>
+            <featformsuppress>0</featformsuppress>
+            <editorlayout>generatedlayout</editorlayout>
+            <widgets/>
+            <conditionalstyles>
+              <rowstyles/>
+              <fieldstyles/>
+            </conditionalstyles>
+            <defaults>
+              <default field="country" expression=""/>
+              <default field="district" expression=""/>
+              <default field="city" expression=""/>
+              <default field="addrtype" expression=""/>
+              <default field="addrlocat" expression=""/>
+              <default field="quadrant" expression=""/>
+              <default field="offset" expression=""/>
+            </defaults>
+            <previewExpression>COALESCE( "country", '&lt;NULL>' )</previewExpression>
+            <layerGeometryType>0</layerGeometryType>
+          </qgis>
+        </map-layer-style>
+        <map-layer-style name="adm"/>
       </map-layer-style-manager>
       <edittypes>
         <edittype widgetv2type="TextEdit" name="country">
@@ -5879,7 +6496,7 @@ def my_form_open(dialog, layer, feature):
           <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="255,255,255,255"/>
+              <prop k="color" v="0,0,0,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
               <prop k="name" v="circle"/>
@@ -5933,10 +6550,10 @@ def my_form_open(dialog, layer, feature):
         <property key="labeling/bufferColorB" value="255"/>
         <property key="labeling/bufferColorG" value="255"/>
         <property key="labeling/bufferColorR" value="255"/>
-        <property key="labeling/bufferDraw" value="true"/>
+        <property key="labeling/bufferDraw" value="false"/>
         <property key="labeling/bufferJoinStyle" value="128"/>
         <property key="labeling/bufferNoFill" value="false"/>
-        <property key="labeling/bufferSize" value="0.15"/>
+        <property key="labeling/bufferSize" value="0.25"/>
         <property key="labeling/bufferSizeInMapUnits" value="false"/>
         <property key="labeling/bufferSizeMapUnitScale" value="0,0,0,0,0,0"/>
         <property key="labeling/bufferTransp" value="0"/>
@@ -5954,18 +6571,18 @@ def my_form_open(dialog, layer, feature):
         <property key="labeling/fieldName" value="city"/>
         <property key="labeling/fitInPolygonOnly" value="false"/>
         <property key="labeling/fontCapitals" value="0"/>
-        <property key="labeling/fontFamily" value="Ubuntu"/>
-        <property key="labeling/fontItalic" value="false"/>
+        <property key="labeling/fontFamily" value="Carlito"/>
+        <property key="labeling/fontItalic" value="true"/>
         <property key="labeling/fontLetterSpacing" value="0"/>
         <property key="labeling/fontLimitPixelSize" value="false"/>
         <property key="labeling/fontMaxPixelSize" value="10000"/>
         <property key="labeling/fontMinPixelSize" value="3"/>
-        <property key="labeling/fontSize" value="4"/>
+        <property key="labeling/fontSize" value="5"/>
         <property key="labeling/fontSizeInMapUnits" value="false"/>
         <property key="labeling/fontSizeMapUnitScale" value="0,0,0,0,0,0"/>
         <property key="labeling/fontStrikeout" value="false"/>
         <property key="labeling/fontUnderline" value="false"/>
-        <property key="labeling/fontWeight" value="75"/>
+        <property key="labeling/fontWeight" value="50"/>
         <property key="labeling/fontWordSpacing" value="0"/>
         <property key="labeling/formatNumbers" value="false"/>
         <property key="labeling/isExpression" value="false"/>
@@ -5981,7 +6598,7 @@ def my_form_open(dialog, layer, feature):
         <property key="labeling/minFeatureSize" value="0"/>
         <property key="labeling/multilineAlign" value="3"/>
         <property key="labeling/multilineHeight" value="1"/>
-        <property key="labeling/namedStyle" value="Bold"/>
+        <property key="labeling/namedStyle" value="Italic"/>
         <property key="labeling/obstacle" value="true"/>
         <property key="labeling/obstacleFactor" value="1.32"/>
         <property key="labeling/obstacleType" value="0"/>
@@ -6103,7 +6720,7 @@ def my_form_open(dialog, layer, feature):
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;offset&quot;" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="country"/>
           <column width="-1" hidden="0" type="field" name="district"/>
@@ -6170,6 +6787,29 @@ def my_form_open(dialog, layer, feature):
       </noData>
       <map-layer-style-manager current="">
         <map-layer-style name=""/>
+        <map-layer-style name="alternative">
+          <qgis version="2.18.14" minimumScale="0" maximumScale="1e+08" hasScaleBasedVisibilityFlag="0">
+            <pipe>
+              <rasterrenderer opacity="1" alphaBand="-1" classificationMax="1393.49" classificationMinMaxOrigin="CumulativeCutFullExtentEstimated" band="1" classificationMin="232.858" type="singlebandpseudocolor">
+                <rasterTransparency/>
+                <rastershader>
+                  <colorrampshader colorRampType="INTERPOLATED" clip="0">
+                    <item alpha="255" value="200" label="&lt; 100" color="#8baabf"/>
+                    <item alpha="255" value="400" label="100 - 300" color="#78ba78"/>
+                    <item alpha="255" value="600" label="300 - 500" color="#ffff97"/>
+                    <item alpha="255" value="800" label="500 - 700" color="#ffb269"/>
+                    <item alpha="255" value="1000" label="700 - 900" color="#bf7f3f"/>
+                    <item alpha="255" value="1393" label="> 900" color="#ffffff"/>
+                  </colorrampshader>
+                </rastershader>
+              </rasterrenderer>
+              <brightnesscontrast brightness="0" contrast="0"/>
+              <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+              <rasterresampler maxOversampling="2"/>
+            </pipe>
+            <blendMode>6</blendMode>
+          </qgis>
+        </map-layer-style>
       </map-layer-style-manager>
       <pipe>
         <rasterrenderer opacity="1" alphaBand="-1" classificationMax="1393.49" classificationMinMaxOrigin="CumulativeCutFullExtentEstimated" band="1" classificationMin="232.858" type="singlebandpseudocolor">
@@ -6220,7 +6860,7 @@ def my_form_open(dialog, layer, feature):
       <vectorjoins/>
       <layerDependencies/>
       <expressionfields/>
-      <map-layer-style-manager current="DEM">
+      <map-layer-style-manager current="aggr">
         <map-layer-style name="">
           <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
             <edittypes>
@@ -6381,8 +7021,7 @@ def my_form_open(dialog, layer, feature):
             <layerGeometryType>0</layerGeometryType>
           </qgis>
         </map-layer-style>
-        <map-layer-style name="DEM"/>
-        <map-layer-style name="aggr">
+        <map-layer-style name="DEM">
           <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
             <edittypes>
               <edittype widgetv2type="TextEdit" name="id_mun">
@@ -6436,11 +7075,11 @@ def my_form_open(dialog, layer, feature):
                     <prop k="offset_unit" v="MM"/>
                     <prop k="outline_color" v="0,0,0,255"/>
                     <prop k="outline_style" v="solid"/>
-                    <prop k="outline_width" v="0.1"/>
+                    <prop k="outline_width" v="0"/>
                     <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
                     <prop k="outline_width_unit" v="MM"/>
                     <prop k="scale_method" v="diameter"/>
-                    <prop k="size" v="0.3"/>
+                    <prop k="size" v="0.4"/>
                     <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
                     <prop k="size_unit" v="MM"/>
                     <prop k="vertical_anchor_point" v="1"/>
@@ -6495,7 +7134,7 @@ def my_form_open(dialog, layer, feature):
             <excludeAttributesWMS/>
             <excludeAttributesWFS/>
             <attributeactions default="-1"/>
-            <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;id_manure&quot;" sortOrder="0">
+            <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
               <columns>
                 <column width="-1" hidden="0" type="field" name="id_mun"/>
                 <column width="-1" hidden="0" type="field" name="id_building"/>
@@ -6542,6 +7181,7 @@ def my_form_open(dialog, layer, feature):
             <layerGeometryType>0</layerGeometryType>
           </qgis>
         </map-layer-style>
+        <map-layer-style name="aggr"/>
       </map-layer-style-manager>
       <edittypes>
         <edittype widgetv2type="TextEdit" name="id_mun">
@@ -6595,11 +7235,11 @@ def my_form_open(dialog, layer, feature):
               <prop k="offset_unit" v="MM"/>
               <prop k="outline_color" v="0,0,0,255"/>
               <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
+              <prop k="outline_width" v="0.1"/>
               <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
               <prop k="outline_width_unit" v="MM"/>
               <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="0.4"/>
+              <prop k="size" v="0.3"/>
               <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
               <prop k="size_unit" v="MM"/>
               <prop k="vertical_anchor_point" v="1"/>
@@ -6654,7 +7294,7 @@ def my_form_open(dialog, layer, feature):
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;id_manure&quot;" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="id_mun"/>
           <column width="-1" hidden="0" type="field" name="id_building"/>
@@ -6818,7 +7458,7 @@ def my_form_open(dialog, layer, feature):
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <aliases>
         <alias field="id_mun" index="0" name=""/>
         <alias field="id_building" index="1" name=""/>
@@ -6836,7 +7476,7 @@ def my_form_open(dialog, layer, feature):
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="-785514496">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="id_mun"/>
           <column width="-1" hidden="0" type="field" name="id_building"/>
@@ -6853,10 +7493,10 @@ def my_form_open(dialog, layer, feature):
           <column width="-1" hidden="1" type="actions"/>
         </columns>
       </attributetableconfig>
-      <editform></editform>
+      <editform>.</editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
-      <editforminitfilepath></editforminitfilepath>
+      <editforminitfilepath>.</editforminitfilepath>
       <editforminitcode><![CDATA[]]></editforminitcode>
       <featformsuppress>0</featformsuppress>
       <editorlayout>generatedlayout</editorlayout>
@@ -7709,8 +8349,9 @@ def my_form_open(dialog, layer, feature):
       <vectorjoins/>
       <layerDependencies/>
       <expressionfields/>
-      <map-layer-style-manager current="Zones">
-        <map-layer-style name="">
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+        <map-layer-style name="Zones">
           <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
             <edittypes>
               <edittype widgetv2type="TextEdit" name="rank">
@@ -7728,7 +8369,7 @@ def my_form_open(dialog, layer, feature):
                 <category render="true" symbol="0" value="3" label="High priority:|industrial areas"/>
                 <category render="true" symbol="1" value="2" label="Medium priority:|buffer zones around urban areas"/>
                 <category render="true" symbol="2" value="1" label="Low priority:|agriculture areas"/>
-                <category render="true" symbol="3" value="0" label="No go:|urban and forested areas"/>
+                <category render="true" symbol="3" value="0" label="Exclusion:|urban and forested areas"/>
               </categories>
               <symbols>
                 <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
@@ -7882,7 +8523,6 @@ def my_form_open(dialog, layer, feature):
             <layerGeometryType>2</layerGeometryType>
           </qgis>
         </map-layer-style>
-        <map-layer-style name="Zones"/>
         <map-layer-style name="alternative">
           <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
             <edittypes>
@@ -24119,7 +24759,7 @@ def my_form_open(dialog, layer, feature):
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;methane_total_produced&quot;" sortOrder="0">
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;manure_available&quot;" sortOrder="0">
         <columns>
           <column width="-1" hidden="0" type="field" name="id_target"/>
           <column width="-1" hidden="0" type="field" name="zone"/>
@@ -30824,7 +31464,7 @@ def my_form_open(dialog, layer, feature):
       <vectorjoins/>
       <layerDependencies/>
       <expressionfields/>
-      <map-layer-style-manager current="adm">
+      <map-layer-style-manager current="DEM">
         <map-layer-style name="">
           <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
             <edittypes>
@@ -30985,7 +31625,8 @@ def my_form_open(dialog, layer, feature):
             <layerGeometryType>1</layerGeometryType>
           </qgis>
         </map-layer-style>
-        <map-layer-style name="DEM">
+        <map-layer-style name="DEM"/>
+        <map-layer-style name="adm">
           <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
             <edittypes>
               <edittype widgetv2type="TextEdit" name="id">
@@ -31045,6 +31686,23 @@ def my_form_open(dialog, layer, feature):
                     <prop k="use_custom_dash" v="0"/>
                     <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
                   </layer>
+                  <layer pass="0" class="SimpleLine" locked="0">
+                    <prop k="capstyle" v="square"/>
+                    <prop k="customdash" v="5;2"/>
+                    <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="customdash_unit" v="MM"/>
+                    <prop k="draw_inside_polygon" v="0"/>
+                    <prop k="joinstyle" v="bevel"/>
+                    <prop k="line_color" v="255,255,0,255"/>
+                    <prop k="line_style" v="solid"/>
+                    <prop k="line_width" v="0.1"/>
+                    <prop k="line_width_unit" v="MM"/>
+                    <prop k="offset" v="0"/>
+                    <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="offset_unit" v="MM"/>
+                    <prop k="use_custom_dash" v="0"/>
+                    <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+                  </layer>
                 </symbol>
               </symbols>
               <rotation/>
@@ -31052,7 +31710,7 @@ def my_form_open(dialog, layer, feature):
             </renderer-v2>
             <labeling type="simple"/>
             <customproperties/>
-            <blendMode>6</blendMode>
+            <blendMode>0</blendMode>
             <featureBlendMode>0</featureBlendMode>
             <layerTransparency>33</layerTransparency>
             <displayfield>name</displayfield>
@@ -31128,7 +31786,6 @@ def my_form_open(dialog, layer, feature):
             <layerGeometryType>1</layerGeometryType>
           </qgis>
         </map-layer-style>
-        <map-layer-style name="adm"/>
       </map-layer-style-manager>
       <edittypes>
         <edittype widgetv2type="TextEdit" name="id">
@@ -31188,23 +31845,6 @@ def my_form_open(dialog, layer, feature):
               <prop k="use_custom_dash" v="0"/>
               <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
             </layer>
-            <layer pass="0" class="SimpleLine" locked="0">
-              <prop k="capstyle" v="square"/>
-              <prop k="customdash" v="5;2"/>
-              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="customdash_unit" v="MM"/>
-              <prop k="draw_inside_polygon" v="0"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="255,255,0,255"/>
-              <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.1"/>
-              <prop k="line_width_unit" v="MM"/>
-              <prop k="offset" v="0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="use_custom_dash" v="0"/>
-              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-            </layer>
           </symbol>
         </symbols>
         <rotation/>
@@ -31212,7 +31852,7 @@ def my_form_open(dialog, layer, feature):
       </renderer-v2>
       <labeling type="simple"/>
       <customproperties/>
-      <blendMode>0</blendMode>
+      <blendMode>6</blendMode>
       <featureBlendMode>0</featureBlendMode>
       <layerTransparency>33</layerTransparency>
       <displayfield>name</displayfield>
@@ -31315,8 +31955,114 @@ def my_form_open(dialog, layer, feature):
       <vectorjoins/>
       <layerDependencies/>
       <expressionfields/>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
+      <map-layer-style-manager current="zones">
+        <map-layer-style name="">
+          <qgis version="2.18.14" simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+            <edittypes>
+              <edittype widgetv2type="TextEdit" name="rank">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="zone">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="id_mun">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+              <edittype widgetv2type="TextEdit" name="id_target">
+                <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+              </edittype>
+            </edittypes>
+            <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+              <symbols>
+                <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
+                  <layer pass="0" class="SimpleMarker" locked="0">
+                    <prop k="angle" v="0"/>
+                    <prop k="color" v="178,223,138,255"/>
+                    <prop k="horizontal_anchor_point" v="1"/>
+                    <prop k="joinstyle" v="bevel"/>
+                    <prop k="name" v="diamond"/>
+                    <prop k="offset" v="0,0"/>
+                    <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="offset_unit" v="MM"/>
+                    <prop k="outline_color" v="0,0,0,255"/>
+                    <prop k="outline_style" v="solid"/>
+                    <prop k="outline_width" v="0"/>
+                    <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="outline_width_unit" v="MM"/>
+                    <prop k="scale_method" v="area"/>
+                    <prop k="size" v="1.4"/>
+                    <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+                    <prop k="size_unit" v="MM"/>
+                    <prop k="vertical_anchor_point" v="1"/>
+                  </layer>
+                </symbol>
+              </symbols>
+              <rotation/>
+              <sizescale scalemethod="diameter"/>
+            </renderer-v2>
+            <labeling type="simple"/>
+            <customproperties/>
+            <blendMode>0</blendMode>
+            <featureBlendMode>0</featureBlendMode>
+            <layerTransparency>0</layerTransparency>
+            <displayfield>id_mun</displayfield>
+            <label>0</label>
+            <labelattributes>
+              <label fieldname="" text="Label"/>
+              <family fieldname="" name="Ubuntu"/>
+              <size fieldname="" units="pt" value="12"/>
+              <bold fieldname="" on="0"/>
+              <italic fieldname="" on="0"/>
+              <underline fieldname="" on="0"/>
+              <strikeout fieldname="" on="0"/>
+              <color fieldname="" red="0" blue="0" green="0"/>
+              <x fieldname=""/>
+              <y fieldname=""/>
+              <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+              <angle fieldname="" value="0" auto="0"/>
+              <alignment fieldname="" value="center"/>
+              <buffercolor fieldname="" red="255" blue="255" green="255"/>
+              <buffersize fieldname="" units="pt" value="1"/>
+              <bufferenabled fieldname="" on=""/>
+              <multilineenabled fieldname="" on=""/>
+              <selectedonly on=""/>
+            </labelattributes>
+            <annotationform>.</annotationform>
+            <aliases>
+              <alias field="rank" index="0" name=""/>
+              <alias field="zone" index="1" name=""/>
+              <alias field="id_mun" index="2" name=""/>
+              <alias field="id_target" index="3" name=""/>
+            </aliases>
+            <excludeAttributesWMS/>
+            <excludeAttributesWFS/>
+            <attributeactions default="-1"/>
+            <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+              <columns/>
+            </attributetableconfig>
+            <editform>.</editform>
+            <editforminit/>
+            <editforminitcodesource>0</editforminitcodesource>
+            <editforminitfilepath>.</editforminitfilepath>
+            <editforminitcode><![CDATA[]]></editforminitcode>
+            <featformsuppress>0</featformsuppress>
+            <editorlayout>generatedlayout</editorlayout>
+            <widgets/>
+            <conditionalstyles>
+              <rowstyles/>
+              <fieldstyles/>
+            </conditionalstyles>
+            <defaults>
+              <default field="rank" expression=""/>
+              <default field="zone" expression=""/>
+              <default field="id_mun" expression=""/>
+              <default field="id_target" expression=""/>
+            </defaults>
+            <previewExpression/>
+            <layerGeometryType>0</layerGeometryType>
+          </qgis>
+        </map-layer-style>
+        <map-layer-style name="zones"/>
       </map-layer-style-manager>
       <edittypes>
         <edittype widgetv2type="TextEdit" name="rank">
@@ -31337,20 +32083,20 @@ def my_form_open(dialog, layer, feature):
           <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
-              <prop k="color" v="178,223,138,255"/>
+              <prop k="color" v="0,0,0,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="diamond"/>
+              <prop k="name" v="circle"/>
               <prop k="offset" v="0,0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
               <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_color" v="0,0,0,0"/>
               <prop k="outline_style" v="solid"/>
               <prop k="outline_width" v="0"/>
               <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
               <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="area"/>
-              <prop k="size" v="1.4"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="0.5"/>
               <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
               <prop k="size_unit" v="MM"/>
               <prop k="vertical_anchor_point" v="1"/>
@@ -31364,7 +32110,7 @@ def my_form_open(dialog, layer, feature):
       <customproperties/>
       <blendMode>0</blendMode>
       <featureBlendMode>0</featureBlendMode>
-      <layerTransparency>0</layerTransparency>
+      <layerTransparency>47</layerTransparency>
       <displayfield>id_mun</displayfield>
       <label>0</label>
       <labelattributes>
@@ -31398,7 +32144,13 @@ def my_form_open(dialog, layer, feature):
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
       <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
-        <columns/>
+        <columns>
+          <column width="-1" hidden="0" type="field" name="rank"/>
+          <column width="-1" hidden="0" type="field" name="zone"/>
+          <column width="-1" hidden="0" type="field" name="id_mun"/>
+          <column width="-1" hidden="0" type="field" name="id_target"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
       </attributetableconfig>
       <editform>.</editform>
       <editforminit/>
@@ -31418,7 +32170,7 @@ def my_form_open(dialog, layer, feature):
         <default field="id_mun" expression=""/>
         <default field="id_target" expression=""/>
       </defaults>
-      <previewExpression></previewExpression>
+      <previewExpression>COALESCE( "id_mun", '&lt;NULL>' )</previewExpression>
     </maplayer>
   </projectlayers>
   <properties>
@@ -31707,21 +32459,22 @@ def my_form_open(dialog, layer, feature):
   </properties>
   <visibility-presets>
     <visibility-preset name="ADM">
-      <layer style="" id="biogas_potential_pivot20171208115748741"/>
-      <layer style="" id="cities_EPSG303520171207230723398"/>
-      <layer style="adm" id="adm_communes20171129102137342"/>
+      <layer style="adm" id="cities_EPSG303520171207230723398"/>
       <layer style="" id="AOI_copy20171208121915660"/>
+      <layer style="adm" id="adm_communes20171129102137342"/>
+      <layer style="" id="biogas_potential_pivot20171208115748741"/>
     </visibility-preset>
     <visibility-preset name="Crop">
+      <layer style="" id="AOI_copy20171208121915660"/>
+      <layer style="aggr" id="adm_communes20171129102137342"/>
       <layer style="" id="Building_location_copy20171209182441449"/>
       <layer style="test" id="adm_communes_copy20171208114953633"/>
       <layer style="" id="biogas_potential_pivot20171208115748741"/>
-      <layer style="aggr" id="adm_communes20171129102137342"/>
-      <layer style="" id="AOI_copy20171208121915660"/>
     </visibility-preset>
     <visibility-preset name="DEM">
-      <layer style="" id="biogas_potential_pivot20171208115748741"/>
       <layer style="" id="AOI_copy20171208121915660"/>
+      <layer style="DEM" id="roads_main20171116165415827"/>
+      <layer style="" id="biogas_potential_pivot20171208115748741"/>
       <layer style="" id="dhm_lamb_10m_FINAL_EPSG303520171208122112555"/>
       <layer style="" id="DEM_Shadows_EPSG303520171120112810998"/>
     </visibility-preset>
@@ -31730,9 +32483,6 @@ def my_form_open(dialog, layer, feature):
       <layer style="Split" id="opt_allocation_all_farms_copy20171206110821285"/>
       <layer style="crop_flux" id="Manure__tonnes__copy20171206173732695"/>
       <layer style="" id="lulc_zones20171116165020771"/>
-      <checked-legend-nodes id="opt_allocation_all_farms_copy20171206110821285">
-        <checked-legend-node id="1"/>
-      </checked-legend-nodes>
     </visibility-preset>
     <visibility-preset name="Flux_manure">
       <layer style="split" id="opt_plants_all_copy20171206110713222"/>
@@ -31743,16 +32493,28 @@ def my_form_open(dialog, layer, feature):
         <checked-legend-node id="0"/>
       </checked-legend-nodes>
     </visibility-preset>
+    <visibility-preset name="LULC">
+      <layer style="" id="AOI_copy20171208121915660"/>
+      <layer style="" id="lulc_corine_12_adm20171129114826902"/>
+      <layer style="" id="biogas_potential_pivot20171208115748741"/>
+    </visibility-preset>
     <visibility-preset name="Manure">
+      <layer style="" id="AOI_copy20171208121915660"/>
+      <layer style="aggr" id="adm_communes20171129102137342"/>
       <layer style="aggr" id="farm_buildings_biomass20171208081716133"/>
       <layer style="" id="Crop_copy20171208124319985"/>
       <layer style="" id="biogas_potential_pivot20171208115748741"/>
-      <layer style="" id="AOI_copy20171208121915660"/>
     </visibility-preset>
     <visibility-preset name="Plants_all">
       <layer style="capacity" id="opt_plants_all20171206105000157"/>
       <layer style="capacity" id="opt_allocation_all_route20171205192544574"/>
       <layer style="Zones" id="lulc_zones20171116165020771"/>
+    </visibility-preset>
+    <visibility-preset name="Zones">
+      <layer style="" id="AOI_copy20171208121915660"/>
+      <layer style="zones" id="site_clean20171123085349351"/>
+      <layer style="Zones" id="lulc_zones20171116165020771"/>
+      <layer style="" id="biogas_potential_pivot20171208115748741"/>
     </visibility-preset>
   </visibility-presets>
 </qgis>

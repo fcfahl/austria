@@ -17,6 +17,7 @@
 **/01_Input/**
 **/02_Output/**
 **/03_Scripts/cache/**
+**/04_Workspace/export/**
 **/05_Report/**
 **/TMP
 **/TMP/**
@@ -32,3 +33,5 @@
 *.svgz
 *.odg
 *.png
+*.jpg
+*.qgs~
