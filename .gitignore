@@ -1,7 +1,10 @@
-# Tiff files
+# Image files
 *.tiff
 *.tif
 *.tfw
+*.png
+*.jpg
+*.jpeg
 
 # Shape files
 *.shp
@@ -29,9 +32,7 @@
 *.pyc
 *.log
 
-
+# other files
 *.svgz
 *.odg
-*.png
-*.jpg
 *.qgs~

@@ -10,7 +10,9 @@ tables:
     - {name: plant_capacity, type: double precision}
     - {name: rank, type: integer}
     - {name: length_manure_avg, type: double precision}
+    - {name: length_manure_sum, type: double precision}
     - {name: length_crop_avg, type: double precision}
+    - {name: length_crop_sum, type: double precision}
     - {name: manure_required, type: double precision}
     - {name: manure_available, type: double precision}
     - {name: manure_used, type: double precision}
@@ -30,6 +32,8 @@ tables:
     - {name: cost_total, type: double precision}
     - {name: ratio_manure, type: double precision}
     - {name: ratio_crop, type: double precision}
+    - {name: manure_km, type: double precision}
+    - {name: crop_km, type: double precision}
 
   opt_residual:
     geom: ''

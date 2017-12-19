@@ -392,8 +392,11 @@ def Step_07_calculate_Crop_Methane (plant_capacity):
         lengths AS (
             SELECT
                 id_target,
+                -- don't use COALESCE in avg as it will consider also null cell
                 AVG(length_manure) AS length_manure_avg,
-                AVG(length_crop) AS length_crop_avg
+                SUM(COALESCE(length_manure,0)) AS length_manure_sum,
+                AVG(length_crop) AS length_crop_avg,
+                SUM(COALESCE(length_crop,0)) AS length_crop_sum
             FROM {residual}
             GROUP BY id_target
         )
@@ -401,7 +404,9 @@ def Step_07_calculate_Crop_Methane (plant_capacity):
         SET plant_capacity = {plant_capacity},
             rank = {n_rank},
             length_manure_avg = l.length_manure_avg,
+            length_manure_sum = l.length_manure_sum,
             length_crop_avg = l.length_crop_avg,
+            length_crop_sum = l.length_crop_sum,
             crop_used = t.crop_used,
             methane_required = t.methane_required,
             methane_from_crop = t.methane_from_crop,
@@ -501,16 +506,16 @@ def Step_10_calculate_Plant_Costs ():
 
     manure='COALESCE(r.manure_used,0)'
     crop='COALESCE(r.crop_used,0)'
-    distance1='r.length / 1000'
-    distance2='r.length / 1000'
+    distance_manure='r.length_manure / 1000'
+    distance_crop='r.length_crop / 1000'
     harvest=SQL_costs['harvest']
     ensiling=SQL_costs['ensiling']
     km=SQL_costs['manure']
     fixed=SQL_costs['manure_fixed']
 
     cost_harvest = "({crop} * {harvest})".format(crop=crop, harvest=harvest)
-    cost_ensiling = "({crop} * {ensiling} * {distance})".format(crop=crop, ensiling=ensiling, distance=distance2)
-    cost_manure = "({manure} * ({fixed} + ({km}  * ({distance}))) )".format(manure=manure, fixed=fixed, km=km, distance=distance1)
+    cost_ensiling = "({crop} * {ensiling} * {distance})".format(crop=crop, ensiling=ensiling, distance=distance_crop)
+    cost_manure = "({manure} * ({fixed} + ({km}  * ({distance}))) )".format(manure=manure, fixed=fixed, km=km, distance=distance_manure)
 
     # __________________________ update residuals
     sql_cost= """
@@ -532,7 +537,9 @@ def Step_10_calculate_Plant_Costs ():
             cost_ensiling = b.cost_ensiling,
             cost_manure = b.cost_manure,
             cost_total = COALESCE(b.cost_harvest,0) + COALESCE(b.cost_ensiling,0) +  COALESCE(b.cost_manure,0),
-            resources_total = COALESCE(b.manure_used,0) + COALESCE(b.crop_used,0)
+            resources_total = COALESCE(b.manure_used,0) + COALESCE(b.crop_used,0),
+            manure_km = b.manure_used / NULLIF(length_manure_sum,0),
+            crop_km = b.crop_used / NULLIF(length_crop_sum,0)
         FROM costs AS b
         WHERE a.id_target = b.id_target
         ;
