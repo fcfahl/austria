@@ -85,6 +85,8 @@ def reproject_OSM (tables):
 
     print "\n__________________ reprojecting DB ______________________\n"
 
+    cursor = connect_PostGIS (db='postgres')
+
     for key in tables:
 
         geometry = OSM_tables[key]

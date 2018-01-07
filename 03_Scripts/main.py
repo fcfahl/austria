@@ -90,7 +90,7 @@ if __name__ == "__main__":
     # TOPO.Step_02_segmentize_OSM_Roads()
     # TOPO.Step_03_create_Road_Topology()
     # TOPO.Step_04_update_Topology()
-    # TOPO.Step_05_extract_Routes_(check=FALSE)
+    # TOPO.Step_05_extract_Routes(check=True)
 
     #==============================================================================
     #           PLANTS
@@ -110,9 +110,9 @@ if __name__ == "__main__":
 #
     OPT.extract_plants_by_capacity ()
     OPT.export_Tables_CSV ()
-    # 
-    # OPT2.extract_plants_all ()
-    # OPT2.export_Tables_CSV ()
+
+    OPT2.extract_plants_all ()
+    OPT2.export_Tables_CSV ()
 
 
     #==============================================================================
@@ -131,3 +131,4 @@ if __name__ == "__main__":
     # clean_selected_tables (False)
 
     log_close()
+121212

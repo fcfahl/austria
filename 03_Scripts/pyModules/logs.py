@@ -35,7 +35,7 @@ def initialize_Log(fileName, mode):
 #    remove_LOG_File(file)
 
 
-    handler = colorlog.StreamHandler()
+    handler = logging.StreamHandler()
     handler.setFormatter(colorlog.ColoredFormatter(
     '%(log_color)s%(levelname)s:%(name)s:%(message)s'))
 
