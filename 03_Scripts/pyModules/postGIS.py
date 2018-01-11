@@ -221,8 +221,14 @@ def export_CSV (path, table, columns='*'):
         table=table,
     )
 
-    command = "psql -d {db} -U {user} -w -t -A -F',' --no-align -c \
-        'COPY (SELECT {columns} FROM public.{table} ORDER BY id_plant) To STDOUT WITh CSV HEADER' > {outFile}".format(
+    if platform == 'windows':
+        os.chdir(pg_win)
+        psql = "psql.exe"
+    else:
+        psql = "psql"
+
+    command = "{psql} -d {db} -U {user} -w -t -A -F',' --no-align -c \"COPY (SELECT {columns} FROM public.{table} ORDER BY id_plant) TO STDOUT WITH CSV HEADER\" > {outFile}".format(
+        psql=psql,
         host=db_PostGIS['host'],
         port=db_PostGIS['port'],
         db=db_PostGIS['dbname'],
@@ -233,6 +239,7 @@ def export_CSV (path, table, columns='*'):
         outFile=outFile)
 
     subprocess.call(command, shell=True)
+    info (command)
 
 def import_SHP (shapefile, table):
 
@@ -240,22 +247,35 @@ def import_SHP (shapefile, table):
 
     drop_table (table)
 
-    sql_file = "{0}.sql".format(table)
+    if platform == 'windows':
+        os.chdir(pg_win)
+        shp2pg = "shp2pgsql.exe"
+        psql = "psql.exe"
+        sql_file = "{0}/{1}.sql".format(outDir, table)
+    else:
+        shp2pg = "shp2pgsql"
+        psql = "psql"
+        sql_file = "{0}.sql".format(table)
 
-    command = "shp2pgsql -s {proj} -I -c {inFile} {table}> {sql}" .format(
+    command = "{shp2pg} -s {proj} -I -c {inFile} {table} > {sql}" .format(
+        shp2pg=shp2pg,
         proj=db_PostGIS['proj'],
         table=table,
         sql=sql_file,
+        outDir=outDir,
         inFile=shapefile)
 
-    command2 = "psql --no-password --dbname={dbname} --username={user} --host={host} --table={table} < {sql}" .format(
+    command2 = "{psql} --no-password --dbname={dbname} --username={user} --host={host} < {sql}" .format(
+        psql=psql,
         dbname=db_PostGIS['dbname'],
         host=db_PostGIS['host'],
         pwd=db_PostGIS['pwd'],
         user=db_PostGIS['user'],
         sql=sql_file,
-        table=table
+        table=table,
+        outDir=outDir
         )
+
 
     subprocess.call(command, shell=True)
     subprocess.call(command2, shell=True)

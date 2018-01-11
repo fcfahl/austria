@@ -38,7 +38,7 @@ if __name__ == "__main__":
     #==============================================================================
 
     # OSM.Step_01_download_OSM (raw=OSM_raw['austria'], osm=OSM_Files['pbf'])
-    # OSM.Step_02_import_PostGIS (osm=OSM_Files['pbf'], cache=True, limit_AOI=True)
+    # OSM.Step_02_import_PostGIS (osm=OSM_Files['pbf'], cache=False, limit_AOI=True)
     # OSM.Step_03_reproject_Tables (tables=OSM_tables)
 
     #==============================================================================
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     #==============================================================================
     #           PLANTS
     #==============================================================================
-    #
+
     # PLT.Step_01_initiate_Plants()
     # PLT.Step_02_join_Farm_Resources()
     # PLT.Step_03_aggregate_Resources()
@@ -108,10 +108,10 @@ if __name__ == "__main__":
     #           OPTMIZATION (location of plants)
     #==============================================================================
 #
-    OPT.extract_plants_by_capacity ()
-    OPT.export_Tables_CSV ()
-
+    # OPT.extract_plants_by_capacity ()
     OPT2.extract_plants_all ()
+
+    # OPT.export_Tables_CSV ()
     OPT2.export_Tables_CSV ()
 
 
@@ -131,4 +131,3 @@ if __name__ == "__main__":
     # clean_selected_tables (False)
 
     log_close()
-121212

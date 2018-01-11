@@ -2,6 +2,7 @@ from variables import *
 from pyModules.postGIS import *
 from pg_queries import *
 from postGIS import export_CSV
+from cost_formula import transportation_costs
 
 def Step_01_initialize_Files (plants):
 
@@ -140,6 +141,12 @@ def Step_04_calculate_Manure (plant_capacity):
             GROUP BY f.id_target
             ORDER BY f.id_target
         ),
+        -- it fix the problem with only one farm that outputed 0 as result
+        column_check AS (
+    		SELECT
+    			(SELECT id_target FROM current_plant) AS id_target,
+    			COALESCE( (SELECT manure_row_1 FROM manure_columns), 0 ) as manure_row_1
+        ),
         manure_farms AS (
             SELECT
                 f.id_target, f.id_building, f.length,
@@ -149,7 +156,7 @@ def Step_04_calculate_Manure (plant_capacity):
                 row_number () OVER (ORDER BY s.id_target, s.length ASC) AS manure_row
                 FROM farm_selection AS s
                 WHERE s.length < {manure_distance}
-                ) AS f, manure_columns AS m
+                ) AS f, column_check AS m
             WHERE f.id_target = m.id_target AND f.manure_row <= m.manure_row_1 + 1-- grab the next value of the sequence
         ),
         manure_used AS (
@@ -200,17 +207,18 @@ def Step_05_calculate_Manure_Methane (plant_capacity):
         ),
         manure_available AS (
             SELECT id_target,
-                SUM (COALESCE(manure_available,0)) AS manure_available,
-                SUM (COALESCE(crop_available,0)) AS crop_available,
-                SUM (COALESCE(manure_used,0)) AS manure_used
+                SUM (COALESCE(manure_used,0)) AS manure_used,
+                SUM (COALESCE(manure_available,0)) + SUM (COALESCE(manure_used,0)) AS manure_available,
+                SUM (COALESCE(crop_available,0)) AS crop_available
             FROM farm_selection
             GROUP BY id_target
             ORDER BY id_target
         ),
         manure_required AS (
             SELECT
-                a.id_target, a.manure_available, a.manure_used, p.manure_required,
-                a.manure_available - p.manure_required AS manure_residual,
+                a.id_target,
+                a.manure_available, a.manure_used, p.manure_required,
+                a.manure_used - p.manure_required AS manure_residual,
                 manure_used * {manure_yield} AS methane_from_manure,
                 a.crop_available
             FROM manure_available AS a, parameters AS p
@@ -504,18 +512,7 @@ def Step_10_calculate_Plant_Costs ():
 
     global selected_plant, found_plant
 
-    manure='COALESCE(r.manure_used,0)'
-    crop='COALESCE(r.crop_used,0)'
-    distance_manure='r.length_manure / 1000'
-    distance_crop='r.length_crop / 1000'
-    harvest=SQL_costs['harvest']
-    ensiling=SQL_costs['ensiling']
-    km=SQL_costs['manure']
-    fixed=SQL_costs['manure_fixed']
-
-    cost_harvest = "({crop} * {harvest})".format(crop=crop, harvest=harvest)
-    cost_ensiling = "({crop} * {ensiling} * {distance})".format(crop=crop, ensiling=ensiling, distance=distance_crop)
-    cost_manure = "({manure} * ({fixed} + ({km}  * ({distance}))) )".format(manure=manure, fixed=fixed, km=km, distance=distance_manure)
+    costs = transportation_costs(manure_resources = 'r.manure_used', crop_resources = 'r.crop_used', manure_distance='r.length_manure', crop_distance='r.length_crop')
 
     # __________________________ update residuals
     sql_cost= """
@@ -547,9 +544,9 @@ def Step_10_calculate_Plant_Costs ():
         plants = opt_plants.name,
         residual = opt_residual.name,
         allocation = opt_allocation.name,
-        cost_harvest = cost_harvest,
-        cost_ensiling = cost_ensiling,
-        cost_manure = cost_manure,
+        cost_harvest = costs['cost_harvest'],
+        cost_ensiling = costs['cost_ensiling'],
+        cost_manure = costs['cost_manure'],
         )
 
     if found_plant:
@@ -559,18 +556,7 @@ def Step_11_select_Next_Plant (minimum_value, plant_capacity):
 
     global found_plant, selected_plant, n_rank, target_exclusion
 
-    manure='COALESCE(manure_available,0)'
-    crop='COALESCE(crop_available,0)'
-    distance1='length / 1000'
-    distance2='length / 1000'
-    harvest=SQL_costs['harvest']
-    ensiling=SQL_costs['ensiling']
-    km=SQL_costs['manure']
-    fixed=SQL_costs['manure_fixed']
-
-    cost_harvest = "({crop} * {harvest})".format(crop=crop, harvest=harvest)
-    cost_ensiling = "({crop} * {ensiling} * {distance})".format(crop=crop, ensiling=ensiling, distance=distance2)
-    cost_manure = "({manure} * ({fixed} + ({km}  * ({distance}))) )".format(manure=manure, fixed=fixed, km=km, distance=distance1)
+    costs = transportation_costs(manure_resources = 'manure_available', crop_resources = 'crop_available', manure_distance='length', crop_distance='length')
 
     sql_residual= """
         WITH
@@ -601,9 +587,9 @@ def Step_11_select_Next_Plant (minimum_value, plant_capacity):
     """.format (
         plants = opt_plants.name,
         residual = opt_residual.name,
-        cost_harvest = cost_harvest,
-        cost_ensiling = cost_ensiling,
-        cost_manure = cost_manure,
+        cost_harvest = costs['cost_harvest'],
+        cost_ensiling = costs['cost_ensiling'],
+        cost_manure = costs['cost_manure'],
         n_rank = n_rank,
         minimum_value = minimum_value,
         crop_demand = SQL_crop_demand[plant_capacity],
@@ -656,8 +642,6 @@ def Step_11_select_Next_Plant (minimum_value, plant_capacity):
             error ("no more plants for the rank {0}".format(n_rank))
             n_rank -= 1
             found_plant = False
-
-
 
 def Step_12_map_Route_Plants (map_routes, location):
 
@@ -719,9 +703,10 @@ def Step_12_map_Route_Plants (map_routes, location):
 
         sql_custom (table = map_routes, sql=sql_merge)
 
-def pause_script (pause_, step ):
+def pause_script (step ):
 
-#
+    pause_ = False
+
     if pause_  :
         debug ("\n######################## {0} ##################\n".format(step))
         programPause = raw_input("Press the <ENTER> key to continue...")
@@ -742,9 +727,6 @@ def extract_plants_all ():
     exclusion = [1444, 1445, 1446]
     target_exclusion = "AND NOT ({0})".format(' or '.join( "id_target =" + str(x) for x in exclusion))
 
-
-    pause_ = False
-
     plants = "{0}_all".format(opt_plants.name)
     residual = "{0}_all".format(opt_residual.name)
 
@@ -753,17 +735,15 @@ def extract_plants_all ():
     plant_costs = "{0}_{1}kw".format(SQL_plant_costs['cost'].name, first_capacity)
     plant_costs_aggr = "{0}_{1}kw".format(SQL_plant_costs['cost_aggr'].name, first_capacity)
 
-
+    #____________________________
 
     Step_01_initialize_Files(plants)
 
     Step_02_select_First_Plant (plant_costs_aggr)
-
-    pause_script(pause_, "after step 2")
+    pause_script("after step 2")
 
     Step_03_initialize_Residues (plant_costs, str(first_capacity))
-
-    pause_script(pause_, "after step 3")
+    pause_script("after step 3")
 
     for plant_capacity in capacities:
 
@@ -776,36 +756,28 @@ def extract_plants_all ():
         while n_rank > 0:
 
             Step_04_calculate_Manure (str(plant_capacity))
-
-            pause_script(pause_, "after step 4")
+            pause_script("after step 4")
 
             Step_05_calculate_Manure_Methane (str(plant_capacity))
-
-            pause_script(pause_, "after step 5")
+            pause_script("after step 5")
 
             Step_06_calculate_Crop (str(plant_capacity))
-
-            pause_script(pause_, "after step 6")
+            pause_script("after step 6")
 
             Step_07_calculate_Crop_Methane (str(plant_capacity))
-
-            pause_script(pause_, "after step 7")
+            pause_script("after step 7")
 
             Step_08_transfer_Allocation ()
-
-            pause_script(pause_, "after step 8")
+            pause_script("after step 8")
 
             Step_09_update_Residues ()
-
-            pause_script(pause_, "after step 9")
+            pause_script("after step 9")
 
             Step_10_calculate_Plant_Costs ()
-
-            pause_script(pause_, "after step 10")
+            pause_script("after step 10")
 
             Step_11_select_Next_Plant (minimum_value, str(plant_capacity))
-
-            pause_script(pause_,  "after step 11")
+            pause_script("after step 11")
 
             count += 1
 

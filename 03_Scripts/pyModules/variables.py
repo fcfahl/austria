@@ -343,11 +343,13 @@ SQL_crop_demand = {
 print SQL_manure_demand['750']
 print SQL_crop_demand['750']
 
+
 SQL_costs = {
     'harvest': 5,
-    'ensiling': 1,
-    'manure': 0.5,
-    'manure_fixed': 2,
+    'ensiling_km': 1,
+    'ensiling_loading': 0.5,
+    'manure_km': 0.5,
+    'manure_loading': 1,
 }
 
 columns_all = """
